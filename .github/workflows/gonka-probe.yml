@@ -1,0 +1,156 @@
+name: GonkaRouter 10M Token Probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_tokens_budget:
+        description: "Hard stop after this many total tokens (default 9.5M to leave headroom)"
+        required: false
+        default: "9500000"
+      calls_per_batch:
+        description: "Number of completion calls per batch"
+        required: false
+        default: "20"
+      max_batches:
+        description: "Safety limit on number of batches"
+        required: false
+        default: "50"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout (optional)
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install openai tiktoken
+
+      - name: Run token probe
+        env:
+          GONKA_API_KEY: ${{ secrets.GONKA_API_KEY }}
+          BASE_URL: "https://api.gonkarouter.io/v1"
+          MODEL: "zai-org/GLM-5.3-Flash"
+          MAX_TOKENS_BUDGET: ${{ github.event.inputs.max_tokens_budget }}
+          CALLS_PER_BATCH: ${{ github.event.inputs.calls_per_batch }}
+          MAX_BATCHES: ${{ github.event.inputs.max_batches }}
+        run: |
+          python - <<'EOF'
+          import os, time, json
+          from openai import OpenAI
+
+          api_key = os.environ["GONKA_API_KEY"]
+          if not api_key:
+              raise SystemExit("Missing secret GONKA_API_KEY")
+
+          client = OpenAI(
+              api_key=api_key,
+              base_url=os.environ["BASE_URL"],
+          )
+
+          MODEL = os.environ["MODEL"]
+          MAX_BUDGET = int(os.environ["MAX_TOKENS_BUDGET"])
+          CALLS_PER_BATCH = int(os.environ["CALLS_PER_BATCH"])
+          MAX_BATCHES = int(os.environ["MAX_BATCHES"])
+
+          total_prompt = 0
+          total_completion = 0
+          total_tokens = 0
+          successful_calls = 0
+          failed_calls = 0
+
+          # Representative agent-style prompt (code + history + tool result style)
+          system = "You are a careful security researcher helping debug a vulnerability."
+          user_template = """Task context:
+          - Binary: vulnerable C program with buffer overflow
+          - Goal: craft a working exploit that prints the flag
+          - Current status: crash confirmed, need reliable ROP chain
+
+          Previous tool output (truncated):
+          ```
+          (gdb) info registers
+          rax 0x0
+          rip 0x401234
+          ...
+          ```
+
+          Write the next concrete step (max 180 tokens). Be specific."""
+
+          print(f"Starting probe | model={MODEL} | budget={MAX_BUDGET:,} tokens")
+          print("-" * 60)
+
+          for batch in range(1, MAX_BATCHES + 1):
+              if total_tokens >= MAX_BUDGET:
+                  print("Reached budget limit – stopping.")
+                  break
+
+              print(f"\nBatch {batch}/{MAX_BATCHES}")
+              batch_tokens = 0
+
+              for i in range(CALLS_PER_BATCH):
+                  if total_tokens >= MAX_BUDGET:
+                      break
+
+                  try:
+                      resp = client.chat.completions.create(
+                          model=MODEL,
+                          messages=[
+                              {"role": "system", "content": system},
+                              {"role": "user", "content": user_template},
+                          ],
+                          max_tokens=200,
+                          temperature=0.3,
+                      )
+
+                      usage = resp.usage
+                      p = usage.prompt_tokens or 0
+                      c = usage.completion_tokens or 0
+                      t = usage.total_tokens or (p + c)
+
+                      total_prompt += p
+                      total_completion += c
+                      total_tokens += t
+                      batch_tokens += t
+                      successful_calls += 1
+
+                  except Exception as e:
+                      failed_calls += 1
+                      print(f"  Call failed: {e}")
+                      time.sleep(2)
+                      continue
+
+              print(f"  Batch tokens: {batch_tokens:,} | Cumulative: {total_tokens:,}")
+
+              # Soft rate-limit friendliness
+              time.sleep(1.5)
+
+          print("\n" + "=" * 60)
+          print("PROBE RESULTS")
+          print("=" * 60)
+          print(f"Successful calls : {successful_calls}")
+          print(f"Failed calls     : {failed_calls}")
+          print(f"Prompt tokens    : {total_prompt:,}")
+          print(f"Completion tokens: {total_completion:,}")
+          print(f"Total tokens     : {total_tokens:,}")
+          print(f"Budget used      : {total_tokens / MAX_BUDGET * 100:.1f}% of {MAX_BUDGET:,}")
+
+          if successful_calls > 0:
+              avg = total_tokens / successful_calls
+              print(f"Avg tokens/call  : {avg:,.0f}")
+              remaining = MAX_BUDGET - total_tokens
+              print(f"Est. remaining calls with leftover: {int(remaining / avg):,}")
+
+          # Rough mapping to ExploitGym-style tasks
+          # (real tasks vary wildly; this is only a ballpark)
+          tokens_per_task_estimate = 25_000  # conservative mid-range for a short agent trajectory
+          print(f"\nRough estimate: ~{total_tokens // tokens_per_task_estimate} short agent trajectories")
+          print("with the tokens consumed in this probe.")
+          EOF
