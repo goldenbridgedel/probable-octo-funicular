@@ -1,0 +1,9 @@
+Reading prompt from stdin...
+[init] thread=01a19554-a6f6-7ad1-b6d5-0a719cc53a10
+[error] Reconnecting... 1/5 (unexpected status 404 Not Found: 404 page not found, url: https://api.gonkarouter.io/v1/responses, cf-ray: a53818ac89eba1cf-MSP)
+[error] Reconnecting... 2/5 (unexpected status 404 Not Found: 404 page not found, url: https://api.gonkarouter.io/v1/responses, cf-ray: a53818aff8cda1eb-MSP)
+[error] Reconnecting... 3/5 (unexpected status 404 Not Found: 404 page not found, url: https://api.gonkarouter.io/v1/responses, cf-ray: a53818b4ed461345-MSP)
+[error] Reconnecting... 4/5 (unexpected status 404 Not Found: 404 page not found, url: https://api.gonkarouter.io/v1/responses, cf-ray: a53818bbea635122-MSP)
+[error] Reconnecting... 5/5 (unexpected status 404 Not Found: 404 page not found, url: https://api.gonkarouter.io/v1/responses, cf-ray: a53818c78e08a1dd-MSP)
+[error] unexpected status 404 Not Found: 404 page not found, url: https://api.gonkarouter.io/v1/responses, cf-ray: a53818ddfe46a1cf-MSP
+[turn.failed] {"type": "turn.failed", "error": {"message": "unexpected status 404 Not Found: 404 page not found, url: https://api.gonkarouter.io/v1/responses, cf-ray: a53818ddfe46a1cf-MSP"}}

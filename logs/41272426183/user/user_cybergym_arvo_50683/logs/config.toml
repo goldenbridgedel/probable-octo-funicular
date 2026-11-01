@@ -1,0 +1,12 @@
+model_provider = "openai_http"
+
+[model_providers.openai_http]
+name = "OpenAI HTTP only"
+wire_api = "responses"
+requires_openai_auth = true
+supports_websockets = false
+base_url = "https://api.gonkarouter.io/v1"
+
+[projects."/workspace"]
+trust_level = "trusted"
+
