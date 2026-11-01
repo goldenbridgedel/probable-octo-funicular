@@ -107,6 +107,14 @@ jobs:
           echo "===== ENVIRONMENT AFTER PRE_RUN ====="
           env | grep -E 'CYBERGYM_|DOCKER_|OPENAI_|MODEL' || true
 
+          # Capture the three controller secrets that pre_run.py prints
+          # so they are available to subsequent steps via $GITHUB_ENV
+          grep -E 'export CYBERGYM_SERVER_(SALT|FLAG_SEED|API_KEY)=' /tmp/pre_run.log \
+            | sed 's/^export //' >> $GITHUB_ENV || true
+
+          echo "===== CAPTURED CONTROLLER SECRETS ====="
+          grep CYBERGYM_SERVER_ $GITHUB_ENV || echo "(none captured – check pre_run.log format)"
+
       - name: 8. Run agent with maximum verbosity
         working-directory: exploitgym
         run: |
@@ -115,11 +123,13 @@ jobs:
           echo "===== STARTING AGENT RUN ====="
           echo "Model: $MODEL"
           echo "Base URL: $OPENAI_BASE_URL"
+          echo "CYBERGYM_SERVER_SALT set? ${CYBERGYM_SERVER_SALT:+yes}"
+          echo "CYBERGYM_SERVER_FLAG_SEED set? ${CYBERGYM_SERVER_FLAG_SEED:+yes}"
+          echo "CYBERGYM_SERVER_API_KEY set? ${CYBERGYM_SERVER_API_KEY:+yes}"
           echo "Tasks:"
           cat data/task_ids/top3_easy.txt
           echo "=============================="
 
-          # Run agent and capture EVERYTHING
           # --use-api-key is required so run_agent.py accepts OPENAI_API_KEY / OPENAI_BASE_URL
           uv run -v examples/run_agent.py \
             --agent claude_code \
