@@ -13,7 +13,7 @@ on:
         default: "9000"
 
 permissions:
-  contents: write   # needed to push logs back to the repo
+  contents: write
 
 jobs:
   ultra-verbose-top3:
@@ -27,32 +27,19 @@ jobs:
       PYTHONUNBUFFERED: "1"
       PYTHONLOGLEVEL: "DEBUG"
       UV_LOG: "debug"
-      UV_VERBOSE: "1"
       DOCKER_BUILDKIT: "1"
-      DOCKER_CLI_DEBUG: "1"
 
     steps:
-      - name: 0. System info (ultra)
+      - name: 0. System info
         run: |
           set -x
-          echo "############################################################"
-          echo "##### HOST INSPECTION"
-          echo "############################################################"
           date -u
           uname -a
-          cat /etc/os-release || true
-          nproc
-          lscpu || true
           free -h
           df -h
-          lsblk || true
           docker version || true
-          docker info || true
-          env | sort | grep -E '^(PATH|HOME|GITHUB_|RUNNER_|OPENAI_|MODEL|UV_|PYTHON|DOCKER|CYBERGYM)' || true
-          sysctl kernel.randomize_va_space 2>/dev/null || true
-          sysctl kernel.core_pattern 2>/dev/null || true
 
-      - name: 1. Checkout this repo (for pushing logs later)
+      - name: 1. Checkout this repo (for pushing logs)
         uses: actions/checkout@v4
         with:
           path: probe-repo
@@ -72,23 +59,18 @@ jobs:
           set -x
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.local/bin" >> $GITHUB_PATH
-          export PATH="$HOME/.local/bin:$PATH"
           uv --version
-          python3 --version
 
-      - name: 3. Install dependencies (verbose)
+      - name: 3. Install Python deps
         working-directory: exploitgym
         run: |
           set -x
-          uv sync --extra proxy -v 2>&1 | tee /tmp/uv_sync.log
-          uv pip install openai -v 2>&1 | tee /tmp/uv_pip_openai.log
-          uv pip list 2>&1 | tee /tmp/uv_pip_list.log
-          .venv/bin/python -c "import openai, sys; print('openai', openai.__version__); print(sys.executable)"
+          uv sync --extra proxy -v
+          uv pip install openai -v
 
       - name: 4. Create top-3 task list
         working-directory: exploitgym
         run: |
-          set -x
           mkdir -p data/task_ids
           cat > data/task_ids/top3_easy.txt << 'EOF'
           user:cybergym/arvo_44034
@@ -97,24 +79,75 @@ jobs:
           EOF
           cat -n data/task_ids/top3_easy.txt
 
-      - name: 5. Pull Docker images (ultra)
+      - name: 5. Pull Docker images
         working-directory: exploitgym
         run: |
           set -x
-          docker images
-          df -h
           uv run -v scripts/setup/pull_images.py data/task_ids/top3_easy.txt --user-modes exp.none 2>&1 | tee /tmp/pull_images.log || true
           docker images
-          docker system df || true
-          cat /tmp/pull_images.log || true
 
-      - name: 6. Runtime artifacts
+      - name: 6. Runtime artifacts (gdb / socat / nc)
         working-directory: exploitgym
         run: |
           set -x
+          # Run setup_data but we will force Node/Codex in the next step
           bash -x scripts/setup/setup_data.sh 2>&1 | tee /tmp/setup_data.log || true
           docker pull ubuntu/squid:latest 2>&1 | tee /tmp/squid.log || true
-          cat /tmp/setup_data.log || true
+
+      # ---------- FIX: ensure /data/node/bin/codex.sh exists via host mount ----------
+      - name: 6b. Install Node + Codex into data/runtime/node
+        working-directory: exploitgym
+        run: |
+          set -x
+          NODE_PREFIX="$(pwd)/data/runtime/node"
+          mkdir -p "$NODE_PREFIX"
+
+          # Fast path: official Node linux-x64 binary (glibc) instead of full static compile
+          if [[ ! -x "$NODE_PREFIX/bin/node" ]]; then
+            NODE_VERSION="22.21.0"
+            echo "Downloading Node ${NODE_VERSION}..."
+            curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" \
+              -o /tmp/node.tar.xz
+            tar -xJf /tmp/node.tar.xz -C /tmp
+            # Merge into prefix (bin/, lib/, ...)
+            cp -a /tmp/node-v${NODE_VERSION}-linux-x64/. "$NODE_PREFIX/"
+          fi
+
+          echo "Node at: $NODE_PREFIX/bin/node"
+          "$NODE_PREFIX/bin/node" -v
+          "$NODE_PREFIX/bin/npm" -v
+
+          # Install Codex CLI into this prefix
+          echo "Installing @openai/codex..."
+          NPM_CONFIG_PREFIX="$NODE_PREFIX" npm_config_prefix="$NODE_PREFIX" \
+            "$NODE_PREFIX/bin/npm" install -g --prefix "$NODE_PREFIX" "@openai/codex@0.120.0"
+
+          # Write launcher expected by CodexAgent (CODEX_BIN_PATH=/data/node/bin/codex.sh)
+          # Host path data/runtime is mounted at /data in the container.
+          cat > "$NODE_PREFIX/bin/codex.sh" << 'LAUNCHER'
+          #!/bin/bash
+          SCRIPT_DIR=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
+          TARGET="$SCRIPT_DIR/codex"
+          if [[ -x "$TARGET" ]]; then
+            exec "$TARGET" "$@"
+          fi
+          # npm global bin may be a JS entry
+          if [[ -f "$TARGET" ]]; then
+            exec "$SCRIPT_DIR/node" "$TARGET" "$@"
+          fi
+          # Fallback: npx-style resolution
+          exec "$SCRIPT_DIR/node" "$SCRIPT_DIR/../lib/node_modules/@openai/codex/bin/codex.js" "$@"
+          LAUNCHER
+          chmod +x "$NODE_PREFIX/bin/codex.sh"
+
+          echo "===== VALIDATE HOST TREE ====="
+          ls -la "$NODE_PREFIX/bin/" | head -40
+          file "$NODE_PREFIX/bin/node" || true
+          file "$NODE_PREFIX/bin/codex.sh" || true
+          # codex --version (may need network the first time; ok if it just prints help/version)
+          "$NODE_PREFIX/bin/codex.sh" --version 2>&1 | head -20 || true
+          test -x "$NODE_PREFIX/bin/codex.sh"
+          echo "Codex launcher OK at data/runtime/node/bin/codex.sh (-> /data/node/bin/codex.sh in container)"
 
       - name: 7. Start controller / proxy (mint secrets)
         working-directory: exploitgym
@@ -123,72 +156,35 @@ jobs:
           SALT="cg-$(openssl rand -hex 16)"
           FLAG_SEED="sf-$(openssl rand -hex 16)"
           API_KEY="cybergym-$(openssl rand -hex 16)"
-
           echo "CYBERGYM_SERVER_SALT=$SALT"           >> $GITHUB_ENV
           echo "CYBERGYM_SERVER_FLAG_SEED=$FLAG_SEED" >> $GITHUB_ENV
           echo "CYBERGYM_SERVER_API_KEY=$API_KEY"     >> $GITHUB_ENV
-
           export CYBERGYM_SERVER_SALT="$SALT"
           export CYBERGYM_SERVER_FLAG_SEED="$FLAG_SEED"
           export CYBERGYM_SERVER_API_KEY="$API_KEY"
 
-          echo "===== MINTED SECRETS ====="
-          echo "CYBERGYM_SERVER_SALT=$SALT"
-          echo "CYBERGYM_SERVER_FLAG_SEED=$FLAG_SEED"
-          echo "CYBERGYM_SERVER_API_KEY=$API_KEY"
-
           uv run -v scripts/setup/pre_run.py data/task_ids/top3_easy.txt 2>&1 | tee /tmp/pre_run.log || true
-          echo "===== PRE_RUN FULL LOG ====="
-          cat /tmp/pre_run.log || true
-          echo "===== docker ps / ports ====="
+          tail -n 80 /tmp/pre_run.log || true
           docker ps -a || true
-          ss -tlnp || true
 
-      - name: 8. Run agent = codex (OpenAI style, max verbosity)
+      - name: 8. Run agent = codex (OpenAI style)
         working-directory: exploitgym
         run: |
           set -x
           mkdir -p out/codex
-          echo "############################################################"
-          echo "##### CODEX / OPENAI-STYLE RUN"
-          echo "############################################################"
-          echo "date: $(date -u)"
-          echo "OPENAI_API_KEY set? ${OPENAI_API_KEY:+yes (len=${#OPENAI_API_KEY})}"
+          echo "OPENAI_API_KEY set? ${OPENAI_API_KEY:+yes}"
           echo "OPENAI_BASE_URL=$OPENAI_BASE_URL"
           echo "MODEL=$MODEL"
-          echo "CYBERGYM_SERVER_SALT set? ${CYBERGYM_SERVER_SALT:+yes}"
-          echo "CYBERGYM_SERVER_FLAG_SEED set? ${CYBERGYM_SERVER_FLAG_SEED:+yes}"
-          echo "CYBERGYM_SERVER_API_KEY set? ${CYBERGYM_SERVER_API_KEY:+yes}"
-          cat -n data/task_ids/top3_easy.txt
-          docker ps -a || true
-          ss -tlnp || true
+          echo "Host codex.sh: $(ls -la data/runtime/node/bin/codex.sh)"
 
-          # Quick live smoke test against Gonka (OpenAI style)
-          echo "===== GONKA SMOKE TEST ====="
+          # Smoke test Gonka
           .venv/bin/python - <<'PY' 2>&1 | tee /tmp/gonka_smoke.log || true
-          import os, json
+          import os
           from openai import OpenAI
-          client = OpenAI(
-              api_key=os.environ["OPENAI_API_KEY"],
-              base_url=os.environ["OPENAI_BASE_URL"],
-          )
-          print("base_url =", client.base_url)
-          try:
-              models = client.models.list()
-              print("models.list OK, count =", len(getattr(models, "data", []) or []))
-              for m in (models.data or [])[:10]:
-                  print(" -", getattr(m, "id", m))
-          except Exception as e:
-              print("models.list FAILED:", type(e), e)
-          try:
-              r = client.chat.completions.create(
-                  model=os.environ["MODEL"],
-                  messages=[{"role": "user", "content": "Reply with exactly: pong"}],
-                  max_tokens=32,
-              )
-              print("chat OK:", r.choices[0].message.content)
-          except Exception as e:
-              print("chat FAILED:", type(e), e)
+          c = OpenAI(api_key=os.environ["OPENAI_API_KEY"], base_url=os.environ["OPENAI_BASE_URL"])
+          print("models", [m.id for m in c.models.list().data[:5]])
+          r = c.chat.completions.create(model=os.environ["MODEL"], messages=[{"role":"user","content":"pong"}], max_tokens=16)
+          print("chat", r.choices[0].message.content)
           PY
 
           uv run -v examples/run_agent.py \
@@ -203,66 +199,41 @@ jobs:
             --use-api-key \
             2>&1 | tee out/codex/FULL_CONSOLE.log /tmp/codex_console.log
 
-          echo "===== CODEX FINISHED (exit=${PIPESTATUS[0]}) ====="
-          date -u
-          docker ps -a || true
-          du -sh out/codex || true
-          find out/codex -type f -printf "%s\t%p\n" | sort -n || true
+          echo "exit=${PIPESTATUS[0]}"
+          find out/codex -type f -printf "%s\t%p\n" | sort -n | tail -40
 
-      - name: 9. Dump results (ultra)
+      - name: 9. Dump results
         working-directory: exploitgym
         if: always()
         run: |
           set -x
           OUT=out/codex
-          echo "############################################################"
-          echo "##### COMPLETE FILE TREE"
-          echo "############################################################"
-          find "$OUT" -type f -printf "%p (%s bytes)\n" 2>/dev/null | sort || true
-
-          echo ""
-          echo "############################################################"
-          echo "##### ALL result.json"
-          echo "############################################################"
-          find "$OUT" -name 'result.json' 2>/dev/null | while read f; do
+          find "$OUT" -name 'result.json' | while read f; do
+            echo "=== $f ==="
+            cat "$f"
+            jq -e '.score > 0' "$f" >/dev/null 2>&1 && echo SOLVED || echo NOT_SOLVED
+          done || true
+          echo "===== codex.log samples ====="
+          find "$OUT" -name 'codex.log' | while read f; do
             echo "--- $f ---"
             cat "$f"
-            if jq -e '.score > 0' "$f" >/dev/null 2>&1; then
-              echo "✅ SOLVED"
-            else
-              echo "❌ NOT SOLVED"
-            fi
-            echo ""
           done || true
+          tail -n 100 "$OUT/FULL_CONSOLE.log" 2>/dev/null || true
+          grep -n -iE 'error|No such file|codex.sh|401|403|ValueError' \
+            "$OUT/FULL_CONSOLE.log" /tmp/codex_console.log 2>/dev/null | head -40 || true
 
-          echo ""
-          echo "############################################################"
-          echo "##### FULL CONSOLE LOG"
-          echo "############################################################"
-          cat "$OUT/FULL_CONSOLE.log" 2>/dev/null || true
-
-          echo ""
-          echo "############################################################"
-          echo "##### PRE_RUN + SMOKE + ERROR GREP"
-          echo "############################################################"
-          cat /tmp/pre_run.log 2>/dev/null || true
-          cat /tmp/gonka_smoke.log 2>/dev/null || true
-          grep -n -iE 'error|ValueError|auth|401|403|invalid|failed|traceback|exception' \
-            "$OUT/FULL_CONSOLE.log" /tmp/codex_console.log /tmp/gonka_smoke.log /tmp/pre_run.log \
-            2>/dev/null | head -100 || true
-
-      - name: 10. Upload Actions artifact
+      - name: 10. Upload artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: top3-codex-openai-logs
           path: |
             exploitgym/out/codex/
+            exploitgym/data/runtime/node/bin/
             /tmp/*.log
           retention-days: 14
 
-      # Push logs into the repo on branch run-logs/<run_id> so they are publicly downloadable
-      - name: 11. Push logs to repo (public branch)
+      - name: 11. Push logs to repo
         if: always()
         working-directory: probe-repo
         run: |
@@ -270,25 +241,15 @@ jobs:
           RUN_ID="${{ github.run_id }}"
           BRANCH="run-logs/${RUN_ID}"
           DEST="logs/${RUN_ID}"
-
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Collect everything we care about
           mkdir -p "$DEST"
           cp -a ../exploitgym/out/codex/. "$DEST/" 2>/dev/null || true
           cp -a /tmp/*.log "$DEST/" 2>/dev/null || true
-
-          # Small index for humans
           {
             echo "# Run ${RUN_ID}"
-            echo
-            echo "- Workflow: ${{ github.workflow }}"
-            echo "- Actor: ${{ github.actor }}"
-            echo "- SHA: ${{ github.sha }}"
             echo "- UTC: $(date -u)"
-            echo
-            echo "## result.json summary"
+            echo "## results"
             find "$DEST" -name result.json | while read f; do
               echo "### $f"
               echo '```json'
@@ -296,16 +257,8 @@ jobs:
               echo '```'
             done
           } > "$DEST/README.md"
-
           git checkout -B "$BRANCH"
           git add -A
-          git status
-          if git diff --staged --quiet; then
-            echo "Nothing to commit"
-          else
-            git commit -m "logs: run ${RUN_ID} (codex / OpenAI-style Gonka probe)"
-            git push -u origin "$BRANCH" --force
-            echo "Logs pushed to branch: $BRANCH"
-            echo "Browse: https://github.com/${{ github.repository }}/tree/${BRANCH}"
-            echo "Raw example: https://raw.githubusercontent.com/${{ github.repository }}/${BRANCH}/logs/${RUN_ID}/FULL_CONSOLE.log"
-          fi
+          git diff --staged --quiet || git commit -m "logs: run ${RUN_ID} (codex + node runtime fix)"
+          git push -u origin "$BRANCH" --force
+          echo "https://github.com/${{ github.repository }}/tree/${BRANCH}"
