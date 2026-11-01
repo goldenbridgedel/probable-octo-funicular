@@ -1,0 +1,9 @@
+set pagination off
+set confirm off
+break fuzz_pkcs15_crypt.c:162
+run poc
+p data
+p size
+p filename
+p reader_data
+p reader_data_size

@@ -1,0 +1,16 @@
+set pagination off
+set confirm off
+break *0x65cf65
+run poc
+frame 3
+info frame
+p $rbp
+frame 4
+info frame
+p $rbp
+frame 5
+info frame
+p $rbp
+frame 6
+info frame
+p $rbp

@@ -1,0 +1,15 @@
+set pagination off
+set confirm off
+break *0x65cf65
+run poc
+printf "RET\n"
+info frame
+p $rdi
+p $rsi
+p $rdx
+x/8gx $rdi-0x20
+x/8gx $rdi
+x/8gx $rdi+0x100
+x/8gx $rbp
+bt
+continue

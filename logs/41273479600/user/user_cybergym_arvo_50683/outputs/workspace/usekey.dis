@@ -1,0 +1,533 @@
+Dump of assembler code for function use_key:
+pkcs15-sec.c:
+133	{
+   0x000000000048a260 <+0>:	push   %rbp
+   0x000000000048a261 <+1>:	mov    %rsp,%rbp
+   0x000000000048a264 <+4>:	push   %rbx
+   0x000000000048a265 <+5>:	sub    $0xd8,%rsp
+   0x000000000048a26c <+12>:	mov    0x18(%rbp),%rax
+   0x000000000048a270 <+16>:	mov    0x10(%rbp),%rax
+   0x000000000048a274 <+20>:	mov    %rdi,-0x18(%rbp)
+   0x000000000048a278 <+24>:	mov    %rsi,-0x20(%rbp)
+   0x000000000048a27c <+28>:	mov    %rdx,-0x28(%rbp)
+   0x000000000048a280 <+32>:	mov    %rcx,-0x30(%rbp)
+   0x000000000048a284 <+36>:	mov    %r8,-0x38(%rbp)
+   0x000000000048a288 <+40>:	mov    %r9,-0x40(%rbp)
+
+134		int r = SC_SUCCESS;
+   0x000000000048a28c <+44>:	movl   $0x0,-0x44(%rbp)
+
+135		int revalidated_cached_pin = 0;
+   0x000000000048a293 <+51>:	movl   $0x0,-0x48(%rbp)
+
+136		sc_path_t path;
+137		LOG_TEST_RET(p15card->card->ctx, get_file_path(obj, &path), "Failed to get key file path.");
+   0x000000000048a29a <+58>:	mov    -0x20(%rbp),%rdi
+   0x000000000048a29e <+62>:	lea    -0x88(%rbp),%rsi
+   0x000000000048a2a5 <+69>:	call   0x490790 <get_file_path>
+   0x000000000048a2aa <+74>:	mov    %eax,-0x8c(%rbp)
+   0x000000000048a2b0 <+80>:	cmpl   $0x0,-0x8c(%rbp)
+   0x000000000048a2b7 <+87>:	jge    0x48a38d <use_key+301>
+   0x000000000048a2bd <+93>:	mov    0x419d2c(%rip),%rax        # 0x8a3ff0
+   0x000000000048a2c4 <+100>:	movslq %fs:(%rax),%rdx
+   0x000000000048a2c8 <+104>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a2cf <+111>:	mov    (%rcx),%rcx
+   0x000000000048a2d2 <+114>:	xor    $0x47ef,%rdx
+   0x000000000048a2d9 <+121>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a2dd <+125>:	add    $0x1,%sil
+   0x000000000048a2e1 <+129>:	mov    %sil,%dil
+   0x000000000048a2e4 <+132>:	sub    $0x1,%dil
+   0x000000000048a2e8 <+136>:	adc    $0x0,%sil
+   0x000000000048a2ec <+140>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a2f0 <+144>:	movl   $0x23f7,%fs:(%rax)
+   0x000000000048a2f7 <+151>:	mov    -0x18(%rbp),%rax
+   0x000000000048a2fb <+155>:	mov    (%rax),%rax
+   0x000000000048a2fe <+158>:	mov    (%rax),%rax
+   0x000000000048a301 <+161>:	mov    %rax,-0xa0(%rbp)
+   0x000000000048a308 <+168>:	mov    -0x8c(%rbp),%eax
+   0x000000000048a30e <+174>:	mov    %eax,-0x98(%rbp)
+   0x000000000048a314 <+180>:	mov    -0x8c(%rbp),%edi
+   0x000000000048a31a <+186>:	call   0x422880 <sc_strerror>
+   0x000000000048a31f <+191>:	mov    -0xa0(%rbp),%rdi
+   0x000000000048a326 <+198>:	mov    -0x98(%rbp),%r10d
+   0x000000000048a32d <+205>:	mov    $0x3,%esi
+   0x000000000048a332 <+210>:	movabs $0x84bcfb,%rdx
+   0x000000000048a33c <+220>:	mov    $0x89,%ecx
+   0x000000000048a341 <+225>:	movabs $0x84c236,%r8
+   0x000000000048a34b <+235>:	mov    $0x1,%r9d
+   0x000000000048a351 <+241>:	movabs $0x845451,%rbx
+   0x000000000048a35b <+251>:	movabs $0x84c23e,%r11
+   0x000000000048a365 <+261>:	mov    %rbx,(%rsp)
+   0x000000000048a369 <+265>:	mov    %r11,0x8(%rsp)
+   0x000000000048a36e <+270>:	mov    %r10d,0x10(%rsp)
+   0x000000000048a373 <+275>:	mov    %rax,0x18(%rsp)
+   0x000000000048a378 <+280>:	mov    $0x0,%al
+   0x000000000048a37a <+282>:	call   0x420890 <sc_do_log_color>
+   0x000000000048a37f <+287>:	mov    -0x8c(%rbp),%eax
+   0x000000000048a385 <+293>:	mov    %eax,-0xc(%rbp)
+   0x000000000048a388 <+296>:	jmp    0x48ab50 <use_key+2288>
+   0x000000000048a38d <+301>:	mov    0x419c5c(%rip),%rax        # 0x8a3ff0
+   0x000000000048a394 <+308>:	movslq %fs:(%rax),%rdx
+   0x000000000048a398 <+312>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a39f <+319>:	mov    (%rcx),%rcx
+   0x000000000048a3a2 <+322>:	xor    $0xd1f0,%rdx
+   0x000000000048a3a9 <+329>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a3ad <+333>:	add    $0x1,%sil
+   0x000000000048a3b1 <+337>:	mov    %sil,%dil
+   0x000000000048a3b4 <+340>:	sub    $0x1,%dil
+   0x000000000048a3b8 <+344>:	adc    $0x0,%sil
+   0x000000000048a3bc <+348>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a3c0 <+352>:	movl   $0x68f8,%fs:(%rax)
+
+138	
+139		r = sc_lock(p15card->card);
+   0x000000000048a3c7 <+359>:	mov    -0x18(%rbp),%rax
+   0x000000000048a3cb <+363>:	mov    (%rax),%rdi
+   0x000000000048a3ce <+366>:	call   0x43a950 <sc_lock>
+   0x000000000048a3d3 <+371>:	mov    %eax,-0x44(%rbp)
+
+140		LOG_TEST_RET(p15card->card->ctx, r, "sc_lock() failed");
+   0x000000000048a3d6 <+374>:	mov    -0x44(%rbp),%eax
+   0x000000000048a3d9 <+377>:	mov    %eax,-0x90(%rbp)
+   0x000000000048a3df <+383>:	cmpl   $0x0,-0x90(%rbp)
+   0x000000000048a3e6 <+390>:	jge    0x48a4bc <use_key+604>
+   0x000000000048a3ec <+396>:	mov    0x419bfd(%rip),%rax        # 0x8a3ff0
+   0x000000000048a3f3 <+403>:	movslq %fs:(%rax),%rdx
+   0x000000000048a3f7 <+407>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a3fe <+414>:	mov    (%rcx),%rcx
+   0x000000000048a401 <+417>:	xor    $0xb9ad,%rdx
+   0x000000000048a408 <+424>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a40c <+428>:	add    $0x1,%sil
+   0x000000000048a410 <+432>:	mov    %sil,%dil
+   0x000000000048a413 <+435>:	sub    $0x1,%dil
+   0x000000000048a417 <+439>:	adc    $0x0,%sil
+   0x000000000048a41b <+443>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a41f <+447>:	movl   $0x5cd6,%fs:(%rax)
+   0x000000000048a426 <+454>:	mov    -0x18(%rbp),%rax
+   0x000000000048a42a <+458>:	mov    (%rax),%rax
+   0x000000000048a42d <+461>:	mov    (%rax),%rax
+   0x000000000048a430 <+464>:	mov    %rax,-0xb0(%rbp)
+   0x000000000048a437 <+471>:	mov    -0x90(%rbp),%eax
+   0x000000000048a43d <+477>:	mov    %eax,-0xa4(%rbp)
+   0x000000000048a443 <+483>:	mov    -0x90(%rbp),%edi
+   0x000000000048a449 <+489>:	call   0x422880 <sc_strerror>
+   0x000000000048a44e <+494>:	mov    -0xb0(%rbp),%rdi
+   0x000000000048a455 <+501>:	mov    -0xa4(%rbp),%r10d
+   0x000000000048a45c <+508>:	mov    $0x3,%esi
+   0x000000000048a461 <+513>:	movabs $0x84bcfb,%rdx
+   0x000000000048a46b <+523>:	mov    $0x8c,%ecx
+   0x000000000048a470 <+528>:	movabs $0x84c236,%r8
+   0x000000000048a47a <+538>:	mov    $0x1,%r9d
+   0x000000000048a480 <+544>:	movabs $0x845451,%rbx
+   0x000000000048a48a <+554>:	movabs $0x845f61,%r11
+   0x000000000048a494 <+564>:	mov    %rbx,(%rsp)
+   0x000000000048a498 <+568>:	mov    %r11,0x8(%rsp)
+   0x000000000048a49d <+573>:	mov    %r10d,0x10(%rsp)
+   0x000000000048a4a2 <+578>:	mov    %rax,0x18(%rsp)
+   0x000000000048a4a7 <+583>:	mov    $0x0,%al
+   0x000000000048a4a9 <+585>:	call   0x420890 <sc_do_log_color>
+   0x000000000048a4ae <+590>:	mov    -0x90(%rbp),%eax
+   0x000000000048a4b4 <+596>:	mov    %eax,-0xc(%rbp)
+   0x000000000048a4b7 <+599>:	jmp    0x48ab50 <use_key+2288>
+   0x000000000048a4bc <+604>:	mov    0x419b2d(%rip),%rax        # 0x8a3ff0
+   0x000000000048a4c3 <+611>:	movslq %fs:(%rax),%rdx
+   0x000000000048a4c7 <+615>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a4ce <+622>:	mov    (%rcx),%rcx
+   0x000000000048a4d1 <+625>:	xor    $0x7dc0,%rdx
+   0x000000000048a4d8 <+632>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a4dc <+636>:	add    $0x1,%sil
+   0x000000000048a4e0 <+640>:	mov    %sil,%dil
+   0x000000000048a4e3 <+643>:	sub    $0x1,%dil
+   0x000000000048a4e7 <+647>:	adc    $0x0,%sil
+   0x000000000048a4eb <+651>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a4ef <+655>:	movl   $0x3ee0,%fs:(%rax)
+
+141	
+142		do {
+   0x000000000048a4f6 <+662>:	jmp    0x48a4fb <use_key+667>
+
+143			if (path.len != 0 || path.aid.len != 0) {
+   0x000000000048a4fb <+667>:	mov    0x419aee(%rip),%rax        # 0x8a3ff0
+   0x000000000048a502 <+674>:	movslq %fs:(%rax),%rdx
+   0x000000000048a506 <+678>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a50d <+685>:	mov    (%rcx),%rcx
+   0x000000000048a510 <+688>:	xor    $0xaa2d,%rdx
+   0x000000000048a517 <+695>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a51b <+699>:	add    $0x1,%sil
+   0x000000000048a51f <+703>:	mov    %sil,%dil
+   0x000000000048a522 <+706>:	sub    $0x1,%dil
+   0x000000000048a526 <+710>:	adc    $0x0,%sil
+   0x000000000048a52a <+714>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a52e <+718>:	movl   $0x5516,%fs:(%rax)
+   0x000000000048a535 <+725>:	cmpq   $0x0,-0x78(%rbp)
+   0x000000000048a53a <+730>:	jne    0x48a585 <use_key+805>
+   0x000000000048a540 <+736>:	mov    0x419aa9(%rip),%rax        # 0x8a3ff0
+   0x000000000048a547 <+743>:	movslq %fs:(%rax),%rdx
+   0x000000000048a54b <+747>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a552 <+754>:	mov    (%rcx),%rcx
+   0x000000000048a555 <+757>:	xor    $0xe1f8,%rdx
+   0x000000000048a55c <+764>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a560 <+768>:	add    $0x1,%sil
+   0x000000000048a564 <+772>:	mov    %sil,%dil
+   0x000000000048a567 <+775>:	sub    $0x1,%dil
+   0x000000000048a56b <+779>:	adc    $0x0,%sil
+   0x000000000048a56f <+783>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a573 <+787>:	movl   $0x70fc,%fs:(%rax)
+   0x000000000048a57a <+794>:	cmpq   $0x0,-0x50(%rbp)
+   0x000000000048a57f <+799>:	je     0x48a68a <use_key+1066>
+
+144				r = select_key_file(p15card, obj, senv);
+   0x000000000048a585 <+805>:	mov    0x419a64(%rip),%rax        # 0x8a3ff0
+   0x000000000048a58c <+812>:	movslq %fs:(%rax),%rdx
+   0x000000000048a590 <+816>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a597 <+823>:	mov    (%rcx),%rcx
+   0x000000000048a59a <+826>:	xor    $0x1d1,%rdx
+   0x000000000048a5a1 <+833>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a5a5 <+837>:	add    $0x1,%sil
+   0x000000000048a5a9 <+841>:	mov    %sil,%dil
+   0x000000000048a5ac <+844>:	sub    $0x1,%dil
+   0x000000000048a5b0 <+848>:	adc    $0x0,%sil
+   0x000000000048a5b4 <+852>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a5b8 <+856>:	movl   $0xe8,%fs:(%rax)
+   0x000000000048a5bf <+863>:	mov    -0x18(%rbp),%rdi
+   0x000000000048a5c3 <+867>:	mov    -0x20(%rbp),%rsi
+   0x000000000048a5c7 <+871>:	mov    -0x28(%rbp),%rdx
+   0x000000000048a5cb <+875>:	call   0x4909c0 <select_key_file>
+   0x000000000048a5d0 <+880>:	mov    %eax,-0x44(%rbp)
+
+145				if (r < 0) {
+   0x000000000048a5d3 <+883>:	cmpl   $0x0,-0x44(%rbp)
+   0x000000000048a5d7 <+887>:	jge    0x48a650 <use_key+1008>
+
+146					sc_log(p15card->card->ctx,
+   0x000000000048a5dd <+893>:	mov    0x419a0c(%rip),%rax        # 0x8a3ff0
+   0x000000000048a5e4 <+900>:	movslq %fs:(%rax),%rdx
+   0x000000000048a5e8 <+904>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a5ef <+911>:	mov    (%rcx),%rcx
+   0x000000000048a5f2 <+914>:	xor    $0xb155,%rdx
+   0x000000000048a5f9 <+921>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a5fd <+925>:	add    $0x1,%sil
+   0x000000000048a601 <+929>:	mov    %sil,%dil
+   0x000000000048a604 <+932>:	sub    $0x1,%dil
+   0x000000000048a608 <+936>:	adc    $0x0,%sil
+   0x000000000048a60c <+940>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a610 <+944>:	movl   $0x58aa,%fs:(%rax)
+   0x000000000048a617 <+951>:	mov    -0x18(%rbp),%rax
+   0x000000000048a61b <+955>:	mov    (%rax),%rax
+   0x000000000048a61e <+958>:	mov    (%rax),%rdi
+   0x000000000048a621 <+961>:	mov    $0x3,%esi
+   0x000000000048a626 <+966>:	movabs $0x84bcfb,%rdx
+   0x000000000048a630 <+976>:	mov    $0x93,%ecx
+   0x000000000048a635 <+981>:	movabs $0x84c236,%r8
+   0x000000000048a63f <+991>:	movabs $0x84c25b,%r9
+   0x000000000048a649 <+1001>:	mov    $0x0,%al
+   0x000000000048a64b <+1003>:	call   0x420210 <sc_do_log>
+
+147							"Unable to select private key file");
+148				}
+149			}
+   0x000000000048a650 <+1008>:	mov    0x419999(%rip),%rax        # 0x8a3ff0
+   0x000000000048a657 <+1015>:	movslq %fs:(%rax),%rdx
+   0x000000000048a65b <+1019>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a662 <+1026>:	mov    (%rcx),%rcx
+   0x000000000048a665 <+1029>:	xor    $0x2964,%rdx
+   0x000000000048a66c <+1036>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a670 <+1040>:	add    $0x1,%sil
+   0x000000000048a674 <+1044>:	mov    %sil,%dil
+   0x000000000048a677 <+1047>:	sub    $0x1,%dil
+   0x000000000048a67b <+1051>:	adc    $0x0,%sil
+   0x000000000048a67f <+1055>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a683 <+1059>:	movl   $0x14b2,%fs:(%rax)
+
+150			if (r == SC_SUCCESS)
+   0x000000000048a68a <+1066>:	mov    0x41995f(%rip),%rax        # 0x8a3ff0
+   0x000000000048a691 <+1073>:	movslq %fs:(%rax),%rdx
+   0x000000000048a695 <+1077>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a69c <+1084>:	mov    (%rcx),%rcx
+   0x000000000048a69f <+1087>:	xor    $0xf846,%rdx
+   0x000000000048a6a6 <+1094>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a6aa <+1098>:	add    $0x1,%sil
+   0x000000000048a6ae <+1102>:	mov    %sil,%dil
+   0x000000000048a6b1 <+1105>:	sub    $0x1,%dil
+   0x000000000048a6b5 <+1109>:	adc    $0x0,%sil
+   0x000000000048a6b9 <+1113>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a6bd <+1117>:	movl   $0x7c23,%fs:(%rax)
+   0x000000000048a6c4 <+1124>:	cmpl   $0x0,-0x44(%rbp)
+   0x000000000048a6c8 <+1128>:	jne    0x48a71d <use_key+1213>
+
+151				r = sc_set_security_env(p15card->card, senv, 0);
+   0x000000000048a6ce <+1134>:	mov    0x41991b(%rip),%rax        # 0x8a3ff0
+   0x000000000048a6d5 <+1141>:	movslq %fs:(%rax),%rdx
+   0x000000000048a6d9 <+1145>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a6e0 <+1152>:	mov    (%rcx),%rcx
+   0x000000000048a6e3 <+1155>:	xor    $0x3751,%rdx
+   0x000000000048a6ea <+1162>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a6ee <+1166>:	add    $0x1,%sil
+   0x000000000048a6f2 <+1170>:	mov    %sil,%dil
+   0x000000000048a6f5 <+1173>:	sub    $0x1,%dil
+   0x000000000048a6f9 <+1177>:	adc    $0x0,%sil
+   0x000000000048a6fd <+1181>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a701 <+1185>:	movl   $0x1ba8,%fs:(%rax)
+   0x000000000048a708 <+1192>:	mov    -0x18(%rbp),%rax
+   0x000000000048a70c <+1196>:	mov    (%rax),%rdi
+   0x000000000048a70f <+1199>:	mov    -0x28(%rbp),%rsi
+   0x000000000048a713 <+1203>:	xor    %edx,%edx
+   0x000000000048a715 <+1205>:	call   0x7c0600 <sc_set_security_env>
+   0x000000000048a71a <+1210>:	mov    %eax,-0x44(%rbp)
+
+152	
+153			if (r == SC_SUCCESS)
+   0x000000000048a71d <+1213>:	mov    0x4198cc(%rip),%rax        # 0x8a3ff0
+   0x000000000048a724 <+1220>:	movslq %fs:(%rax),%rdx
+   0x000000000048a728 <+1224>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a72f <+1231>:	mov    (%rcx),%rcx
+   0x000000000048a732 <+1234>:	xor    $0xdfa2,%rdx
+   0x000000000048a739 <+1241>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a73d <+1245>:	add    $0x1,%sil
+   0x000000000048a741 <+1249>:	mov    %sil,%dil
+   0x000000000048a744 <+1252>:	sub    $0x1,%dil
+   0x000000000048a748 <+1256>:	adc    $0x0,%sil
+   0x000000000048a74c <+1260>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a750 <+1264>:	movl   $0x6fd1,%fs:(%rax)
+   0x000000000048a757 <+1271>:	cmpl   $0x0,-0x44(%rbp)
+   0x000000000048a75b <+1275>:	jne    0x48a7bb <use_key+1371>
+
+154				r = card_command(p15card->card, in, inlen, out, outlen);
+   0x000000000048a761 <+1281>:	mov    0x419888(%rip),%rax        # 0x8a3ff0
+   0x000000000048a768 <+1288>:	movslq %fs:(%rax),%rdx
+   0x000000000048a76c <+1292>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a773 <+1299>:	mov    (%rcx),%rcx
+   0x000000000048a776 <+1302>:	xor    $0x8843,%rdx
+   0x000000000048a77d <+1309>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a781 <+1313>:	add    $0x1,%sil
+   0x000000000048a785 <+1317>:	mov    %sil,%dil
+   0x000000000048a788 <+1320>:	sub    $0x1,%dil
+   0x000000000048a78c <+1324>:	adc    $0x0,%sil
+   0x000000000048a790 <+1328>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a794 <+1332>:	movl   $0x4421,%fs:(%rax)
+   0x000000000048a79b <+1339>:	mov    -0x30(%rbp),%rax
+   0x000000000048a79f <+1343>:	mov    -0x18(%rbp),%rcx
+   0x000000000048a7a3 <+1347>:	mov    (%rcx),%rdi
+   0x000000000048a7a6 <+1350>:	mov    -0x38(%rbp),%rsi
+   0x000000000048a7aa <+1354>:	mov    -0x40(%rbp),%rdx
+   0x000000000048a7ae <+1358>:	mov    0x10(%rbp),%rcx
+   0x000000000048a7b2 <+1362>:	mov    0x18(%rbp),%r8
+   0x000000000048a7b6 <+1366>:	call   *%rax
+   0x000000000048a7b8 <+1368>:	mov    %eax,-0x44(%rbp)
+
+155	
+156			if (revalidated_cached_pin)
+   0x000000000048a7bb <+1371>:	mov    0x41982e(%rip),%rax        # 0x8a3ff0
+   0x000000000048a7c2 <+1378>:	movslq %fs:(%rax),%rdx
+   0x000000000048a7c6 <+1382>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a7cd <+1389>:	mov    (%rcx),%rcx
+   0x000000000048a7d0 <+1392>:	xor    $0xf672,%rdx
+   0x000000000048a7d7 <+1399>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a7db <+1403>:	add    $0x1,%sil
+   0x000000000048a7df <+1407>:	mov    %sil,%dil
+   0x000000000048a7e2 <+1410>:	sub    $0x1,%dil
+   0x000000000048a7e6 <+1414>:	adc    $0x0,%sil
+   0x000000000048a7ea <+1418>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a7ee <+1422>:	movl   $0x7b39,%fs:(%rax)
+   0x000000000048a7f5 <+1429>:	cmpl   $0x0,-0x48(%rbp)
+   0x000000000048a7f9 <+1433>:	je     0x48a83e <use_key+1502>
+
+157				/* only re-validate once */
+158				break;
+   0x000000000048a7ff <+1439>:	mov    0x4197ea(%rip),%rax        # 0x8a3ff0
+   0x000000000048a806 <+1446>:	movslq %fs:(%rax),%rdx
+   0x000000000048a80a <+1450>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a811 <+1457>:	mov    (%rcx),%rcx
+   0x000000000048a814 <+1460>:	xor    $0xb7f6,%rdx
+   0x000000000048a81b <+1467>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a81f <+1471>:	add    $0x1,%sil
+   0x000000000048a823 <+1475>:	mov    %sil,%dil
+   0x000000000048a826 <+1478>:	sub    $0x1,%dil
+   0x000000000048a82a <+1482>:	adc    $0x0,%sil
+   0x000000000048a82e <+1486>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a832 <+1490>:	movl   $0x5bfb,%fs:(%rax)
+   0x000000000048a839 <+1497>:	jmp    0x48a99d <use_key+1853>
+
+159			if (r == SC_ERROR_SECURITY_STATUS_NOT_SATISFIED) {
+   0x000000000048a83e <+1502>:	mov    0x4197ab(%rip),%rax        # 0x8a3ff0
+   0x000000000048a845 <+1509>:	movslq %fs:(%rax),%rdx
+   0x000000000048a849 <+1513>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a850 <+1520>:	mov    (%rcx),%rcx
+   0x000000000048a853 <+1523>:	xor    $0x45de,%rdx
+   0x000000000048a85a <+1530>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a85e <+1534>:	add    $0x1,%sil
+   0x000000000048a862 <+1538>:	mov    %sil,%dil
+   0x000000000048a865 <+1541>:	sub    $0x1,%dil
+   0x000000000048a869 <+1545>:	adc    $0x0,%sil
+   0x000000000048a86d <+1549>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a871 <+1553>:	movl   $0x22ef,%fs:(%rax)
+   0x000000000048a878 <+1560>:	cmpl   $0xfffffb45,-0x44(%rbp)
+   0x000000000048a87f <+1567>:	jne    0x48a959 <use_key+1785>
+
+160				r = sc_pkcs15_pincache_revalidate(p15card, obj);
+   0x000000000048a885 <+1573>:	mov    0x419764(%rip),%rax        # 0x8a3ff0
+   0x000000000048a88c <+1580>:	movslq %fs:(%rax),%rdx
+   0x000000000048a890 <+1584>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a897 <+1591>:	mov    (%rcx),%rcx
+   0x000000000048a89a <+1594>:	xor    $0x7b4c,%rdx
+   0x000000000048a8a1 <+1601>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a8a5 <+1605>:	add    $0x1,%sil
+   0x000000000048a8a9 <+1609>:	mov    %sil,%dil
+   0x000000000048a8ac <+1612>:	sub    $0x1,%dil
+   0x000000000048a8b0 <+1616>:	adc    $0x0,%sil
+   0x000000000048a8b4 <+1620>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a8b8 <+1624>:	movl   $0x3da6,%fs:(%rax)
+   0x000000000048a8bf <+1631>:	mov    -0x18(%rbp),%rdi
+   0x000000000048a8c3 <+1635>:	mov    -0x20(%rbp),%rsi
+   0x000000000048a8c7 <+1639>:	call   0x471b20 <sc_pkcs15_pincache_revalidate>
+   0x000000000048a8cc <+1644>:	mov    %eax,-0x44(%rbp)
+
+161				if (r < 0)
+   0x000000000048a8cf <+1647>:	cmpl   $0x0,-0x44(%rbp)
+   0x000000000048a8d3 <+1651>:	jge    0x48a918 <use_key+1720>
+
+162					break;
+   0x000000000048a8d9 <+1657>:	mov    0x419710(%rip),%rax        # 0x8a3ff0
+   0x000000000048a8e0 <+1664>:	movslq %fs:(%rax),%rdx
+   0x000000000048a8e4 <+1668>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a8eb <+1675>:	mov    (%rcx),%rcx
+   0x000000000048a8ee <+1678>:	xor    $0x2913,%rdx
+   0x000000000048a8f5 <+1685>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a8f9 <+1689>:	add    $0x1,%sil
+   0x000000000048a8fd <+1693>:	mov    %sil,%dil
+   0x000000000048a900 <+1696>:	sub    $0x1,%dil
+   0x000000000048a904 <+1700>:	adc    $0x0,%sil
+   0x000000000048a908 <+1704>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a90c <+1708>:	movl   $0x1489,%fs:(%rax)
+   0x000000000048a913 <+1715>:	jmp    0x48a99d <use_key+1853>
+
+163				revalidated_cached_pin = 1;
+   0x000000000048a918 <+1720>:	mov    0x4196d1(%rip),%rax        # 0x8a3ff0
+   0x000000000048a91f <+1727>:	movslq %fs:(%rax),%rdx
+   0x000000000048a923 <+1731>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a92a <+1738>:	mov    (%rcx),%rcx
+   0x000000000048a92d <+1741>:	xor    $0x84d1,%rdx
+   0x000000000048a934 <+1748>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a938 <+1752>:	add    $0x1,%sil
+   0x000000000048a93c <+1756>:	mov    %sil,%dil
+   0x000000000048a93f <+1759>:	sub    $0x1,%dil
+   0x000000000048a943 <+1763>:	adc    $0x0,%sil
+   0x000000000048a947 <+1767>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a94b <+1771>:	movl   $0x4268,%fs:(%rax)
+   0x000000000048a952 <+1778>:	movl   $0x1,-0x48(%rbp)
+
+164			}
+165		} while (revalidated_cached_pin);
+   0x000000000048a959 <+1785>:	mov    0x419690(%rip),%rax        # 0x8a3ff0
+   0x000000000048a960 <+1792>:	movslq %fs:(%rax),%rdx
+   0x000000000048a964 <+1796>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a96b <+1803>:	mov    (%rcx),%rcx
+   0x000000000048a96e <+1806>:	xor    $0xe5ed,%rdx
+   0x000000000048a975 <+1813>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a979 <+1817>:	add    $0x1,%sil
+   0x000000000048a97d <+1821>:	mov    %sil,%dil
+   0x000000000048a980 <+1824>:	sub    $0x1,%dil
+   0x000000000048a984 <+1828>:	adc    $0x0,%sil
+   0x000000000048a988 <+1832>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a98c <+1836>:	movl   $0x72f6,%fs:(%rax)
+   0x000000000048a993 <+1843>:	cmpl   $0x0,-0x48(%rbp)
+   0x000000000048a997 <+1847>:	jne    0x48a4fb <use_key+667>
+
+166	
+167		sc_unlock(p15card->card);
+   0x000000000048a99d <+1853>:	mov    0x41964c(%rip),%rax        # 0x8a3ff0
+   0x000000000048a9a4 <+1860>:	movslq %fs:(%rax),%rdx
+   0x000000000048a9a8 <+1864>:	mov    $0x8ac0c0,%rcx
+   0x000000000048a9af <+1871>:	mov    (%rcx),%rcx
+   0x000000000048a9b2 <+1874>:	xor    $0xf66e,%rdx
+   0x000000000048a9b9 <+1881>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048a9bd <+1885>:	add    $0x1,%sil
+   0x000000000048a9c1 <+1889>:	mov    %sil,%dil
+   0x000000000048a9c4 <+1892>:	sub    $0x1,%dil
+   0x000000000048a9c8 <+1896>:	adc    $0x0,%sil
+   0x000000000048a9cc <+1900>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048a9d0 <+1904>:	movl   $0x7b37,%fs:(%rax)
+   0x000000000048a9d7 <+1911>:	mov    -0x18(%rbp),%rax
+   0x000000000048a9db <+1915>:	mov    (%rax),%rdi
+   0x000000000048a9de <+1918>:	call   0x43b5f0 <sc_unlock>
+
+168	
+169		LOG_FUNC_RETURN(p15card->card->ctx, r);
+   0x000000000048a9e3 <+1923>:	mov    -0x44(%rbp),%eax
+   0x000000000048a9e6 <+1926>:	mov    %eax,-0x94(%rbp)
+   0x000000000048a9ec <+1932>:	cmpl   $0x0,-0x94(%rbp)
+   0x000000000048a9f3 <+1939>:	jg     0x48aacb <use_key+2155>
+   0x000000000048a9f9 <+1945>:	mov    0x4195f0(%rip),%rax        # 0x8a3ff0
+   0x000000000048aa00 <+1952>:	movslq %fs:(%rax),%rdx
+   0x000000000048aa04 <+1956>:	mov    $0x8ac0c0,%rcx
+   0x000000000048aa0b <+1963>:	mov    (%rcx),%rcx
+   0x000000000048aa0e <+1966>:	xor    $0xdda0,%rdx
+   0x000000000048aa15 <+1973>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048aa19 <+1977>:	add    $0x1,%sil
+   0x000000000048aa1d <+1981>:	mov    %sil,%dil
+   0x000000000048aa20 <+1984>:	sub    $0x1,%dil
+   0x000000000048aa24 <+1988>:	adc    $0x0,%sil
+   0x000000000048aa28 <+1992>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048aa2c <+1996>:	movl   $0x6ed0,%fs:(%rax)
+   0x000000000048aa33 <+2003>:	mov    -0x18(%rbp),%rax
+   0x000000000048aa37 <+2007>:	mov    (%rax),%rax
+   0x000000000048aa3a <+2010>:	mov    (%rax),%rax
+   0x000000000048aa3d <+2013>:	mov    %rax,-0xc0(%rbp)
+   0x000000000048aa44 <+2020>:	mov    -0x94(%rbp),%edx
+   0x000000000048aa4a <+2026>:	xor    %eax,%eax
+   0x000000000048aa4c <+2028>:	mov    $0x1,%ecx
+   0x000000000048aa51 <+2033>:	cmp    $0x0,%edx
+   0x000000000048aa54 <+2036>:	cmovne %ecx,%eax
+   0x000000000048aa57 <+2039>:	mov    %eax,-0xb8(%rbp)
+   0x000000000048aa5d <+2045>:	mov    -0x94(%rbp),%eax
+   0x000000000048aa63 <+2051>:	mov    %eax,-0xb4(%rbp)
+   0x000000000048aa69 <+2057>:	mov    -0x94(%rbp),%edi
+   0x000000000048aa6f <+2063>:	call   0x422880 <sc_strerror>
+   0x000000000048aa74 <+2068>:	mov    -0xc0(%rbp),%rdi
+   0x000000000048aa7b <+2075>:	mov    -0xb8(%rbp),%r9d
+   0x000000000048aa82 <+2082>:	mov    -0xb4(%rbp),%r10d
+   0x000000000048aa89 <+2089>:	mov    $0x3,%esi
+   0x000000000048aa8e <+2094>:	movabs $0x84bcfb,%rdx
+   0x000000000048aa98 <+2104>:	mov    $0xa9,%ecx
+   0x000000000048aa9d <+2109>:	movabs $0x84c236,%r8
+   0x000000000048aaa7 <+2119>:	movabs $0x843782,%r11
+   0x000000000048aab1 <+2129>:	mov    %r11,(%rsp)
+   0x000000000048aab5 <+2133>:	mov    %r10d,0x8(%rsp)
+   0x000000000048aaba <+2138>:	mov    %rax,0x10(%rsp)
+   0x000000000048aabf <+2143>:	mov    $0x0,%al
+   0x000000000048aac1 <+2145>:	call   0x420890 <sc_do_log_color>
+   0x000000000048aac6 <+2150>:	jmp    0x48ab47 <use_key+2279>
+   0x000000000048aacb <+2155>:	mov    0x41951e(%rip),%rax        # 0x8a3ff0
+   0x000000000048aad2 <+2162>:	movslq %fs:(%rax),%rdx
+   0x000000000048aad6 <+2166>:	mov    $0x8ac0c0,%rcx
+   0x000000000048aadd <+2173>:	mov    (%rcx),%rcx
+   0x000000000048aae0 <+2176>:	xor    $0xddf2,%rdx
+   0x000000000048aae7 <+2183>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000048aaeb <+2187>:	add    $0x1,%sil
+   0x000000000048aaef <+2191>:	mov    %sil,%dil
+   0x000000000048aaf2 <+2194>:	sub    $0x1,%dil
+   0x000000000048aaf6 <+2198>:	adc    $0x0,%sil
+   0x000000000048aafa <+2202>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000048aafe <+2206>:	movl   $0x6ef9,%fs:(%rax)
+   0x000000000048ab05 <+2213>:	mov    -0x18(%rbp),%rax
+   0x000000000048ab09 <+2217>:	mov    (%rax),%rax
+   0x000000000048ab0c <+2220>:	mov    (%rax),%rdi
+   0x000000000048ab0f <+2223>:	mov    -0x94(%rbp),%eax
+   0x000000000048ab15 <+2229>:	mov    $0x3,%esi
+   0x000000000048ab1a <+2234>:	movabs $0x84bcfb,%rdx
+   0x000000000048ab24 <+2244>:	mov    $0xa9,%ecx
+   0x000000000048ab29 <+2249>:	movabs $0x84c236,%r8
+   0x000000000048ab33 <+2259>:	movabs $0x84379b,%r9
+   0x000000000048ab3d <+2269>:	mov    %eax,(%rsp)
+   0x000000000048ab40 <+2272>:	mov    $0x0,%al
+   0x000000000048ab42 <+2274>:	call   0x420210 <sc_do_log>
+   0x000000000048ab47 <+2279>:	mov    -0x94(%rbp),%eax
+   0x000000000048ab4d <+2285>:	mov    %eax,-0xc(%rbp)
+
+170	}
+   0x000000000048ab50 <+2288>:	mov    -0xc(%rbp),%eax
+   0x000000000048ab53 <+2291>:	add    $0xd8,%rsp
+   0x000000000048ab5a <+2298>:	pop    %rbx
+   0x000000000048ab5b <+2299>:	pop    %rbp
+   0x000000000048ab5c <+2300>:	ret
+End of assembler dump.

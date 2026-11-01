@@ -1,0 +1,1127 @@
+Line 215 of "../../../src/tools/pkcs15-crypt.c" starts at address 0x409440 <sign> and ends at 0x40944f <sign+15>.
+Dump of assembler code for function sign:
+../../../src/tools/pkcs15-crypt.c:
+215	{
+   0x0000000000409440 <+0>:	push   %rbp
+   0x0000000000409441 <+1>:	mov    %rsp,%rbp
+   0x0000000000409444 <+4>:	sub    $0x850,%rsp
+   0x000000000040944b <+11>:	mov    %rdi,-0x10(%rbp)
+
+216		u8 buf[1024], out[1024];
+217		struct sc_pkcs15_prkey_info *key = (struct sc_pkcs15_prkey_info *) obj->data;
+   0x000000000040944f <+15>:	mov    -0x10(%rbp),%rax
+   0x0000000000409453 <+19>:	mov    0xa98(%rax),%rax
+   0x000000000040945a <+26>:	mov    %rax,-0x818(%rbp)
+
+218		int r, c, len;
+219	
+220		if (opt_input == NULL) {
+   0x0000000000409461 <+33>:	cmpq   $0x0,0x8ac168
+   0x000000000040946a <+42>:	jne    0x4094c3 <sign+131>
+
+221			fprintf(stderr, "No input file specified. Reading from stdin\n");
+   0x0000000000409470 <+48>:	mov    0x49ab79(%rip),%rax        # 0x8a3ff0
+   0x0000000000409477 <+55>:	movslq %fs:(%rax),%rdx
+   0x000000000040947b <+59>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409482 <+66>:	mov    (%rcx),%rcx
+   0x0000000000409485 <+69>:	xor    $0x7cf1,%rdx
+   0x000000000040948c <+76>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409490 <+80>:	add    $0x1,%sil
+   0x0000000000409494 <+84>:	mov    %sil,%dil
+   0x0000000000409497 <+87>:	sub    $0x1,%dil
+   0x000000000040949b <+91>:	adc    $0x0,%sil
+   0x000000000040949f <+95>:	mov    %sil,(%rcx,%rdx,1)
+   0x00000000004094a3 <+99>:	movl   $0x3e78,%fs:(%rax)
+   0x00000000004094aa <+106>:	mov    0x8ac148,%rdi
+   0x00000000004094b2 <+114>:	movabs $0x842ddb,%rsi
+   0x00000000004094bc <+124>:	mov    $0x0,%al
+   0x00000000004094be <+126>:	call   0x406f20 <fprintf@plt>
+
+222		}
+223	
+224		c = read_input(buf, sizeof(buf));
+   0x00000000004094c3 <+131>:	mov    0x49ab26(%rip),%rax        # 0x8a3ff0
+   0x00000000004094ca <+138>:	movslq %fs:(%rax),%rdx
+   0x00000000004094ce <+142>:	mov    $0x8ac0c0,%rcx
+   0x00000000004094d5 <+149>:	mov    (%rcx),%rcx
+   0x00000000004094d8 <+152>:	xor    $0x25be,%rdx
+   0x00000000004094df <+159>:	mov    (%rcx,%rdx,1),%sil
+   0x00000000004094e3 <+163>:	add    $0x1,%sil
+   0x00000000004094e7 <+167>:	mov    %sil,%dil
+   0x00000000004094ea <+170>:	sub    $0x1,%dil
+   0x00000000004094ee <+174>:	adc    $0x0,%sil
+   0x00000000004094f2 <+178>:	mov    %sil,(%rcx,%rdx,1)
+   0x00000000004094f6 <+182>:	movl   $0x12df,%fs:(%rax)
+   0x00000000004094fd <+189>:	lea    -0x410(%rbp),%rdi
+   0x0000000000409504 <+196>:	mov    $0x400,%esi
+   0x0000000000409509 <+201>:	call   0x40af30 <read_input>
+   0x000000000040950e <+206>:	mov    %eax,-0x820(%rbp)
+
+225		if (c < 0)
+   0x0000000000409514 <+212>:	cmpl   $0x0,-0x820(%rbp)
+   0x000000000040951b <+219>:	jge    0x409567 <sign+295>
+
+226			return 2;
+   0x0000000000409521 <+225>:	mov    0x49aac8(%rip),%rax        # 0x8a3ff0
+   0x0000000000409528 <+232>:	movslq %fs:(%rax),%rdx
+   0x000000000040952c <+236>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409533 <+243>:	mov    (%rcx),%rcx
+   0x0000000000409536 <+246>:	xor    $0x1f99,%rdx
+   0x000000000040953d <+253>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409541 <+257>:	add    $0x1,%sil
+   0x0000000000409545 <+261>:	mov    %sil,%dil
+   0x0000000000409548 <+264>:	sub    $0x1,%dil
+   0x000000000040954c <+268>:	adc    $0x0,%sil
+   0x0000000000409550 <+272>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409554 <+276>:	movl   $0xfcc,%fs:(%rax)
+   0x000000000040955b <+283>:	movl   $0x2,-0x4(%rbp)
+   0x0000000000409562 <+290>:	jmp    0x409ba5 <sign+1893>
+
+227		len = sizeof(out);
+   0x0000000000409567 <+295>:	mov    0x49aa82(%rip),%rax        # 0x8a3ff0
+   0x000000000040956e <+302>:	movslq %fs:(%rax),%rdx
+   0x0000000000409572 <+306>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409579 <+313>:	mov    (%rcx),%rcx
+   0x000000000040957c <+316>:	xor    $0xf524,%rdx
+   0x0000000000409583 <+323>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409587 <+327>:	add    $0x1,%sil
+   0x000000000040958b <+331>:	mov    %sil,%dil
+   0x000000000040958e <+334>:	sub    $0x1,%dil
+   0x0000000000409592 <+338>:	adc    $0x0,%sil
+   0x0000000000409596 <+342>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000040959a <+346>:	movl   $0x7a92,%fs:(%rax)
+   0x00000000004095a1 <+353>:	movl   $0x400,-0x824(%rbp)
+
+228		if (obj->type == SC_PKCS15_TYPE_PRKEY_RSA
+   0x00000000004095ab <+363>:	mov    -0x10(%rbp),%rax
+   0x00000000004095af <+367>:	cmpl   $0x101,(%rax)
+
+229				&& !(opt_crypt_flags & SC_ALGORITHM_RSA_PAD_PKCS1)
+   0x00000000004095b5 <+373>:	jne    0x4096d5 <sign+661>
+   0x00000000004095bb <+379>:	mov    0x49aa2e(%rip),%rax        # 0x8a3ff0
+   0x00000000004095c2 <+386>:	movslq %fs:(%rax),%rdx
+   0x00000000004095c6 <+390>:	mov    $0x8ac0c0,%rcx
+   0x00000000004095cd <+397>:	mov    (%rcx),%rcx
+   0x00000000004095d0 <+400>:	xor    $0x6667,%rdx
+   0x00000000004095d7 <+407>:	mov    (%rcx,%rdx,1),%sil
+   0x00000000004095db <+411>:	add    $0x1,%sil
+   0x00000000004095df <+415>:	mov    %sil,%dil
+   0x00000000004095e2 <+418>:	sub    $0x1,%dil
+   0x00000000004095e6 <+422>:	adc    $0x0,%sil
+   0x00000000004095ea <+426>:	mov    %sil,(%rcx,%rdx,1)
+   0x00000000004095ee <+430>:	movl   $0x3333,%fs:(%rax)
+   0x00000000004095f5 <+437>:	mov    0x8ac184,%eax
+   0x00000000004095fc <+444>:	and    $0x2,%eax
+   0x00000000004095ff <+447>:	cmp    $0x0,%eax
+
+230				&& (size_t)c != key->modulus_length/8) {
+   0x0000000000409602 <+450>:	jne    0x4096d5 <sign+661>
+   0x0000000000409608 <+456>:	mov    0x49a9e1(%rip),%rax        # 0x8a3ff0
+   0x000000000040960f <+463>:	movslq %fs:(%rax),%rdx
+   0x0000000000409613 <+467>:	mov    $0x8ac0c0,%rcx
+   0x000000000040961a <+474>:	mov    (%rcx),%rcx
+   0x000000000040961d <+477>:	xor    $0xe466,%rdx
+   0x0000000000409624 <+484>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409628 <+488>:	add    $0x1,%sil
+   0x000000000040962c <+492>:	mov    %sil,%dil
+   0x000000000040962f <+495>:	sub    $0x1,%dil
+   0x0000000000409633 <+499>:	adc    $0x0,%sil
+   0x0000000000409637 <+503>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000040963b <+507>:	movl   $0x7233,%fs:(%rax)
+   0x0000000000409642 <+514>:	movslq -0x820(%rbp),%rax
+   0x0000000000409649 <+521>:	mov    -0x818(%rbp),%rcx
+   0x0000000000409650 <+528>:	mov    0x118(%rcx),%rcx
+   0x0000000000409657 <+535>:	shr    $0x3,%rcx
+   0x000000000040965b <+539>:	cmp    %rcx,%rax
+
+228		if (obj->type == SC_PKCS15_TYPE_PRKEY_RSA
+   0x000000000040965e <+542>:	je     0x4096d5 <sign+661>
+
+231			fprintf(stderr, "Input has to be exactly %lu bytes, when using no padding.\n",
+   0x0000000000409664 <+548>:	mov    0x49a985(%rip),%rax        # 0x8a3ff0
+   0x000000000040966b <+555>:	movslq %fs:(%rax),%rdx
+   0x000000000040966f <+559>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409676 <+566>:	mov    (%rcx),%rcx
+   0x0000000000409679 <+569>:	xor    $0x3e8c,%rdx
+   0x0000000000409680 <+576>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409684 <+580>:	add    $0x1,%sil
+   0x0000000000409688 <+584>:	mov    %sil,%dil
+   0x000000000040968b <+587>:	sub    $0x1,%dil
+   0x000000000040968f <+591>:	adc    $0x0,%sil
+   0x0000000000409693 <+595>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409697 <+599>:	movl   $0x1f46,%fs:(%rax)
+   0x000000000040969e <+606>:	mov    0x8ac148,%rdi
+
+232				(unsigned long) key->modulus_length/8);
+   0x00000000004096a6 <+614>:	mov    -0x818(%rbp),%rax
+   0x00000000004096ad <+621>:	mov    0x118(%rax),%rdx
+   0x00000000004096b4 <+628>:	shr    $0x3,%rdx
+
+231			fprintf(stderr, "Input has to be exactly %lu bytes, when using no padding.\n",
+   0x00000000004096b8 <+632>:	movabs $0x842ea5,%rsi
+   0x00000000004096c2 <+642>:	mov    $0x0,%al
+   0x00000000004096c4 <+644>:	call   0x406f20 <fprintf@plt>
+
+233			return 2;
+   0x00000000004096c9 <+649>:	movl   $0x2,-0x4(%rbp)
+   0x00000000004096d0 <+656>:	jmp    0x409ba5 <sign+1893>
+
+234		}
+235		if (!key->native) {
+   0x00000000004096d5 <+661>:	mov    0x49a914(%rip),%rax        # 0x8a3ff0
+   0x00000000004096dc <+668>:	movslq %fs:(%rax),%rdx
+   0x00000000004096e0 <+672>:	mov    $0x8ac0c0,%rcx
+   0x00000000004096e7 <+679>:	mov    (%rcx),%rcx
+   0x00000000004096ea <+682>:	xor    $0x5e37,%rdx
+   0x00000000004096f1 <+689>:	mov    (%rcx,%rdx,1),%sil
+   0x00000000004096f5 <+693>:	add    $0x1,%sil
+   0x00000000004096f9 <+697>:	mov    %sil,%dil
+   0x00000000004096fc <+700>:	sub    $0x1,%dil
+   0x0000000000409700 <+704>:	adc    $0x0,%sil
+   0x0000000000409704 <+708>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409708 <+712>:	movl   $0x2f1b,%fs:(%rax)
+   0x000000000040970f <+719>:	mov    -0x818(%rbp),%rax
+   0x0000000000409716 <+726>:	cmpl   $0x0,0x110(%rax)
+   0x000000000040971d <+733>:	jne    0x409782 <sign+834>
+
+236			fprintf(stderr, "Deprecated non-native key detected! Upgrade your smart cards.\n");
+   0x0000000000409723 <+739>:	mov    0x49a8c6(%rip),%rax        # 0x8a3ff0
+   0x000000000040972a <+746>:	movslq %fs:(%rax),%rdx
+   0x000000000040972e <+750>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409735 <+757>:	mov    (%rcx),%rcx
+   0x0000000000409738 <+760>:	xor    $0x6aef,%rdx
+   0x000000000040973f <+767>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409743 <+771>:	add    $0x1,%sil
+   0x0000000000409747 <+775>:	mov    %sil,%dil
+   0x000000000040974a <+778>:	sub    $0x1,%dil
+   0x000000000040974e <+782>:	adc    $0x0,%sil
+   0x0000000000409752 <+786>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409756 <+790>:	movl   $0x3577,%fs:(%rax)
+   0x000000000040975d <+797>:	mov    0x8ac148,%rdi
+   0x0000000000409765 <+805>:	movabs $0x842e08,%rsi
+   0x000000000040976f <+815>:	mov    $0x0,%al
+   0x0000000000409771 <+817>:	call   0x406f20 <fprintf@plt>
+
+237			return SC_ERROR_NOT_SUPPORTED;
+   0x0000000000409776 <+822>:	movl   $0xfffffa80,-0x4(%rbp)
+   0x000000000040977d <+829>:	jmp    0x409ba5 <sign+1893>
+
+238		}
+239	
+240		r = sc_pkcs15_compute_signature(p15card, obj, opt_crypt_flags, buf, c, out, len, NULL);
+   0x0000000000409782 <+834>:	mov    0x49a867(%rip),%rax        # 0x8a3ff0
+   0x0000000000409789 <+841>:	movslq %fs:(%rax),%rdx
+   0x000000000040978d <+845>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409794 <+852>:	mov    (%rcx),%rcx
+   0x0000000000409797 <+855>:	xor    $0x92e1,%rdx
+   0x000000000040979e <+862>:	mov    (%rcx,%rdx,1),%sil
+   0x00000000004097a2 <+866>:	add    $0x1,%sil
+   0x00000000004097a6 <+870>:	mov    %sil,%dil
+   0x00000000004097a9 <+873>:	sub    $0x1,%dil
+   0x00000000004097ad <+877>:	adc    $0x0,%sil
+   0x00000000004097b1 <+881>:	mov    %sil,(%rcx,%rdx,1)
+   0x00000000004097b5 <+885>:	movl   $0x4970,%fs:(%rax)
+   0x00000000004097bc <+892>:	mov    0x8ac1b8,%rdi
+   0x00000000004097c4 <+900>:	mov    -0x10(%rbp),%rsi
+   0x00000000004097c8 <+904>:	movslq 0x8ac184,%rdx
+   0x00000000004097d0 <+912>:	lea    -0x410(%rbp),%rcx
+   0x00000000004097d7 <+919>:	movslq -0x820(%rbp),%r8
+   0x00000000004097de <+926>:	lea    -0x810(%rbp),%r9
+   0x00000000004097e5 <+933>:	movslq -0x824(%rbp),%rax
+   0x00000000004097ec <+940>:	xor    %r10d,%r10d
+   0x00000000004097ef <+943>:	mov    %rax,(%rsp)
+   0x00000000004097f3 <+947>:	movq   $0x0,0x8(%rsp)
+   0x00000000004097fc <+956>:	call   0x48e5e0 <sc_pkcs15_compute_signature>
+   0x0000000000409801 <+961>:	mov    %eax,-0x81c(%rbp)
+
+241		if (r < 0) {
+   0x0000000000409807 <+967>:	cmpl   $0x0,-0x81c(%rbp)
+   0x000000000040980e <+974>:	jge    0x40988f <sign+1103>
+
+242			fprintf(stderr, "Compute signature failed: %s\n", sc_strerror(r));
+   0x0000000000409814 <+980>:	mov    0x49a7d5(%rip),%rax        # 0x8a3ff0
+   0x000000000040981b <+987>:	movslq %fs:(%rax),%rdx
+   0x000000000040981f <+991>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409826 <+998>:	mov    (%rcx),%rcx
+   0x0000000000409829 <+1001>:	xor    $0xc4bf,%rdx
+   0x0000000000409830 <+1008>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409834 <+1012>:	add    $0x1,%sil
+   0x0000000000409838 <+1016>:	mov    %sil,%dil
+   0x000000000040983b <+1019>:	sub    $0x1,%dil
+   0x000000000040983f <+1023>:	adc    $0x0,%sil
+   0x0000000000409843 <+1027>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409847 <+1031>:	movl   $0x625f,%fs:(%rax)
+   0x000000000040984e <+1038>:	mov    0x8ac148,%rax
+   0x0000000000409856 <+1046>:	mov    %rax,-0x840(%rbp)
+   0x000000000040985d <+1053>:	mov    -0x81c(%rbp),%edi
+   0x0000000000409863 <+1059>:	call   0x422880 <sc_strerror>
+   0x0000000000409868 <+1064>:	mov    -0x840(%rbp),%rdi
+   0x000000000040986f <+1071>:	mov    %rax,%rdx
+   0x0000000000409872 <+1074>:	movabs $0x842ee0,%rsi
+   0x000000000040987c <+1084>:	mov    $0x0,%al
+   0x000000000040987e <+1086>:	call   0x406f20 <fprintf@plt>
+
+243			return 1;
+   0x0000000000409883 <+1091>:	movl   $0x1,-0x4(%rbp)
+   0x000000000040988a <+1098>:	jmp    0x409ba5 <sign+1893>
+
+244		}
+245		len = r;
+   0x000000000040988f <+1103>:	mov    0x49a75a(%rip),%rax        # 0x8a3ff0
+   0x0000000000409896 <+1110>:	movslq %fs:(%rax),%rdx
+   0x000000000040989a <+1114>:	mov    $0x8ac0c0,%rcx
+   0x00000000004098a1 <+1121>:	mov    (%rcx),%rcx
+   0x00000000004098a4 <+1124>:	xor    $0xe749,%rdx
+   0x00000000004098ab <+1131>:	mov    (%rcx,%rdx,1),%sil
+   0x00000000004098af <+1135>:	add    $0x1,%sil
+   0x00000000004098b3 <+1139>:	mov    %sil,%dil
+   0x00000000004098b6 <+1142>:	sub    $0x1,%dil
+   0x00000000004098ba <+1146>:	adc    $0x0,%sil
+   0x00000000004098be <+1150>:	mov    %sil,(%rcx,%rdx,1)
+   0x00000000004098c2 <+1154>:	movl   $0x73a4,%fs:(%rax)
+   0x00000000004098c9 <+1161>:	mov    -0x81c(%rbp),%eax
+   0x00000000004098cf <+1167>:	mov    %eax,-0x824(%rbp)
+
+246	
+247		if (obj->type == SC_PKCS15_TYPE_PRKEY_EC)   {
+   0x00000000004098d5 <+1173>:	mov    -0x10(%rbp),%rax
+   0x00000000004098d9 <+1177>:	cmpl   $0x104,(%rax)
+   0x00000000004098df <+1183>:	jne    0x409b4a <sign+1802>
+
+248			if (opt_sig_format &&  (!strcmp(opt_sig_format, "openssl") || !strcmp(opt_sig_format, "sequence")))   {
+   0x00000000004098e5 <+1189>:	mov    0x49a704(%rip),%rax        # 0x8a3ff0
+   0x00000000004098ec <+1196>:	movslq %fs:(%rax),%rdx
+   0x00000000004098f0 <+1200>:	mov    $0x8ac0c0,%rcx
+   0x00000000004098f7 <+1207>:	mov    (%rcx),%rcx
+   0x00000000004098fa <+1210>:	xor    $0xa454,%rdx
+   0x0000000000409901 <+1217>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409905 <+1221>:	add    $0x1,%sil
+   0x0000000000409909 <+1225>:	mov    %sil,%dil
+   0x000000000040990c <+1228>:	sub    $0x1,%dil
+   0x0000000000409910 <+1232>:	adc    $0x0,%sil
+   0x0000000000409914 <+1236>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409918 <+1240>:	movl   $0x522a,%fs:(%rax)
+   0x000000000040991f <+1247>:	cmpq   $0x0,0x8ac178
+   0x0000000000409928 <+1256>:	je     0x409b10 <sign+1744>
+   0x000000000040992e <+1262>:	mov    0x49a6bb(%rip),%rax        # 0x8a3ff0
+   0x0000000000409935 <+1269>:	movslq %fs:(%rax),%rdx
+   0x0000000000409939 <+1273>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409940 <+1280>:	mov    (%rcx),%rcx
+   0x0000000000409943 <+1283>:	xor    $0xcfa4,%rdx
+   0x000000000040994a <+1290>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000040994e <+1294>:	add    $0x1,%sil
+   0x0000000000409952 <+1298>:	mov    %sil,%dil
+   0x0000000000409955 <+1301>:	sub    $0x1,%dil
+   0x0000000000409959 <+1305>:	adc    $0x0,%sil
+   0x000000000040995d <+1309>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409961 <+1313>:	movl   $0x67d2,%fs:(%rax)
+   0x0000000000409968 <+1320>:	mov    0x8ac178,%rdi
+   0x0000000000409970 <+1328>:	mov    $0x8429e5,%esi
+   0x0000000000409975 <+1333>:	call   0x406bd0 <strcmp@plt>
+   0x000000000040997a <+1338>:	cmp    $0x0,%eax
+   0x000000000040997d <+1341>:	je     0x4099d8 <sign+1432>
+   0x0000000000409983 <+1347>:	mov    0x49a666(%rip),%rax        # 0x8a3ff0
+   0x000000000040998a <+1354>:	movslq %fs:(%rax),%rdx
+   0x000000000040998e <+1358>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409995 <+1365>:	mov    (%rcx),%rcx
+   0x0000000000409998 <+1368>:	xor    $0x85f1,%rdx
+   0x000000000040999f <+1375>:	mov    (%rcx,%rdx,1),%sil
+   0x00000000004099a3 <+1379>:	add    $0x1,%sil
+   0x00000000004099a7 <+1383>:	mov    %sil,%dil
+   0x00000000004099aa <+1386>:	sub    $0x1,%dil
+   0x00000000004099ae <+1390>:	adc    $0x0,%sil
+   0x00000000004099b2 <+1394>:	mov    %sil,(%rcx,%rdx,1)
+   0x00000000004099b6 <+1398>:	movl   $0x42f8,%fs:(%rax)
+   0x00000000004099bd <+1405>:	mov    0x8ac178,%rdi
+   0x00000000004099c5 <+1413>:	mov    $0x85298e,%esi
+   0x00000000004099ca <+1418>:	call   0x406bd0 <strcmp@plt>
+   0x00000000004099cf <+1423>:	cmp    $0x0,%eax
+   0x00000000004099d2 <+1426>:	jne    0x409b10 <sign+1744>
+
+249				unsigned char *seq;
+   0x00000000004099d8 <+1432>:	mov    0x49a611(%rip),%rax        # 0x8a3ff0
+   0x00000000004099df <+1439>:	movslq %fs:(%rax),%rdx
+   0x00000000004099e3 <+1443>:	mov    $0x8ac0c0,%rcx
+   0x00000000004099ea <+1450>:	mov    (%rcx),%rcx
+   0x00000000004099ed <+1453>:	xor    $0xdac9,%rdx
+   0x00000000004099f4 <+1460>:	mov    (%rcx,%rdx,1),%sil
+   0x00000000004099f8 <+1464>:	add    $0x1,%sil
+   0x00000000004099fc <+1468>:	mov    %sil,%dil
+   0x00000000004099ff <+1471>:	sub    $0x1,%dil
+   0x0000000000409a03 <+1475>:	adc    $0x0,%sil
+   0x0000000000409a07 <+1479>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409a0b <+1483>:	movl   $0x6d64,%fs:(%rax)
+
+250				size_t seqlen;
+251	
+252				if (sc_asn1_sig_value_rs_to_sequence(ctx, out, len, &seq, &seqlen))   {
+   0x0000000000409a12 <+1490>:	mov    0x8ac1a8,%rdi
+   0x0000000000409a1a <+1498>:	lea    -0x810(%rbp),%rsi
+   0x0000000000409a21 <+1505>:	movslq -0x824(%rbp),%rdx
+   0x0000000000409a28 <+1512>:	lea    -0x830(%rbp),%rcx
+   0x0000000000409a2f <+1519>:	lea    -0x838(%rbp),%r8
+   0x0000000000409a36 <+1526>:	call   0x42b460 <sc_asn1_sig_value_rs_to_sequence>
+   0x0000000000409a3b <+1531>:	cmp    $0x0,%eax
+   0x0000000000409a3e <+1534>:	je     0x409aa3 <sign+1635>
+
+253					fprintf(stderr, "Failed to convert signature to ASN1 sequence format.\n");
+   0x0000000000409a44 <+1540>:	mov    0x49a5a5(%rip),%rax        # 0x8a3ff0
+   0x0000000000409a4b <+1547>:	movslq %fs:(%rax),%rdx
+   0x0000000000409a4f <+1551>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409a56 <+1558>:	mov    (%rcx),%rcx
+   0x0000000000409a59 <+1561>:	xor    $0x2d93,%rdx
+   0x0000000000409a60 <+1568>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409a64 <+1572>:	add    $0x1,%sil
+   0x0000000000409a68 <+1576>:	mov    %sil,%dil
+   0x0000000000409a6b <+1579>:	sub    $0x1,%dil
+   0x0000000000409a6f <+1583>:	adc    $0x0,%sil
+   0x0000000000409a73 <+1587>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409a77 <+1591>:	movl   $0x16c9,%fs:(%rax)
+   0x0000000000409a7e <+1598>:	mov    0x8ac148,%rdi
+   0x0000000000409a86 <+1606>:	movabs $0x842efe,%rsi
+   0x0000000000409a90 <+1616>:	mov    $0x0,%al
+   0x0000000000409a92 <+1618>:	call   0x406f20 <fprintf@plt>
+
+254					return 2;
+   0x0000000000409a97 <+1623>:	movl   $0x2,-0x4(%rbp)
+   0x0000000000409a9e <+1630>:	jmp    0x409ba5 <sign+1893>
+
+255				}
+256	
+257				memcpy(out, seq, seqlen);
+   0x0000000000409aa3 <+1635>:	mov    0x49a546(%rip),%rax        # 0x8a3ff0
+   0x0000000000409aaa <+1642>:	movslq %fs:(%rax),%rdx
+   0x0000000000409aae <+1646>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409ab5 <+1653>:	mov    (%rcx),%rcx
+   0x0000000000409ab8 <+1656>:	xor    $0xb42b,%rdx
+   0x0000000000409abf <+1663>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409ac3 <+1667>:	add    $0x1,%sil
+   0x0000000000409ac7 <+1671>:	mov    %sil,%dil
+   0x0000000000409aca <+1674>:	sub    $0x1,%dil
+   0x0000000000409ace <+1678>:	adc    $0x0,%sil
+   0x0000000000409ad2 <+1682>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409ad6 <+1686>:	movl   $0x5a15,%fs:(%rax)
+   0x0000000000409add <+1693>:	lea    -0x810(%rbp),%rdi
+   0x0000000000409ae4 <+1700>:	mov    -0x830(%rbp),%rsi
+   0x0000000000409aeb <+1707>:	mov    -0x838(%rbp),%rdx
+   0x0000000000409af2 <+1714>:	call   0x406fd0 <memcpy@plt>
+
+258				len = seqlen;
+   0x0000000000409af7 <+1719>:	mov    -0x838(%rbp),%rax
+   0x0000000000409afe <+1726>:	mov    %eax,-0x824(%rbp)
+
+259	
+260				free(seq);
+   0x0000000000409b04 <+1732>:	mov    -0x830(%rbp),%rdi
+   0x0000000000409b0b <+1739>:	call   0x406590 <free@plt>
+
+261			}
+262		}
+   0x0000000000409b10 <+1744>:	mov    0x49a4d9(%rip),%rax        # 0x8a3ff0
+   0x0000000000409b17 <+1751>:	movslq %fs:(%rax),%rdx
+   0x0000000000409b1b <+1755>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409b22 <+1762>:	mov    (%rcx),%rcx
+   0x0000000000409b25 <+1765>:	xor    $0x4b77,%rdx
+   0x0000000000409b2c <+1772>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409b30 <+1776>:	add    $0x1,%sil
+   0x0000000000409b34 <+1780>:	mov    %sil,%dil
+   0x0000000000409b37 <+1783>:	sub    $0x1,%dil
+   0x0000000000409b3b <+1787>:	adc    $0x0,%sil
+   0x0000000000409b3f <+1791>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409b43 <+1795>:	movl   $0x25bb,%fs:(%rax)
+
+263	
+264		r = write_output(out, len);
+   0x0000000000409b4a <+1802>:	mov    0x49a49f(%rip),%rax        # 0x8a3ff0
+   0x0000000000409b51 <+1809>:	movslq %fs:(%rax),%rdx
+   0x0000000000409b55 <+1813>:	mov    $0x8ac0c0,%rcx
+   0x0000000000409b5c <+1820>:	mov    (%rcx),%rcx
+   0x0000000000409b5f <+1823>:	xor    $0x84cd,%rdx
+   0x0000000000409b66 <+1830>:	mov    (%rcx,%rdx,1),%sil
+   0x0000000000409b6a <+1834>:	add    $0x1,%sil
+   0x0000000000409b6e <+1838>:	mov    %sil,%dil
+   0x0000000000409b71 <+1841>:	sub    $0x1,%dil
+   0x0000000000409b75 <+1845>:	adc    $0x0,%sil
+   0x0000000000409b79 <+1849>:	mov    %sil,(%rcx,%rdx,1)
+   0x0000000000409b7d <+1853>:	movl   $0x4266,%fs:(%rax)
+   0x0000000000409b84 <+1860>:	lea    -0x810(%rbp),%rdi
+   0x0000000000409b8b <+1867>:	mov    -0x824(%rbp),%esi
+   0x0000000000409b91 <+1873>:	call   0x40b1f0 <write_output>
+   0x0000000000409b96 <+1878>:	mov    %eax,-0x81c(%rbp)
+
+265	
+266		return r;
+   0x0000000000409b9c <+1884>:	mov    -0x81c(%rbp),%eax
+   0x0000000000409ba2 <+1890>:	mov    %eax,-0x4(%rbp)
+
+267	}
+   0x0000000000409ba5 <+1893>:	mov    -0x4(%rbp),%eax
+   0x0000000000409ba8 <+1896>:	add    $0x850,%rsp
+   0x0000000000409baf <+1903>:	pop    %rbp
+   0x0000000000409bb0 <+1904>:	ret
+End of assembler dump.
+Line 1083 of "card-sc-hsm.c" starts at address 0x65cf03 <sc_hsm_decode_ecdsa_signature+1955> and ends at 0x65cf6a <sc_hsm_decode_ecdsa_signature+2058>.
+Dump of assembler code for function sc_hsm_decode_ecdsa_signature:
+card-sc-hsm.c:
+1032						u8 * out, size_t outlen) {
+   0x000000000065c760 <+0>:	push   %rbp
+   0x000000000065c761 <+1>:	mov    %rsp,%rbp
+   0x000000000065c764 <+4>:	push   %rbx
+   0x000000000065c765 <+5>:	sub    $0xa8,%rsp
+   0x000000000065c76c <+12>:	mov    %rdi,-0x18(%rbp)
+   0x000000000065c770 <+16>:	mov    %rsi,-0x20(%rbp)
+   0x000000000065c774 <+20>:	mov    %rdx,-0x28(%rbp)
+   0x000000000065c778 <+24>:	mov    %rcx,-0x30(%rbp)
+   0x000000000065c77c <+28>:	mov    %r8,-0x38(%rbp)
+
+1033	
+1034		int i, r;
+1035		size_t fieldsizebytes;
+1036		const u8 *body, *tag;
+1037		size_t bodylen, taglen;
+1038	
+1039		// Determine field size from length of signature
+1040		if (datalen <= 58) {			// 192 bit curve = 24 * 2 + 10 byte maximum DER signature
+   0x000000000065c780 <+32>:	cmpq   $0x3a,-0x28(%rbp)
+   0x000000000065c785 <+37>:	ja     0x65c7d2 <sc_hsm_decode_ecdsa_signature+114>
+
+1041			fieldsizebytes = 24;
+   0x000000000065c78b <+43>:	mov    0x24785e(%rip),%rax        # 0x8a3ff0
+   0x000000000065c792 <+50>:	movslq %fs:(%rax),%rdx
+   0x000000000065c796 <+54>:	mov    $0x8ac0c0,%rcx
+   0x000000000065c79d <+61>:	mov    (%rcx),%rcx
+   0x000000000065c7a0 <+64>:	xor    $0x4749,%rdx
+   0x000000000065c7a7 <+71>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065c7ab <+75>:	add    $0x1,%sil
+   0x000000000065c7af <+79>:	mov    %sil,%dil
+   0x000000000065c7b2 <+82>:	sub    $0x1,%dil
+   0x000000000065c7b6 <+86>:	adc    $0x0,%sil
+   0x000000000065c7ba <+90>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065c7be <+94>:	movl   $0x23a4,%fs:(%rax)
+   0x000000000065c7c5 <+101>:	movq   $0x18,-0x48(%rbp)
+
+1042		} else if (datalen <= 66) {		// 224 bit curve = 28 * 2 + 10 byte maximum DER signature
+   0x000000000065c7cd <+109>:	jmp    0x65caec <sc_hsm_decode_ecdsa_signature+908>
+   0x000000000065c7d2 <+114>:	mov    0x247817(%rip),%rax        # 0x8a3ff0
+   0x000000000065c7d9 <+121>:	movslq %fs:(%rax),%rdx
+   0x000000000065c7dd <+125>:	mov    $0x8ac0c0,%rcx
+   0x000000000065c7e4 <+132>:	mov    (%rcx),%rcx
+   0x000000000065c7e7 <+135>:	xor    $0x5e13,%rdx
+   0x000000000065c7ee <+142>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065c7f2 <+146>:	add    $0x1,%sil
+   0x000000000065c7f6 <+150>:	mov    %sil,%dil
+   0x000000000065c7f9 <+153>:	sub    $0x1,%dil
+   0x000000000065c7fd <+157>:	adc    $0x0,%sil
+   0x000000000065c801 <+161>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065c805 <+165>:	movl   $0x2f09,%fs:(%rax)
+   0x000000000065c80c <+172>:	cmpq   $0x42,-0x28(%rbp)
+   0x000000000065c811 <+177>:	ja     0x65c85e <sc_hsm_decode_ecdsa_signature+254>
+
+1043			fieldsizebytes = 28;
+   0x000000000065c817 <+183>:	mov    0x2477d2(%rip),%rax        # 0x8a3ff0
+   0x000000000065c81e <+190>:	movslq %fs:(%rax),%rdx
+   0x000000000065c822 <+194>:	mov    $0x8ac0c0,%rcx
+   0x000000000065c829 <+201>:	mov    (%rcx),%rcx
+   0x000000000065c82c <+204>:	xor    $0xd3de,%rdx
+   0x000000000065c833 <+211>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065c837 <+215>:	add    $0x1,%sil
+   0x000000000065c83b <+219>:	mov    %sil,%dil
+   0x000000000065c83e <+222>:	sub    $0x1,%dil
+   0x000000000065c842 <+226>:	adc    $0x0,%sil
+   0x000000000065c846 <+230>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065c84a <+234>:	movl   $0x69ef,%fs:(%rax)
+   0x000000000065c851 <+241>:	movq   $0x1c,-0x48(%rbp)
+
+1044		} else if (datalen <= 74) {		// 256 bit curve = 32 * 2 + 10 byte maximum DER signature
+   0x000000000065c859 <+249>:	jmp    0x65cae7 <sc_hsm_decode_ecdsa_signature+903>
+   0x000000000065c85e <+254>:	mov    0x24778b(%rip),%rax        # 0x8a3ff0
+   0x000000000065c865 <+261>:	movslq %fs:(%rax),%rdx
+   0x000000000065c869 <+265>:	mov    $0x8ac0c0,%rcx
+   0x000000000065c870 <+272>:	mov    (%rcx),%rcx
+   0x000000000065c873 <+275>:	xor    $0x2db8,%rdx
+   0x000000000065c87a <+282>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065c87e <+286>:	add    $0x1,%sil
+   0x000000000065c882 <+290>:	mov    %sil,%dil
+   0x000000000065c885 <+293>:	sub    $0x1,%dil
+   0x000000000065c889 <+297>:	adc    $0x0,%sil
+   0x000000000065c88d <+301>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065c891 <+305>:	movl   $0x16dc,%fs:(%rax)
+   0x000000000065c898 <+312>:	cmpq   $0x4a,-0x28(%rbp)
+   0x000000000065c89d <+317>:	ja     0x65c8ea <sc_hsm_decode_ecdsa_signature+394>
+
+1045			fieldsizebytes = 32;
+   0x000000000065c8a3 <+323>:	mov    0x247746(%rip),%rax        # 0x8a3ff0
+   0x000000000065c8aa <+330>:	movslq %fs:(%rax),%rdx
+   0x000000000065c8ae <+334>:	mov    $0x8ac0c0,%rcx
+   0x000000000065c8b5 <+341>:	mov    (%rcx),%rcx
+   0x000000000065c8b8 <+344>:	xor    $0x57dc,%rdx
+   0x000000000065c8bf <+351>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065c8c3 <+355>:	add    $0x1,%sil
+   0x000000000065c8c7 <+359>:	mov    %sil,%dil
+   0x000000000065c8ca <+362>:	sub    $0x1,%dil
+   0x000000000065c8ce <+366>:	adc    $0x0,%sil
+   0x000000000065c8d2 <+370>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065c8d6 <+374>:	movl   $0x2bee,%fs:(%rax)
+   0x000000000065c8dd <+381>:	movq   $0x20,-0x48(%rbp)
+
+1046		} else if (datalen <= 90) {		// 320 bit curve = 40 * 2 + 10 byte maximum DER signature
+   0x000000000065c8e5 <+389>:	jmp    0x65cae2 <sc_hsm_decode_ecdsa_signature+898>
+   0x000000000065c8ea <+394>:	mov    0x2476ff(%rip),%rax        # 0x8a3ff0
+   0x000000000065c8f1 <+401>:	movslq %fs:(%rax),%rdx
+   0x000000000065c8f5 <+405>:	mov    $0x8ac0c0,%rcx
+   0x000000000065c8fc <+412>:	mov    (%rcx),%rcx
+   0x000000000065c8ff <+415>:	xor    $0x7df2,%rdx
+   0x000000000065c906 <+422>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065c90a <+426>:	add    $0x1,%sil
+   0x000000000065c90e <+430>:	mov    %sil,%dil
+   0x000000000065c911 <+433>:	sub    $0x1,%dil
+   0x000000000065c915 <+437>:	adc    $0x0,%sil
+   0x000000000065c919 <+441>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065c91d <+445>:	movl   $0x3ef9,%fs:(%rax)
+   0x000000000065c924 <+452>:	cmpq   $0x5a,-0x28(%rbp)
+   0x000000000065c929 <+457>:	ja     0x65c976 <sc_hsm_decode_ecdsa_signature+534>
+
+1047			fieldsizebytes = 40;
+   0x000000000065c92f <+463>:	mov    0x2476ba(%rip),%rax        # 0x8a3ff0
+   0x000000000065c936 <+470>:	movslq %fs:(%rax),%rdx
+   0x000000000065c93a <+474>:	mov    $0x8ac0c0,%rcx
+   0x000000000065c941 <+481>:	mov    (%rcx),%rcx
+   0x000000000065c944 <+484>:	xor    $0x9e4,%rdx
+   0x000000000065c94b <+491>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065c94f <+495>:	add    $0x1,%sil
+   0x000000000065c953 <+499>:	mov    %sil,%dil
+   0x000000000065c956 <+502>:	sub    $0x1,%dil
+   0x000000000065c95a <+506>:	adc    $0x0,%sil
+   0x000000000065c95e <+510>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065c962 <+514>:	movl   $0x4f2,%fs:(%rax)
+   0x000000000065c969 <+521>:	movq   $0x28,-0x48(%rbp)
+
+1048		} else if (datalen <= 106) {		// 384 bit curve = 48 * 2 + 10 byte maximum DER signature
+   0x000000000065c971 <+529>:	jmp    0x65cadd <sc_hsm_decode_ecdsa_signature+893>
+   0x000000000065c976 <+534>:	mov    0x247673(%rip),%rax        # 0x8a3ff0
+   0x000000000065c97d <+541>:	movslq %fs:(%rax),%rdx
+   0x000000000065c981 <+545>:	mov    $0x8ac0c0,%rcx
+   0x000000000065c988 <+552>:	mov    (%rcx),%rcx
+   0x000000000065c98b <+555>:	xor    $0x32ac,%rdx
+   0x000000000065c992 <+562>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065c996 <+566>:	add    $0x1,%sil
+   0x000000000065c99a <+570>:	mov    %sil,%dil
+   0x000000000065c99d <+573>:	sub    $0x1,%dil
+   0x000000000065c9a1 <+577>:	adc    $0x0,%sil
+   0x000000000065c9a5 <+581>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065c9a9 <+585>:	movl   $0x1956,%fs:(%rax)
+   0x000000000065c9b0 <+592>:	cmpq   $0x6a,-0x28(%rbp)
+   0x000000000065c9b5 <+597>:	ja     0x65ca02 <sc_hsm_decode_ecdsa_signature+674>
+
+1049			fieldsizebytes = 48;
+   0x000000000065c9bb <+603>:	mov    0x24762e(%rip),%rax        # 0x8a3ff0
+   0x000000000065c9c2 <+610>:	movslq %fs:(%rax),%rdx
+   0x000000000065c9c6 <+614>:	mov    $0x8ac0c0,%rcx
+   0x000000000065c9cd <+621>:	mov    (%rcx),%rcx
+   0x000000000065c9d0 <+624>:	xor    $0xffc3,%rdx
+   0x000000000065c9d7 <+631>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065c9db <+635>:	add    $0x1,%sil
+   0x000000000065c9df <+639>:	mov    %sil,%dil
+   0x000000000065c9e2 <+642>:	sub    $0x1,%dil
+   0x000000000065c9e6 <+646>:	adc    $0x0,%sil
+   0x000000000065c9ea <+650>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065c9ee <+654>:	movl   $0x7fe1,%fs:(%rax)
+   0x000000000065c9f5 <+661>:	movq   $0x30,-0x48(%rbp)
+
+1050		} else if (datalen <= 137) {		// 512 bit curve = 64 * 2 + 9 byte maximum DER signature
+   0x000000000065c9fd <+669>:	jmp    0x65cad8 <sc_hsm_decode_ecdsa_signature+888>
+   0x000000000065ca02 <+674>:	mov    0x2475e7(%rip),%rax        # 0x8a3ff0
+   0x000000000065ca09 <+681>:	movslq %fs:(%rax),%rdx
+   0x000000000065ca0d <+685>:	mov    $0x8ac0c0,%rcx
+   0x000000000065ca14 <+692>:	mov    (%rcx),%rcx
+   0x000000000065ca17 <+695>:	xor    $0x2971,%rdx
+   0x000000000065ca1e <+702>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065ca22 <+706>:	add    $0x1,%sil
+   0x000000000065ca26 <+710>:	mov    %sil,%dil
+   0x000000000065ca29 <+713>:	sub    $0x1,%dil
+   0x000000000065ca2d <+717>:	adc    $0x0,%sil
+   0x000000000065ca31 <+721>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065ca35 <+725>:	movl   $0x14b8,%fs:(%rax)
+   0x000000000065ca3c <+732>:	cmpq   $0x89,-0x28(%rbp)
+   0x000000000065ca44 <+740>:	ja     0x65ca91 <sc_hsm_decode_ecdsa_signature+817>
+
+1051			fieldsizebytes = 64;
+   0x000000000065ca4a <+746>:	mov    0x24759f(%rip),%rax        # 0x8a3ff0
+   0x000000000065ca51 <+753>:	movslq %fs:(%rax),%rdx
+   0x000000000065ca55 <+757>:	mov    $0x8ac0c0,%rcx
+   0x000000000065ca5c <+764>:	mov    (%rcx),%rcx
+   0x000000000065ca5f <+767>:	xor    $0x7e32,%rdx
+   0x000000000065ca66 <+774>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065ca6a <+778>:	add    $0x1,%sil
+   0x000000000065ca6e <+782>:	mov    %sil,%dil
+   0x000000000065ca71 <+785>:	sub    $0x1,%dil
+   0x000000000065ca75 <+789>:	adc    $0x0,%sil
+   0x000000000065ca79 <+793>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065ca7d <+797>:	movl   $0x3f19,%fs:(%rax)
+   0x000000000065ca84 <+804>:	movq   $0x40,-0x48(%rbp)
+
+1052		} else {
+   0x000000000065ca8c <+812>:	jmp    0x65cad3 <sc_hsm_decode_ecdsa_signature+883>
+
+1053			fieldsizebytes = 66;
+   0x000000000065ca91 <+817>:	mov    0x247558(%rip),%rax        # 0x8a3ff0
+   0x000000000065ca98 <+824>:	movslq %fs:(%rax),%rdx
+   0x000000000065ca9c <+828>:	mov    $0x8ac0c0,%rcx
+   0x000000000065caa3 <+835>:	mov    (%rcx),%rcx
+   0x000000000065caa6 <+838>:	xor    $0x7557,%rdx
+   0x000000000065caad <+845>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cab1 <+849>:	add    $0x1,%sil
+   0x000000000065cab5 <+853>:	mov    %sil,%dil
+   0x000000000065cab8 <+856>:	sub    $0x1,%dil
+   0x000000000065cabc <+860>:	adc    $0x0,%sil
+   0x000000000065cac0 <+864>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cac4 <+868>:	movl   $0x3aab,%fs:(%rax)
+   0x000000000065cacb <+875>:	movq   $0x42,-0x48(%rbp)
+   0x000000000065cad3 <+883>:	jmp    0x65cad8 <sc_hsm_decode_ecdsa_signature+888>
+   0x000000000065cad8 <+888>:	jmp    0x65cadd <sc_hsm_decode_ecdsa_signature+893>
+   0x000000000065cadd <+893>:	jmp    0x65cae2 <sc_hsm_decode_ecdsa_signature+898>
+   0x000000000065cae2 <+898>:	jmp    0x65cae7 <sc_hsm_decode_ecdsa_signature+903>
+   0x000000000065cae7 <+903>:	jmp    0x65caec <sc_hsm_decode_ecdsa_signature+908>
+
+1054		}
+1055	
+1056		sc_log(card->ctx,
+   0x000000000065caec <+908>:	mov    -0x18(%rbp),%rax
+   0x000000000065caf0 <+912>:	mov    (%rax),%rdi
+   0x000000000065caf3 <+915>:	mov    -0x48(%rbp),%r10
+   0x000000000065caf7 <+919>:	mov    -0x38(%rbp),%rax
+   0x000000000065cafb <+923>:	mov    $0x3,%esi
+   0x000000000065cb00 <+928>:	movabs $0x867609,%rdx
+   0x000000000065cb0a <+938>:	mov    $0x422,%ecx
+   0x000000000065cb0f <+943>:	movabs $0x867881,%r8
+   0x000000000065cb19 <+953>:	movabs $0x86789f,%r9
+   0x000000000065cb23 <+963>:	mov    %r10,(%rsp)
+   0x000000000065cb27 <+967>:	mov    %rax,0x8(%rsp)
+   0x000000000065cb2c <+972>:	mov    $0x0,%al
+   0x000000000065cb2e <+974>:	call   0x420210 <sc_do_log>
+
+1057		       "Field size %"SC_FORMAT_LEN_SIZE_T"u, signature buffer size %"SC_FORMAT_LEN_SIZE_T"u",
+1058		       fieldsizebytes, outlen);
+1059	
+1060		if (outlen < (fieldsizebytes * 2)) {
+   0x000000000065cb33 <+979>:	mov    -0x38(%rbp),%rax
+   0x000000000065cb37 <+983>:	mov    -0x48(%rbp),%rcx
+   0x000000000065cb3b <+987>:	shl    $0x1,%rcx
+   0x000000000065cb3f <+991>:	cmp    %rcx,%rax
+   0x000000000065cb42 <+994>:	jae    0x65cc8a <sc_hsm_decode_ecdsa_signature+1322>
+
+1061			LOG_TEST_RET(card->ctx, SC_ERROR_INVALID_DATA, "output too small for EC signature");
+   0x000000000065cb48 <+1000>:	mov    0x2474a1(%rip),%rax        # 0x8a3ff0
+   0x000000000065cb4f <+1007>:	movslq %fs:(%rax),%rdx
+   0x000000000065cb53 <+1011>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cb5a <+1018>:	mov    (%rcx),%rcx
+   0x000000000065cb5d <+1021>:	xor    $0xfbf8,%rdx
+   0x000000000065cb64 <+1028>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cb68 <+1032>:	add    $0x1,%sil
+   0x000000000065cb6c <+1036>:	mov    %sil,%dil
+   0x000000000065cb6f <+1039>:	sub    $0x1,%dil
+   0x000000000065cb73 <+1043>:	adc    $0x0,%sil
+   0x000000000065cb77 <+1047>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cb7b <+1051>:	movl   $0x7dfc,%fs:(%rax)
+   0x000000000065cb82 <+1058>:	movl   $0xfffffae7,-0x6c(%rbp)
+   0x000000000065cb89 <+1065>:	cmpl   $0x0,-0x6c(%rbp)
+   0x000000000065cb8d <+1069>:	jge    0x65cc4b <sc_hsm_decode_ecdsa_signature+1259>
+   0x000000000065cb93 <+1075>:	mov    0x247456(%rip),%rax        # 0x8a3ff0
+   0x000000000065cb9a <+1082>:	movslq %fs:(%rax),%rdx
+   0x000000000065cb9e <+1086>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cba5 <+1093>:	mov    (%rcx),%rcx
+   0x000000000065cba8 <+1096>:	xor    $0x4c6f,%rdx
+   0x000000000065cbaf <+1103>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cbb3 <+1107>:	add    $0x1,%sil
+   0x000000000065cbb7 <+1111>:	mov    %sil,%dil
+   0x000000000065cbba <+1114>:	sub    $0x1,%dil
+   0x000000000065cbbe <+1118>:	adc    $0x0,%sil
+   0x000000000065cbc2 <+1122>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cbc6 <+1126>:	movl   $0x2637,%fs:(%rax)
+   0x000000000065cbcd <+1133>:	mov    -0x18(%rbp),%rax
+   0x000000000065cbd1 <+1137>:	mov    (%rax),%rax
+   0x000000000065cbd4 <+1140>:	mov    %rax,-0x80(%rbp)
+   0x000000000065cbd8 <+1144>:	mov    -0x6c(%rbp),%eax
+   0x000000000065cbdb <+1147>:	mov    %eax,-0x74(%rbp)
+   0x000000000065cbde <+1150>:	mov    -0x6c(%rbp),%edi
+   0x000000000065cbe1 <+1153>:	call   0x422880 <sc_strerror>
+   0x000000000065cbe6 <+1158>:	mov    -0x80(%rbp),%rdi
+   0x000000000065cbea <+1162>:	mov    -0x74(%rbp),%r10d
+   0x000000000065cbee <+1166>:	mov    $0x3,%esi
+   0x000000000065cbf3 <+1171>:	movabs $0x867609,%rdx
+   0x000000000065cbfd <+1181>:	mov    $0x425,%ecx
+   0x000000000065cc02 <+1186>:	movabs $0x867881,%r8
+   0x000000000065cc0c <+1196>:	mov    $0x1,%r9d
+   0x000000000065cc12 <+1202>:	movabs $0x845451,%rbx
+   0x000000000065cc1c <+1212>:	movabs $0x8678c9,%r11
+   0x000000000065cc26 <+1222>:	mov    %rbx,(%rsp)
+   0x000000000065cc2a <+1226>:	mov    %r11,0x8(%rsp)
+   0x000000000065cc2f <+1231>:	mov    %r10d,0x10(%rsp)
+   0x000000000065cc34 <+1236>:	mov    %rax,0x18(%rsp)
+   0x000000000065cc39 <+1241>:	mov    $0x0,%al
+   0x000000000065cc3b <+1243>:	call   0x420890 <sc_do_log_color>
+   0x000000000065cc40 <+1248>:	mov    -0x6c(%rbp),%eax
+   0x000000000065cc43 <+1251>:	mov    %eax,-0xc(%rbp)
+   0x000000000065cc46 <+1254>:	jmp    0x65d1af <sc_hsm_decode_ecdsa_signature+2639>
+   0x000000000065cc4b <+1259>:	mov    0x24739e(%rip),%rax        # 0x8a3ff0
+   0x000000000065cc52 <+1266>:	movslq %fs:(%rax),%rdx
+   0x000000000065cc56 <+1270>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cc5d <+1277>:	mov    (%rcx),%rcx
+   0x000000000065cc60 <+1280>:	xor    $0x8748,%rdx
+   0x000000000065cc67 <+1287>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cc6b <+1291>:	add    $0x1,%sil
+   0x000000000065cc6f <+1295>:	mov    %sil,%dil
+   0x000000000065cc72 <+1298>:	sub    $0x1,%dil
+   0x000000000065cc76 <+1302>:	adc    $0x0,%sil
+   0x000000000065cc7a <+1306>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cc7e <+1310>:	movl   $0x43a4,%fs:(%rax)
+
+1062		}
+   0x000000000065cc85 <+1317>:	jmp    0x65cc8a <sc_hsm_decode_ecdsa_signature+1322>
+
+1063		memset(out, 0, outlen);
+   0x000000000065cc8a <+1322>:	mov    0x24735f(%rip),%rax        # 0x8a3ff0
+   0x000000000065cc91 <+1329>:	movslq %fs:(%rax),%rdx
+   0x000000000065cc95 <+1333>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cc9c <+1340>:	mov    (%rcx),%rcx
+   0x000000000065cc9f <+1343>:	xor    $0x4340,%rdx
+   0x000000000065cca6 <+1350>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065ccaa <+1354>:	add    $0x1,%sil
+   0x000000000065ccae <+1358>:	mov    %sil,%dil
+   0x000000000065ccb1 <+1361>:	sub    $0x1,%dil
+   0x000000000065ccb5 <+1365>:	adc    $0x0,%sil
+   0x000000000065ccb9 <+1369>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065ccbd <+1373>:	movl   $0x21a0,%fs:(%rax)
+   0x000000000065ccc4 <+1380>:	mov    -0x30(%rbp),%rdi
+   0x000000000065ccc8 <+1384>:	mov    -0x38(%rbp),%rdx
+   0x000000000065cccc <+1388>:	xor    %esi,%esi
+   0x000000000065ccce <+1390>:	call   0x4060d0 <memset@plt>
+
+1064	
+1065		// Copied from card-piv.c. Thanks
+1066		body = sc_asn1_find_tag(card->ctx, data, datalen, 0x30, &bodylen);
+   0x000000000065ccd3 <+1395>:	mov    -0x18(%rbp),%rax
+   0x000000000065ccd7 <+1399>:	mov    (%rax),%rdi
+   0x000000000065ccda <+1402>:	mov    -0x20(%rbp),%rsi
+   0x000000000065ccde <+1406>:	mov    -0x28(%rbp),%rdx
+   0x000000000065cce2 <+1410>:	mov    $0x30,%ecx
+   0x000000000065cce7 <+1415>:	lea    -0x60(%rbp),%r8
+   0x000000000065cceb <+1419>:	call   0x4248a0 <sc_asn1_find_tag>
+   0x000000000065ccf0 <+1424>:	mov    %rax,-0x50(%rbp)
+
+1067	
+1068		for (i = 0; i<2; i++) {
+   0x000000000065ccf4 <+1428>:	movl   $0x0,-0x3c(%rbp)
+   0x000000000065ccfb <+1435>:	cmpl   $0x2,-0x3c(%rbp)
+   0x000000000065ccff <+1439>:	jge    0x65d013 <sc_hsm_decode_ecdsa_signature+2227>
+
+1069			if (body) {
+   0x000000000065cd05 <+1445>:	mov    0x2472e4(%rip),%rax        # 0x8a3ff0
+   0x000000000065cd0c <+1452>:	movslq %fs:(%rax),%rdx
+   0x000000000065cd10 <+1456>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cd17 <+1463>:	mov    (%rcx),%rcx
+   0x000000000065cd1a <+1466>:	xor    $0xb049,%rdx
+   0x000000000065cd21 <+1473>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cd25 <+1477>:	add    $0x1,%sil
+   0x000000000065cd29 <+1481>:	mov    %sil,%dil
+   0x000000000065cd2c <+1484>:	sub    $0x1,%dil
+   0x000000000065cd30 <+1488>:	adc    $0x0,%sil
+   0x000000000065cd34 <+1492>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cd38 <+1496>:	movl   $0x5824,%fs:(%rax)
+   0x000000000065cd3f <+1503>:	cmpq   $0x0,-0x50(%rbp)
+   0x000000000065cd44 <+1508>:	je     0x65cfba <sc_hsm_decode_ecdsa_signature+2138>
+
+1070				tag = sc_asn1_find_tag(card->ctx, body,  bodylen, 0x02, &taglen);
+   0x000000000065cd4a <+1514>:	mov    0x24729f(%rip),%rax        # 0x8a3ff0
+   0x000000000065cd51 <+1521>:	movslq %fs:(%rax),%rdx
+   0x000000000065cd55 <+1525>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cd5c <+1532>:	mov    (%rcx),%rcx
+   0x000000000065cd5f <+1535>:	xor    $0xc50f,%rdx
+   0x000000000065cd66 <+1542>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cd6a <+1546>:	add    $0x1,%sil
+   0x000000000065cd6e <+1550>:	mov    %sil,%dil
+   0x000000000065cd71 <+1553>:	sub    $0x1,%dil
+   0x000000000065cd75 <+1557>:	adc    $0x0,%sil
+   0x000000000065cd79 <+1561>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cd7d <+1565>:	movl   $0x6287,%fs:(%rax)
+   0x000000000065cd84 <+1572>:	mov    -0x18(%rbp),%rax
+   0x000000000065cd88 <+1576>:	mov    (%rax),%rdi
+   0x000000000065cd8b <+1579>:	mov    -0x50(%rbp),%rsi
+   0x000000000065cd8f <+1583>:	mov    -0x60(%rbp),%rdx
+   0x000000000065cd93 <+1587>:	mov    $0x2,%ecx
+   0x000000000065cd98 <+1592>:	lea    -0x68(%rbp),%r8
+   0x000000000065cd9c <+1596>:	call   0x4248a0 <sc_asn1_find_tag>
+   0x000000000065cda1 <+1601>:	mov    %rax,-0x58(%rbp)
+
+1071				if (tag) {
+   0x000000000065cda5 <+1605>:	cmpq   $0x0,-0x58(%rbp)
+   0x000000000065cdaa <+1610>:	je     0x65cf6f <sc_hsm_decode_ecdsa_signature+2063>
+
+1072					bodylen -= taglen - (tag - body);
+   0x000000000065cdb0 <+1616>:	mov    0x247239(%rip),%rax        # 0x8a3ff0
+   0x000000000065cdb7 <+1623>:	movslq %fs:(%rax),%rdx
+   0x000000000065cdbb <+1627>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cdc2 <+1634>:	mov    (%rcx),%rcx
+   0x000000000065cdc5 <+1637>:	xor    $0xb77f,%rdx
+   0x000000000065cdcc <+1644>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cdd0 <+1648>:	add    $0x1,%sil
+   0x000000000065cdd4 <+1652>:	mov    %sil,%dil
+   0x000000000065cdd7 <+1655>:	sub    $0x1,%dil
+   0x000000000065cddb <+1659>:	adc    $0x0,%sil
+   0x000000000065cddf <+1663>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cde3 <+1667>:	movl   $0x5bbf,%fs:(%rax)
+   0x000000000065cdea <+1674>:	mov    -0x68(%rbp),%rcx
+   0x000000000065cdee <+1678>:	mov    -0x58(%rbp),%rax
+   0x000000000065cdf2 <+1682>:	mov    -0x50(%rbp),%rdx
+   0x000000000065cdf6 <+1686>:	sub    %rdx,%rax
+   0x000000000065cdf9 <+1689>:	sub    %rax,%rcx
+   0x000000000065cdfc <+1692>:	mov    -0x60(%rbp),%rax
+   0x000000000065ce00 <+1696>:	sub    %rcx,%rax
+   0x000000000065ce03 <+1699>:	mov    %rax,-0x60(%rbp)
+
+1073					body = tag + taglen;
+   0x000000000065ce07 <+1703>:	mov    -0x58(%rbp),%rax
+   0x000000000065ce0b <+1707>:	add    -0x68(%rbp),%rax
+   0x000000000065ce0f <+1711>:	mov    %rax,-0x50(%rbp)
+
+1074	
+1075					if (taglen > fieldsizebytes) { /* drop leading 00 if present */
+   0x000000000065ce13 <+1715>:	mov    -0x68(%rbp),%rax
+   0x000000000065ce17 <+1719>:	cmp    -0x48(%rbp),%rax
+   0x000000000065ce1b <+1723>:	jbe    0x65cf03 <sc_hsm_decode_ecdsa_signature+1955>
+
+1076						if (*tag != 0x00) {
+   0x000000000065ce21 <+1729>:	mov    0x2471c8(%rip),%rax        # 0x8a3ff0
+   0x000000000065ce28 <+1736>:	movslq %fs:(%rax),%rdx
+   0x000000000065ce2c <+1740>:	mov    $0x8ac0c0,%rcx
+   0x000000000065ce33 <+1747>:	mov    (%rcx),%rcx
+   0x000000000065ce36 <+1750>:	xor    $0xd99a,%rdx
+   0x000000000065ce3d <+1757>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065ce41 <+1761>:	add    $0x1,%sil
+   0x000000000065ce45 <+1765>:	mov    %sil,%dil
+   0x000000000065ce48 <+1768>:	sub    $0x1,%dil
+   0x000000000065ce4c <+1772>:	adc    $0x0,%sil
+   0x000000000065ce50 <+1776>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065ce54 <+1780>:	movl   $0x6ccd,%fs:(%rax)
+   0x000000000065ce5b <+1787>:	mov    -0x58(%rbp),%rax
+   0x000000000065ce5f <+1791>:	movzbl (%rax),%eax
+   0x000000000065ce62 <+1794>:	cmp    $0x0,%eax
+   0x000000000065ce65 <+1797>:	je     0x65ceb1 <sc_hsm_decode_ecdsa_signature+1873>
+
+1077							r = SC_ERROR_INVALID_DATA;
+   0x000000000065ce6b <+1803>:	mov    0x24717e(%rip),%rax        # 0x8a3ff0
+   0x000000000065ce72 <+1810>:	movslq %fs:(%rax),%rdx
+   0x000000000065ce76 <+1814>:	mov    $0x8ac0c0,%rcx
+   0x000000000065ce7d <+1821>:	mov    (%rcx),%rcx
+   0x000000000065ce80 <+1824>:	xor    $0x3b67,%rdx
+   0x000000000065ce87 <+1831>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065ce8b <+1835>:	add    $0x1,%sil
+   0x000000000065ce8f <+1839>:	mov    %sil,%dil
+   0x000000000065ce92 <+1842>:	sub    $0x1,%dil
+   0x000000000065ce96 <+1846>:	adc    $0x0,%sil
+   0x000000000065ce9a <+1850>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065ce9e <+1854>:	movl   $0x1db3,%fs:(%rax)
+   0x000000000065cea5 <+1861>:	movl   $0xfffffae7,-0x40(%rbp)
+
+1078							goto err;
+   0x000000000065ceac <+1868>:	jmp    0x65d058 <sc_hsm_decode_ecdsa_signature+2296>
+
+1079						}
+1080						tag++;
+   0x000000000065ceb1 <+1873>:	mov    0x247138(%rip),%rax        # 0x8a3ff0
+   0x000000000065ceb8 <+1880>:	movslq %fs:(%rax),%rdx
+   0x000000000065cebc <+1884>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cec3 <+1891>:	mov    (%rcx),%rcx
+   0x000000000065cec6 <+1894>:	xor    $0xbef7,%rdx
+   0x000000000065cecd <+1901>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065ced1 <+1905>:	add    $0x1,%sil
+   0x000000000065ced5 <+1909>:	mov    %sil,%dil
+   0x000000000065ced8 <+1912>:	sub    $0x1,%dil
+   0x000000000065cedc <+1916>:	adc    $0x0,%sil
+   0x000000000065cee0 <+1920>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cee4 <+1924>:	movl   $0x5f7b,%fs:(%rax)
+   0x000000000065ceeb <+1931>:	mov    -0x58(%rbp),%rax
+   0x000000000065ceef <+1935>:	add    $0x1,%rax
+   0x000000000065cef3 <+1939>:	mov    %rax,-0x58(%rbp)
+
+1081						taglen--;
+   0x000000000065cef7 <+1943>:	mov    -0x68(%rbp),%rax
+   0x000000000065cefb <+1947>:	add    $0xffffffffffffffff,%rax
+   0x000000000065ceff <+1951>:	mov    %rax,-0x68(%rbp)
+
+1082					}
+1083					memcpy(out + fieldsizebytes*i + fieldsizebytes - taglen , tag, taglen);
+   0x000000000065cf03 <+1955>:	mov    0x2470e6(%rip),%rax        # 0x8a3ff0
+   0x000000000065cf0a <+1962>:	movslq %fs:(%rax),%rdx
+   0x000000000065cf0e <+1966>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cf15 <+1973>:	mov    (%rcx),%rcx
+   0x000000000065cf18 <+1976>:	xor    $0xe62e,%rdx
+   0x000000000065cf1f <+1983>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cf23 <+1987>:	add    $0x1,%sil
+   0x000000000065cf27 <+1991>:	mov    %sil,%dil
+   0x000000000065cf2a <+1994>:	sub    $0x1,%dil
+   0x000000000065cf2e <+1998>:	adc    $0x0,%sil
+   0x000000000065cf32 <+2002>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cf36 <+2006>:	movl   $0x7317,%fs:(%rax)
+   0x000000000065cf3d <+2013>:	mov    -0x30(%rbp),%rdi
+   0x000000000065cf41 <+2017>:	mov    -0x48(%rbp),%rax
+   0x000000000065cf45 <+2021>:	movslq -0x3c(%rbp),%rcx
+   0x000000000065cf49 <+2025>:	imul   %rcx,%rax
+   0x000000000065cf4d <+2029>:	add    %rax,%rdi
+   0x000000000065cf50 <+2032>:	add    -0x48(%rbp),%rdi
+   0x000000000065cf54 <+2036>:	xor    %eax,%eax
+   0x000000000065cf56 <+2038>:	sub    -0x68(%rbp),%rax
+   0x000000000065cf5a <+2042>:	add    %rax,%rdi
+   0x000000000065cf5d <+2045>:	mov    -0x58(%rbp),%rsi
+   0x000000000065cf61 <+2049>:	mov    -0x68(%rbp),%rdx
+   0x000000000065cf65 <+2053>:	call   0x406fd0 <memcpy@plt>
+
+1084				} else {
+   0x000000000065cf6a <+2058>:	jmp    0x65cfb5 <sc_hsm_decode_ecdsa_signature+2133>
+
+1085					r = SC_ERROR_INVALID_DATA;
+   0x000000000065cf6f <+2063>:	mov    0x24707a(%rip),%rax        # 0x8a3ff0
+   0x000000000065cf76 <+2070>:	movslq %fs:(%rax),%rdx
+   0x000000000065cf7a <+2074>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cf81 <+2081>:	mov    (%rcx),%rcx
+   0x000000000065cf84 <+2084>:	xor    $0x566b,%rdx
+   0x000000000065cf8b <+2091>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cf8f <+2095>:	add    $0x1,%sil
+   0x000000000065cf93 <+2099>:	mov    %sil,%dil
+   0x000000000065cf96 <+2102>:	sub    $0x1,%dil
+   0x000000000065cf9a <+2106>:	adc    $0x0,%sil
+   0x000000000065cf9e <+2110>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cfa2 <+2114>:	movl   $0x2b35,%fs:(%rax)
+   0x000000000065cfa9 <+2121>:	movl   $0xfffffae7,-0x40(%rbp)
+
+1086					goto err;
+   0x000000000065cfb0 <+2128>:	jmp    0x65d058 <sc_hsm_decode_ecdsa_signature+2296>
+
+1087				}
+1088			} else  {
+   0x000000000065cfb5 <+2133>:	jmp    0x65d000 <sc_hsm_decode_ecdsa_signature+2208>
+
+1089				r = SC_ERROR_INVALID_DATA;
+   0x000000000065cfba <+2138>:	mov    0x24702f(%rip),%rax        # 0x8a3ff0
+   0x000000000065cfc1 <+2145>:	movslq %fs:(%rax),%rdx
+   0x000000000065cfc5 <+2149>:	mov    $0x8ac0c0,%rcx
+   0x000000000065cfcc <+2156>:	mov    (%rcx),%rcx
+   0x000000000065cfcf <+2159>:	xor    $0xb1e8,%rdx
+   0x000000000065cfd6 <+2166>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065cfda <+2170>:	add    $0x1,%sil
+   0x000000000065cfde <+2174>:	mov    %sil,%dil
+   0x000000000065cfe1 <+2177>:	sub    $0x1,%dil
+   0x000000000065cfe5 <+2181>:	adc    $0x0,%sil
+   0x000000000065cfe9 <+2185>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065cfed <+2189>:	movl   $0x58f4,%fs:(%rax)
+   0x000000000065cff4 <+2196>:	movl   $0xfffffae7,-0x40(%rbp)
+
+1090				goto err;
+   0x000000000065cffb <+2203>:	jmp    0x65d058 <sc_hsm_decode_ecdsa_signature+2296>
+
+1091			}
+1092		}
+   0x000000000065d000 <+2208>:	jmp    0x65d005 <sc_hsm_decode_ecdsa_signature+2213>
+
+1068		for (i = 0; i<2; i++) {
+   0x000000000065d005 <+2213>:	mov    -0x3c(%rbp),%eax
+   0x000000000065d008 <+2216>:	add    $0x1,%eax
+   0x000000000065d00b <+2219>:	mov    %eax,-0x3c(%rbp)
+   0x000000000065d00e <+2222>:	jmp    0x65ccfb <sc_hsm_decode_ecdsa_signature+1435>
+
+1093		r = 2 * fieldsizebytes;
+   0x000000000065d013 <+2227>:	mov    0x246fd6(%rip),%rax        # 0x8a3ff0
+   0x000000000065d01a <+2234>:	movslq %fs:(%rax),%rdx
+   0x000000000065d01e <+2238>:	mov    $0x8ac0c0,%rcx
+   0x000000000065d025 <+2245>:	mov    (%rcx),%rcx
+   0x000000000065d028 <+2248>:	xor    $0x54ab,%rdx
+   0x000000000065d02f <+2255>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065d033 <+2259>:	add    $0x1,%sil
+   0x000000000065d037 <+2263>:	mov    %sil,%dil
+   0x000000000065d03a <+2266>:	sub    $0x1,%dil
+   0x000000000065d03e <+2270>:	adc    $0x0,%sil
+   0x000000000065d042 <+2274>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065d046 <+2278>:	movl   $0x2a55,%fs:(%rax)
+   0x000000000065d04d <+2285>:	mov    -0x48(%rbp),%rax
+   0x000000000065d051 <+2289>:	shl    $0x1,%rax
+   0x000000000065d055 <+2293>:	mov    %eax,-0x40(%rbp)
+
+1094	err:
+1095		LOG_FUNC_RETURN(card->ctx, r);
+   0x000000000065d058 <+2296>:	jmp    0x65d05d <sc_hsm_decode_ecdsa_signature+2301>
+   0x000000000065d05d <+2301>:	mov    -0x40(%rbp),%eax
+   0x000000000065d060 <+2304>:	mov    %eax,-0x70(%rbp)
+   0x000000000065d063 <+2307>:	cmpl   $0x0,-0x70(%rbp)
+   0x000000000065d067 <+2311>:	jg     0x65d133 <sc_hsm_decode_ecdsa_signature+2515>
+   0x000000000065d06d <+2317>:	mov    0x246f7c(%rip),%rax        # 0x8a3ff0
+   0x000000000065d074 <+2324>:	movslq %fs:(%rax),%rdx
+   0x000000000065d078 <+2328>:	mov    $0x8ac0c0,%rcx
+   0x000000000065d07f <+2335>:	mov    (%rcx),%rcx
+   0x000000000065d082 <+2338>:	xor    $0x49c,%rdx
+   0x000000000065d089 <+2345>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065d08d <+2349>:	add    $0x1,%sil
+   0x000000000065d091 <+2353>:	mov    %sil,%dil
+   0x000000000065d094 <+2356>:	sub    $0x1,%dil
+   0x000000000065d098 <+2360>:	adc    $0x0,%sil
+   0x000000000065d09c <+2364>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065d0a0 <+2368>:	movl   $0x24e,%fs:(%rax)
+   0x000000000065d0a7 <+2375>:	mov    -0x18(%rbp),%rax
+   0x000000000065d0ab <+2379>:	mov    (%rax),%rax
+   0x000000000065d0ae <+2382>:	mov    %rax,-0x90(%rbp)
+   0x000000000065d0b5 <+2389>:	mov    -0x70(%rbp),%edx
+   0x000000000065d0b8 <+2392>:	xor    %eax,%eax
+   0x000000000065d0ba <+2394>:	mov    $0x1,%ecx
+   0x000000000065d0bf <+2399>:	cmp    $0x0,%edx
+   0x000000000065d0c2 <+2402>:	cmovne %ecx,%eax
+   0x000000000065d0c5 <+2405>:	mov    %eax,-0x88(%rbp)
+   0x000000000065d0cb <+2411>:	mov    -0x70(%rbp),%eax
+   0x000000000065d0ce <+2414>:	mov    %eax,-0x84(%rbp)
+   0x000000000065d0d4 <+2420>:	mov    -0x70(%rbp),%edi
+   0x000000000065d0d7 <+2423>:	call   0x422880 <sc_strerror>
+   0x000000000065d0dc <+2428>:	mov    -0x90(%rbp),%rdi
+   0x000000000065d0e3 <+2435>:	mov    -0x88(%rbp),%r9d
+   0x000000000065d0ea <+2442>:	mov    -0x84(%rbp),%r10d
+   0x000000000065d0f1 <+2449>:	mov    $0x3,%esi
+   0x000000000065d0f6 <+2454>:	movabs $0x867609,%rdx
+   0x000000000065d100 <+2464>:	mov    $0x447,%ecx
+   0x000000000065d105 <+2469>:	movabs $0x867881,%r8
+   0x000000000065d10f <+2479>:	movabs $0x843782,%r11
+   0x000000000065d119 <+2489>:	mov    %r11,(%rsp)
+   0x000000000065d11d <+2493>:	mov    %r10d,0x8(%rsp)
+   0x000000000065d122 <+2498>:	mov    %rax,0x10(%rsp)
+   0x000000000065d127 <+2503>:	mov    $0x0,%al
+   0x000000000065d129 <+2505>:	call   0x420890 <sc_do_log_color>
+   0x000000000065d12e <+2510>:	jmp    0x65d1a9 <sc_hsm_decode_ecdsa_signature+2633>
+   0x000000000065d133 <+2515>:	mov    0x246eb6(%rip),%rax        # 0x8a3ff0
+   0x000000000065d13a <+2522>:	movslq %fs:(%rax),%rdx
+   0x000000000065d13e <+2526>:	mov    $0x8ac0c0,%rcx
+   0x000000000065d145 <+2533>:	mov    (%rcx),%rcx
+   0x000000000065d148 <+2536>:	xor    $0xff8c,%rdx
+   0x000000000065d14f <+2543>:	mov    (%rcx,%rdx,1),%sil
+   0x000000000065d153 <+2547>:	add    $0x1,%sil
+   0x000000000065d157 <+2551>:	mov    %sil,%dil
+   0x000000000065d15a <+2554>:	sub    $0x1,%dil
+   0x000000000065d15e <+2558>:	adc    $0x0,%sil
+   0x000000000065d162 <+2562>:	mov    %sil,(%rcx,%rdx,1)
+   0x000000000065d166 <+2566>:	movl   $0x7fc6,%fs:(%rax)
+   0x000000000065d16d <+2573>:	mov    -0x18(%rbp),%rax
+   0x000000000065d171 <+2577>:	mov    (%rax),%rdi
+   0x000000000065d174 <+2580>:	mov    -0x70(%rbp),%eax
+   0x000000000065d177 <+2583>:	mov    $0x3,%esi
+   0x000000000065d17c <+2588>:	movabs $0x867609,%rdx
+   0x000000000065d186 <+2598>:	mov    $0x447,%ecx
+   0x000000000065d18b <+2603>:	movabs $0x867881,%r8
+   0x000000000065d195 <+2613>:	movabs $0x84379b,%r9
+   0x000000000065d19f <+2623>:	mov    %eax,(%rsp)
+   0x000000000065d1a2 <+2626>:	mov    $0x0,%al
+   0x000000000065d1a4 <+2628>:	call   0x420210 <sc_do_log>
+   0x000000000065d1a9 <+2633>:	mov    -0x70(%rbp),%eax
+   0x000000000065d1ac <+2636>:	mov    %eax,-0xc(%rbp)
+
+1096	}
+   0x000000000065d1af <+2639>:	mov    -0xc(%rbp),%eax
+   0x000000000065d1b2 <+2642>:	add    $0xa8,%rsp
+   0x000000000065d1b9 <+2649>:	pop    %rbx
+   0x000000000065d1ba <+2650>:	pop    %rbp
+   0x000000000065d1bb <+2651>:	ret
+End of assembler dump.
