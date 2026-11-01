@@ -75,6 +75,29 @@ jobs:
                   print(f"{i}: {line}")
           PY
 
+      - name: 1d. Patch Codex config to use chat (not /v1/responses)
+        working-directory: exploitgym
+        run: |
+          set -x
+          python3 << 'PY'
+          from pathlib import Path
+          path = Path("src/cybergym/evaluation/agents/codex.py")
+          text = path.read_text()
+          old = 'wire_api = "responses"'
+          new = 'wire_api = "chat"'
+          if old not in text:
+              if 'wire_api = "chat"' in text:
+                  print("already patched to chat")
+              else:
+                  raise SystemExit("wire_api line not found")
+          else:
+              path.write_text(text.replace(old, new, 1))
+              print("patched wire_api responses -> chat")
+          for i, line in enumerate(path.read_text().splitlines(), 1):
+              if "wire_api" in line or "base_url" in line or "model_provider" in line:
+                  print(f"{i}: {line}")
+          PY
+
       - name: 2. Set up Python + uv
         uses: actions/setup-python@v5
         with:
@@ -182,7 +205,7 @@ jobs:
           uv run -v scripts/setup/pre_run.py data/task_ids/top3_easy.txt 2>&1 | tee /tmp/pre_run.log || true
           tail -n 80 /tmp/pre_run.log || true
 
-      - name: 8. Run agent = codex (OpenAI style + base URL)
+      - name: 8. Run agent = codex (OpenAI style + base URL + chat wire)
         working-directory: exploitgym
         run: |
           set -x
@@ -226,9 +249,9 @@ jobs:
             jq -e '.score > 0' "$f" >/dev/null 2>&1 && echo SOLVED || echo NOT_SOLVED
           done || true
           echo "===== codex.log (first task) ====="
-          find "$OUT" -name 'codex.log' | head -1 | xargs -r head -n 100
+          find "$OUT" -name 'codex.log' | head -1 | xargs -r head -n 120
           echo "===== URL / auth grep ====="
-          grep -n -iE 'openai.com|gonkarouter|base_url|401|403|responses|chat.completions|Updated Codex config' \
+          grep -n -iE 'openai.com|gonkarouter|base_url|wire_api|401|403|404|responses|chat.completions|Updated Codex config' \
             "$OUT/FULL_CONSOLE.log" \
             $(find "$OUT" -name 'codex.log' | head -5) \
             2>/dev/null | head -80 || true
@@ -269,6 +292,6 @@ jobs:
           } > "$DEST/README.md"
           git checkout -B "$BRANCH"
           git add -A
-          git diff --staged --quiet || git commit -m "logs: run ${RUN_ID} (OPENAI_BASE_URL wiring)"
+          git diff --staged --quiet || git commit -m "logs: run ${RUN_ID} (chat wire_api + OPENAI_BASE_URL)"
           git push -u origin "$BRANCH" --force
           echo "https://github.com/${{ github.repository }}/tree/${BRANCH}"
