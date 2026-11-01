@@ -1,0 +1,16 @@
+base_url = https://api.gonkarouter.io/v1/
+[2026-11-01 03:47:37 - openai._base_client:486 - DEBUG] Request options: {'method': 'get', 'url': '/models', 'post_parser': <function SyncAPIClient._request_api_list.<locals>._parser at 0x7fa02f9c5bc0>, 'json_data': None}
+[2026-11-01 03:47:37 - openai._base_client:1001 - DEBUG] Sending HTTP Request: GET https://api.gonkarouter.io/v1/models
+[2026-11-01 03:47:38 - httpx:1025 - INFO] HTTP Request: GET https://api.gonkarouter.io/v1/models "HTTP/1.1 200 OK"
+[2026-11-01 03:47:38 - openai._base_client:1039 - DEBUG] HTTP Response: GET https://api.gonkarouter.io/v1/models "200 OK" Headers({'date': 'Sun, 01 Nov 2026 03:47:38 GMT', 'content-type': 'application/json; charset=utf-8', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'alt-svc': 'h3=":443"; ma=86400', 'via': '1.1 Caddy', 'cf-cache-status': 'DYNAMIC', 'nel': '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}', 'report-to': '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=3J0aY%2F8dVjKWVRQmvRCNSPXXycs5tiz%2FyVYQPljZr0Aq%2BltpbRdq95CFWKK8USDK8ySz1VOd5vb4rSssh9ezxCHbE7hw%2F3Co2vg%2B5uhDgXJo9YuqAiEdYqLTPfCwrHH3DqAVQXI%3D"}]}', 'content-encoding': 'gzip', 'server': 'cloudflare', 'cf-ray': 'a537eb524d8fd3b6-LAX'})
+[2026-11-01 03:47:38 - openai._base_client:1047 - DEBUG] request_id: None
+models.list OK, count = 3
+ - deepseek-ai/DeepSeek-V4-Flash-0731
+ - MiniMaxAI/MiniMax-M2.7
+ - zai-org/GLM-5.3-Flash
+[2026-11-01 03:47:38 - openai._base_client:486 - DEBUG] Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-fca45c34-390c-4844-acc4-ea43852f3c3e', 'content': None, 'json_data': {'messages': [{'role': 'user', 'content': 'Reply with exactly: pong'}], 'model': 'zai-org/GLM-5.3-Flash', 'max_tokens': 32}}
+[2026-11-01 03:47:38 - openai._base_client:1001 - DEBUG] Sending HTTP Request: POST https://api.gonkarouter.io/v1/chat/completions
+[2026-11-01 03:47:47 - httpx:1025 - INFO] HTTP Request: POST https://api.gonkarouter.io/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-11-01 03:47:47 - openai._base_client:1039 - DEBUG] HTTP Response: POST https://api.gonkarouter.io/v1/chat/completions "200 OK" Headers({'date': 'Sun, 01 Nov 2026 03:47:47 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'alt-svc': 'h3=":443"; ma=86400', 'via': '1.1 Caddy', 'x-devshard-id': '148294', 'x-ratelimit-limit-requests': '200', 'x-ratelimit-remaining-requests': '199', 'x-ratelimit-reset-requests': '60s', 'x-request-id': 'req-1793504858277117013-20596029', 'cf-cache-status': 'DYNAMIC', 'nel': '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}', 'report-to': '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=FVYADLZE8Pq0koayzm0gCBYkZSz01%2F%2Fwzr%2BdeF60Qv6e9jIzxjAUKXydAz1gHS41cPFePseC92NnhWN54nWTdt9uxl7ogWrHXrC1ay%2BdwMNLVDvPSBInAW3u4FfEc%2BRorbWkfqI%3D"}]}', 'content-encoding': 'gzip', 'server': 'cloudflare', 'cf-ray': 'a537eb538ea4d3b6-LAX'})
+[2026-11-01 03:47:47 - openai._base_client:1047 - DEBUG] request_id: req-1793504858277117013-20596029
+chat OK: pong</arg_value></tool_call>pong</arg_value></tool_call>The user

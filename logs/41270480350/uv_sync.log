@@ -1,0 +1,819 @@
+DEBUG Found workspace root: /home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG Adding root workspace member: /home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG Skipping `pyproject.toml` in `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym` (no `[tool.uv]` section)
+DEBUG Searching for user configuration in: /home/runner/.config/uv/uv.toml
+DEBUG uv 0.13.6 (x86_64-unknown-linux-gnu)
+DEBUG Found project root: /home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG No Python version file found in workspace: /home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG Using Python request `>=3.12, <3.14` from `requires-python` metadata
+DEBUG Checking for Python environment at: .venv
+DEBUG Searching for Python >=3.12, <3.14 in managed installations or search path
+DEBUG Searching for managed installations at `/home/runner/.local/share/uv/python`
+DEBUG Found `cpython-3.12.15-linux-x86_64-gnu` at `/opt/hostedtoolcache/Python/3.12.15/x64/bin/python3` (first executable in the search path)
+Using CPython 3.12.15 interpreter at: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3
+Creating virtual environment at: .venv
+DEBUG Using base executable for virtual environment: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3
+DEBUG Using request connect timeout of 10s and read timeout of 30s
+DEBUG Found static `requires-dist` for: /home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/
+DEBUG Existing `uv.lock` satisfies workspace requirements
+Resolved 128 packages in 1ms
+DEBUG Identified uncached distribution: cybergym @ file:///home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG Identified uncached distribution: httpx==0.28.1
+DEBUG Identified uncached distribution: pre-commit==4.5.1
+DEBUG Identified uncached distribution: pytest==9.0.2
+DEBUG Identified uncached distribution: pytest-asyncio==1.3.0
+DEBUG Identified uncached distribution: ruff==0.15.8
+DEBUG Identified uncached distribution: ty==0.0.31
+DEBUG Identified uncached distribution: capstone==5.0.6
+DEBUG Identified uncached distribution: datasets==4.8.4
+DEBUG Identified uncached distribution: docker==7.1.0
+DEBUG Identified uncached distribution: fastapi==0.124.4
+DEBUG Identified uncached distribution: jinja2==3.1.6
+DEBUG Identified uncached distribution: pydantic==2.12.5
+DEBUG Identified uncached distribution: pydantic-settings==2.14.1
+DEBUG Identified uncached distribution: tqdm==4.67.3
+DEBUG Identified uncached distribution: uvicorn==0.33.0
+DEBUG Identified uncached distribution: litellm==1.87.1
+DEBUG Identified uncached distribution: anyio==4.12.1
+DEBUG Identified uncached distribution: certifi==2026.1.4
+DEBUG Identified uncached distribution: httpcore==1.0.9
+DEBUG Identified uncached distribution: idna==3.11
+DEBUG Identified uncached distribution: cfgv==3.5.0
+DEBUG Identified uncached distribution: identify==2.6.16
+DEBUG Identified uncached distribution: nodeenv==1.10.0
+DEBUG Identified uncached distribution: pyyaml==6.0.3
+DEBUG Identified uncached distribution: virtualenv==20.36.1
+DEBUG Identified uncached distribution: iniconfig==2.3.0
+DEBUG Identified uncached distribution: packaging==26.0
+DEBUG Identified uncached distribution: pluggy==1.6.0
+DEBUG Identified uncached distribution: pygments==2.19.2
+DEBUG Identified uncached distribution: typing-extensions==4.15.0
+DEBUG Identified uncached distribution: dill==0.4.1
+DEBUG Identified uncached distribution: filelock==3.20.3
+DEBUG Identified uncached distribution: fsspec==2026.2.0
+DEBUG Identified uncached distribution: huggingface-hub==1.8.0
+DEBUG Identified uncached distribution: multiprocess==0.70.19
+DEBUG Identified uncached distribution: numpy==2.4.4
+DEBUG Identified uncached distribution: pandas==3.0.2
+DEBUG Identified uncached distribution: pyarrow==23.0.1
+DEBUG Identified uncached distribution: requests==2.32.5
+DEBUG Identified uncached distribution: xxhash==3.6.0
+DEBUG Identified uncached distribution: urllib3==2.6.3
+DEBUG Identified uncached distribution: annotated-doc==0.0.4
+DEBUG Identified uncached distribution: starlette==0.50.0
+DEBUG Identified uncached distribution: markupsafe==3.0.3
+DEBUG Identified uncached distribution: annotated-types==0.7.0
+DEBUG Identified uncached distribution: pydantic-core==2.41.5
+DEBUG Identified uncached distribution: typing-inspection==0.4.2
+DEBUG Identified uncached distribution: python-dotenv==1.0.1
+DEBUG Identified uncached distribution: click==8.1.8
+DEBUG Identified uncached distribution: h11==0.16.0
+DEBUG Identified uncached distribution: aiohttp==3.13.3
+DEBUG Identified uncached distribution: fastuuid==0.14.0
+DEBUG Identified uncached distribution: importlib-metadata==8.5.0
+DEBUG Identified uncached distribution: jsonschema==4.23.0
+DEBUG Identified uncached distribution: openai==2.24.0
+DEBUG Identified uncached distribution: tiktoken==0.12.0
+DEBUG Identified uncached distribution: tokenizers==0.22.2
+DEBUG Identified uncached distribution: apscheduler==3.11.2
+DEBUG Identified uncached distribution: azure-identity==1.25.2
+DEBUG Identified uncached distribution: azure-storage-blob==12.28.0
+DEBUG Identified uncached distribution: backoff==2.2.1
+DEBUG Identified uncached distribution: boto3==1.43.1
+DEBUG Identified uncached distribution: cryptography==46.0.7
+DEBUG Identified uncached distribution: fastapi-sso==0.19.0
+DEBUG Identified uncached distribution: granian==2.5.7
+DEBUG Identified uncached distribution: gunicorn==23.0.0
+DEBUG Identified uncached distribution: litellm-enterprise==0.1.41
+DEBUG Identified uncached distribution: litellm-proxy-extras==0.4.73
+DEBUG Identified uncached distribution: mcp==1.26.0
+DEBUG Identified uncached distribution: orjson==3.11.6
+DEBUG Identified uncached distribution: polars==1.38.1
+DEBUG Identified uncached distribution: pyjwt==2.12.0
+DEBUG Identified uncached distribution: pynacl==1.6.2
+DEBUG Identified uncached distribution: pyroscope-io==0.8.16
+DEBUG Identified uncached distribution: python-multipart==0.0.27
+DEBUG Identified uncached distribution: restrictedpython==8.1
+DEBUG Identified uncached distribution: rich==13.9.4
+DEBUG Identified uncached distribution: rq==2.7.0
+DEBUG Identified uncached distribution: soundfile==0.12.1
+DEBUG Identified uncached distribution: uvloop==0.21.0
+DEBUG Identified uncached distribution: websockets==15.0.1
+DEBUG Identified uncached distribution: distlib==0.4.0
+DEBUG Identified uncached distribution: platformdirs==4.5.1
+DEBUG Identified uncached distribution: hf-xet==1.4.3
+DEBUG Identified uncached distribution: typer==0.23.1
+DEBUG Identified uncached distribution: python-dateutil==2.9.0.post0
+DEBUG Identified uncached distribution: charset-normalizer==3.4.4
+DEBUG Identified uncached distribution: aiohappyeyeballs==2.6.1
+DEBUG Identified uncached distribution: aiosignal==1.4.0
+DEBUG Identified uncached distribution: attrs==26.1.0
+DEBUG Identified uncached distribution: frozenlist==1.8.0
+DEBUG Identified uncached distribution: multidict==6.7.1
+DEBUG Identified uncached distribution: propcache==0.4.1
+DEBUG Identified uncached distribution: yarl==1.23.0
+DEBUG Identified uncached distribution: zipp==3.23.0
+DEBUG Identified uncached distribution: jsonschema-specifications==2025.9.1
+DEBUG Identified uncached distribution: referencing==0.37.0
+DEBUG Identified uncached distribution: rpds-py==0.30.0
+DEBUG Identified uncached distribution: distro==1.9.0
+DEBUG Identified uncached distribution: jiter==0.13.0
+DEBUG Identified uncached distribution: sniffio==1.3.1
+DEBUG Identified uncached distribution: regex==2026.4.4
+DEBUG Identified uncached distribution: tzlocal==5.3.1
+DEBUG Identified uncached distribution: azure-core==1.39.0
+DEBUG Identified uncached distribution: msal==1.35.1
+DEBUG Identified uncached distribution: msal-extensions==1.3.1
+DEBUG Identified uncached distribution: isodate==0.7.2
+DEBUG Identified uncached distribution: botocore==1.43.26
+DEBUG Identified uncached distribution: jmespath==1.1.0
+DEBUG Identified uncached distribution: s3transfer==0.17.1
+DEBUG Identified uncached distribution: cffi==2.0.0
+DEBUG Identified uncached distribution: oauthlib==3.3.1
+DEBUG Identified uncached distribution: httpx-sse==0.4.3
+DEBUG Identified uncached distribution: sse-starlette==3.3.4
+DEBUG Identified uncached distribution: polars-runtime-32==1.38.1
+DEBUG Identified uncached distribution: markdown-it-py==4.0.0
+DEBUG Identified uncached distribution: croniter==6.2.2
+DEBUG Identified uncached distribution: redis==7.4.0
+DEBUG Identified uncached distribution: shellingham==1.5.4
+DEBUG Identified uncached distribution: six==1.17.0
+DEBUG Identified uncached distribution: pycparser==3.0
+DEBUG Identified uncached distribution: email-validator==2.3.0
+DEBUG Identified uncached distribution: mdurl==0.1.2
+DEBUG Identified uncached distribution: dnspython==2.8.0
+DEBUG Using request connect timeout of 10s and read timeout of 30s
+DEBUG Computed cache info: Timestamp(SystemTime { tv_sec: 1793504782, tv_nsec: 847510975 }), None, None, {}, {"src": Some(Timestamp(Timestamp(SystemTime { tv_sec: 1793504782, tv_nsec: 848117135 })))}. Most recently modified: pyproject.toml
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/2c/a5/da83046273d990f256cb79796a190bbf7ec999269705ddc609403f8c6b06/pyarrow-23.0.1-cp312-cp312-manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/2c/a5/da83046273d990f256cb79796a190bbf7ec999269705ddc609403f8c6b06/pyarrow-23.0.1-cp312-cp312-manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/ff/18/8275c95ef09e81ab0c01a162c7b780ce3fbc49066b5d532c6b6ab3dc0118/litellm-1.87.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/ff/18/8275c95ef09e81ab0c01a162c7b780ce3fbc49066b5d532c6b6ab3dc0118/litellm-1.87.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/be/e6/5a5ec1033613e7812e5b19ec8c2a1889834fde336d8812d53019eac6e04a/botocore-1.43.26-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/be/e6/5a5ec1033613e7812e5b19ec8c2a1889834fde336d8812d53019eac6e04a/botocore-1.43.26-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/f2/5a/61d60ec5cc0ab37cbd5a699edb2f9af2875b7fdfdfb2a4608ca3cc5f0448/polars_runtime_32-1.38.1-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/f2/5a/61d60ec5cc0ab37cbd5a699edb2f9af2875b7fdfdfb2a4608ca3cc5f0448/polars_runtime_32-1.38.1-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/f8/22/d7f2fabdba4fae9f3b570e5605d5eb4500dcb7b770d3217dca4428484b17/ruff-0.15.8-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/f8/22/d7f2fabdba4fae9f3b570e5605d5eb4500dcb7b770d3217dca4428484b17/ruff-0.15.8-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/c4/a8/3a61a721472959ab0ce865ef05d10b0d6bfe27ce8801c99f33d4fa996e65/pandas-3.0.2-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/c4/a8/3a61a721472959ab0ce865ef05d10b0d6bfe27ce8801c99f33d4fa996e65/pandas-3.0.2-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/6a/2a/dc2228b2888f51192c7dc766106cd475f1b768c10caaf9727659726f7391/virtualenv-20.36.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/6a/2a/dc2228b2888f51192c7dc766106cd475f1b768c10caaf9727659726f7391/virtualenv-20.36.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/c8/37/01eccd25d23f5aaa7f7ff1a87b5b215469f6b202cf689a1812b71c1e7f6b/ty-0.0.31-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/c8/37/01eccd25d23f5aaa7f7ff1a87b5b215469f6b202cf689a1812b71c1e7f6b/ty-0.0.31-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/06/a7/b4e6a19925c900be9f98bec0a75e6e8f79bb53bdeb891916609ab3958967/uvloop-0.21.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/06/a7/b4e6a19925c900be9f98bec0a75e6e8f79bb53bdeb891916609ab3958967/uvloop-0.21.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/c7/0b/333ddab4270c4f5b972f980adef4faa66951a4aaf646ca067af597f15563/cryptography-46.0.7-cp311-abi3-manylinux_2_34_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/c7/0b/333ddab4270c4f5b972f980adef4faa66951a4aaf646ca067af597f15563/cryptography-46.0.7-cp311-abi3-manylinux_2_34_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/df/9a/a24b26dc8a65f0ecc0fe5be981a19e61e7ca963b85e062c083f3a9100529/hf_xet-1.4.3-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/df/9a/a24b26dc8a65f0ecc0fe5be981a19e61e7ca963b85e062c083f3a9100529/hf_xet-1.4.3-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/2e/76/932be4b50ef6ccedf9d3c6639b056a967a86258c6d9200643f01269211ca/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/2e/76/932be4b50ef6ccedf9d3c6639b056a967a86258c6d9200643f01269211ca/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/eb/8f/88d792e9cacd6ff3bd9a50100586ddc665e02a917662c17d30931f778542/pyroscope_io-0.8.16-py2.py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/eb/8f/88d792e9cacd6ff3bd9a50100586ddc665e02a917662c17d30931f778542/pyroscope_io-0.8.16-py2.py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/6f/c3/b8c65cf86d473b6e99e6d985c678cb192c9b9776a966a2f4b009696bb650/granian-2.5.7-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/6f/c3/b8c65cf86d473b6e99e6d985c678cb192c9b9776a966a2f4b009696bb650/granian-2.5.7-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/0d/76/941cc9f73529988688a665a5c0ecff1112b3d95ab48f81db5f7606f522d3/pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/0d/76/941cc9f73529988688a665a5c0ecff1112b3d95ab48f81db5f7606f522d3/pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/0a/0d/0e3ecece05b7a7e87ab9fb587855548da437a061326fff64a223b6dcb78a/numpy-2.4.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/0a/0d/0e3ecece05b7a7e87ab9fb587855548da437a061326fff64a223b6dcb78a/numpy-2.4.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/86/f6/a62cbbf13f0ac80a70f71b1672feba90fdb21fd7abd8dbf25c0105fb6fa3/aiohttp-3.13.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/86/f6/a62cbbf13f0ac80a70f71b1672feba90fdb21fd7abd8dbf25c0105fb6fa3/aiohttp-3.13.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/78/7f/ec0687bbe8f6b128f1d41d90ec7cedfd1aaaa4ecb1ae8d334acc7dad8013/capstone-5.0.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/78/7f/ec0687bbe8f6b128f1d41d90ec7cedfd1aaaa4ecb1ae8d334acc7dad8013/capstone-5.0.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/c7/21/705964c7812476f378728bdf590ca4b771ec72385c533964653c68e86bdc/pygments-2.19.2-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/c7/21/705964c7812476f378728bdf590ca4b771ec72385c533964653c68e86bdc/pygments-2.19.2-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/c9/a8/b917096b1accc9acd878819a49d3d84875731a41eb665f6ebc826b1af99e/pynacl-1.6.2-cp38-abi3-manylinux_2_34_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/c9/a8/b917096b1accc9acd878819a49d3d84875731a41eb665f6ebc826b1af99e/pynacl-1.6.2-cp38-abi3-manylinux_2_34_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/c1/07/7591f4efd29e65071c3a61b53725036ea8f73366a4920a481ebddaf8d0ca/soundfile-0.12.1-py2.py3-none-manylinux_2_31_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/c1/07/7591f4efd29e65071c3a61b53725036ea8f73366a4920a481ebddaf8d0ca/soundfile-0.12.1-py2.py3-none-manylinux_2_31_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/f4/90/3dae6cc5436137ebd38944d396b5849e167896fc2073da643a49f372dc4f/tiktoken-0.12.0-cp312-cp312-manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/f4/90/3dae6cc5436137ebd38944d396b5849e167896fc2073da643a49f372dc4f/tiktoken-0.12.0-cp312-cp312-manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/c9/30/844dc675ee6902579b8eef01ed23917cc9319a1c9c0c14ec6e39340c96d0/openai-2.24.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/c9/30/844dc675ee6902579b8eef01ed23917cc9319a1c9c0c14ec6e39340c96d0/openai-2.24.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/0a/49/737c1a6273c585719858261753da0b688454d1b634438ccba8a9c4eb5aab/polars-1.38.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/0a/49/737c1a6273c585719858261753da0b688454d1b634438ccba8a9c4eb5aab/polars-1.38.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/11/0e/a9f6f81013e0deaf559b25711623864970fe6a098314e374ccb1540a4152/regex-2026.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/11/0e/a9f6f81013e0deaf559b25711623864970fe6a098314e374ccb1540a4152/regex-2026.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/a9/ae/8a3a16ea4d202cb641b51d2681bdd3d482c1c592d7570b3fa264730829ce/huggingface_hub-1.8.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/a9/ae/8a3a16ea4d202cb641b51d2681bdd3d482c1c592d7570b3fa264730829ce/huggingface_hub-1.8.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/8b/9d/b3589d3877982d4f2329302ef98a8026e7f4443c765c46cfecc8858c6b4b/pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/8b/9d/b3589d3877982d4f2329302ef98a8026e7f4443c765c46cfecc8858c6b4b/pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/b0/e5/247d094108e42ac26363ab8dc57f168840cf7c05774b40ffeb0d78868fcc/datasets-4.8.4-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/b0/e5/247d094108e42ac26363ab8dc57f168840cf7c05774b40ffeb0d78868fcc/datasets-4.8.4-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/33/6b/e0547afaf41bf2c42e52430072fa5658766e3d65bd4b03a563d1b6336f57/distlib-0.4.0-py2.py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/33/6b/e0547afaf41bf2c42e52430072fa5658766e3d65bd4b03a563d1b6336f57/distlib-0.4.0-py2.py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/5a/87/b70ad306ebb6f9b585f114d0ac2137d792b48be34d732d60e597c2f8465a/pydantic-2.12.5-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/5a/87/b70ad306ebb6f9b585f114d0ac2137d792b48be34d732d60e597c2f8465a/pydantic-2.12.5-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/d8/3a/6ef2047a072e54e1142718d433d50e9514c999a58f51abfff7902f3a72f8/azure_storage_blob-12.28.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/d8/3a/6ef2047a072e54e1142718d433d50e9514c999a58f51abfff7902f3a72f8/azure_storage_blob-12.28.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/74/3a/95deec7db1eb53979973ebd156f3369a72732208d1391cd2e5d127062a32/redis-7.4.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/74/3a/95deec7db1eb53979973ebd156f3369a72732208d1391cd2e5d127062a32/redis-7.4.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/60/1b/6f8f29f3f995c7ffdde46a626ddccd7c63aefc0efae881dc13b6e5d5bb16/rpds_py-0.30.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/60/1b/6f8f29f3f995c7ffdde46a626ddccd7c63aefc0efae881dc13b6e5d5bb16/rpds_py-0.30.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/3b/ab/b3226f0bd7cdcf710fbede2b3548584366da3b19b5021e74f5bde2a8fa3f/pytest-9.0.2-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/3b/ab/b3226f0bd7cdcf710fbede2b3548584366da3b19b5021e74f5bde2a8fa3f/pytest-9.0.2-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/f8/4c/09b93e30e984a187bc8aaa3510e1ec8dcbdcd71ca05d2f56aac0492453aa/jiter-0.13.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/f8/4c/09b93e30e984a187bc8aaa3510e1ec8dcbdcd71ca05d2f56aac0492453aa/jiter-0.13.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/ba/5a/18ad964b0086c6e62e2e7500f7edc89e3faa45033c71c1893d34eed2b2de/dnspython-2.8.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/ba/5a/18ad964b0086c6e62e2e7500f7edc89e3faa45033c71c1893d34eed2b2de/dnspython-2.8.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/16/6e/c0fb547eef61293153348f12e0f75a06abb322664b34a1573a7760501336/fastuuid-0.14.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/16/6e/c0fb547eef61293153348f12e0f75a06abb322664b34a1573a7760501336/fastuuid-0.14.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/f3/8d/5e5be3ced1d12966fefb5c4ea3b2a5b480afcea36406559442c6e31d4a48/multidict-6.7.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/f3/8d/5e5be3ced1d12966fefb5c4ea3b2a5b480afcea36406559442c6e31d4a48/multidict-6.7.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/19/71/39c7c0d87f8d4e6c020a393182060eaefeeae6c01dab6a84ec346f2567df/rich-13.9.4-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/19/71/39c7c0d87f8d4e6c020a393182060eaefeeae6c01dab6a84ec346f2567df/rich-13.9.4-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/6a/bd/d91c5e39f490a49df14320f4e8c80161cfcce09f1e2cde1edd16a551abb3/frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/6a/bd/d91c5e39f490a49df14320f4e8c80161cfcce09f1e2cde1edd16a551abb3/frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/fd/d9/eaa1f80170d2b7c5ba23f3b59f766f3a0bb41155fbc32a69adfa1adaaef9/mcp-1.26.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/fd/d9/eaa1f80170d2b7c5ba23f3b59f766f3a0bb41155fbc32a69adfa1adaaef9/mcp-1.26.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/5d/19/fd3ef348460c80af7bb4669ea7926651d1f95c23ff2df18b9d24bab4f3fa/pre_commit-4.5.1-py2.py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/5d/19/fd3ef348460c80af7bb4669ea7926651d1f95c23ff2df18b9d24bab4f3fa/pre_commit-4.5.1-py2.py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/46/4b/3aae6835b8e5f44ea6a68348ad90f78134047b503765087be2f9912140ea/propcache-0.4.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/46/4b/3aae6835b8e5f44ea6a68348ad90f78134047b503765087be2f9912140ea/propcache-0.4.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/78/2d/7fa73dfa841b5ac06c7b8855cfc18622132e365f5b81d02230333ff26e9e/cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/78/2d/7fa73dfa841b5ac06c7b8855cfc18622132e365f5b81d02230333ff26e9e/cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/7e/d6/8ebcd05b01a580f086ac9a97fb9fac65c09a4b012161cc97c21a336e880b/azure_core-1.39.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/7e/d6/8ebcd05b01a580f086ac9a97fb9fac65c09a4b012161cc97c21a336e880b/azure_core-1.39.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/e6/ab/fb21f4c939bb440104cc2b396d3be1d9b7a9fd3c6c2a53d98c45b3d7c954/fsspec-2026.2.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/e6/ab/fb21f4c939bb440104cc2b396d3be1d9b7a9fd3c6c2a53d98c45b3d7c954/fsspec-2026.2.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/11/4f/426f91b96701ec2f37bb2b8cec664eff4f658a11f3fa9d94f0a887ea6d2b/xxhash-3.6.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/11/4f/426f91b96701ec2f37bb2b8cec664eff4f658a11f3fa9d94f0a887ea6d2b/xxhash-3.6.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/9b/77/f658c76f9e9a52c784bd836aaca6fd5b9aae176f1f53273e758a2bcda695/azure_identity-1.25.2-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/9b/77/f658c76f9e9a52c784bd836aaca6fd5b9aae176f1f53273e758a2bcda695/azure_identity-1.25.2-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/14/8f/aa61f528fba38578ec553c145857a181384c72b98156f858ca5c8e82d9d3/websockets-15.0.1-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/14/8f/aa61f528fba38578ec553c145857a181384c72b98156f858ca5c8e82d9d3/websockets-15.0.1-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+   Building cybergym @ file:///home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG Building: cybergym @ file:///home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG Assessing Python executable as base candidate: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3
+DEBUG Creating build environment for: cybergym @ file:///home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG Using base executable for virtual environment: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3
+DEBUG Resolving build requirements
+DEBUG Solving with installed Python version: 3.12.15
+DEBUG Solving with target Python version: >=3.12.15
+DEBUG Adding direct dependency: hatchling*
+Downloading tokenizers (3.1MiB)
+Downloading pynacl (1.3MiB)
+Downloading botocore (14.5MiB)
+Downloading pyarrow (45.4MiB)
+Downloading pydantic-core (2.0MiB)
+Downloading virtualenv (5.7MiB)
+Downloading hf-xet (4.0MiB)
+Downloading numpy (15.9MiB)
+Downloading cryptography (4.3MiB)
+Downloading openai (1.1MiB)
+Downloading pygments (1.2MiB)
+Downloading tiktoken (1.1MiB)
+Downloading ruff (10.7MiB)
+Downloading granian (3.0MiB)
+Downloading uvloop (4.5MiB)
+Downloading aiohttp (1.7MiB)
+Downloading pandas (10.4MiB)
+Downloading pyroscope-io (3.3MiB)
+Downloading soundfile (1.1MiB)
+Downloading litellm (16.3MiB)
+Downloading capstone (1.4MiB)
+Downloading ty (10.7MiB)
+Downloading polars-runtime-32 (43.6MiB)
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/be/9c/92789c596b8df838baa98fa71844d84283302f7604ed565dafe5a6b5041a/oauthlib-3.3.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/be/9c/92789c596b8df838baa98fa71844d84283302f7604ed565dafe5a6b5041a/oauthlib-3.3.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/c0/10/d20b513afe03acc89ec33948320a5544d31f21b05368436d580dec4e234d/charset_normalizer-3.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/c0/10/d20b513afe03acc89ec33948320a5544d31f21b05368436d580dec4e234d/charset_normalizer-3.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/e6/ad/3cc14f097111b4de0040c83a525973216457bbeeb63739ef1ed275c1c021/certifi-2026.1.4-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/e6/ad/3cc14f097111b4de0040c83a525973216457bbeeb63739ef1ed275c1c021/certifi-2026.1.4-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/71/70/38998b950a97ea279e6bd657575d22d1a2047256caf707d9a10fbce4f065/multiprocess-0.70.19-py312-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/71/70/38998b950a97ea279e6bd657575d22d1a2047256caf707d9a10fbce4f065/multiprocess-0.70.19-py312-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/e3/26/57c6fb270950d476074c087527a558ccb6f4436657314bfb6cdf484114c4/docker-7.1.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/e3/26/57c6fb270950d476074c087527a558ccb6f4436657314bfb6cdf484114c4/docker-7.1.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/29/34/d564aff85847ab92c82ee43a7a203683566c2fca0723a5f50aebbe759603/orjson-3.11.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/29/34/d564aff85847ab92c82ee43a7a203683566c2fca0723a5f50aebbe759603/orjson-3.11.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/e5/d1/b8b2d5420c51cd8f7ec044ceecbf24b060156680b26519e1d482e160c3c8/boto3-1.43.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/e5/d1/b8b2d5420c51cd8f7ec044ceecbf24b060156680b26519e1d482e160c3c8/boto3-1.43.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/65/16/284b7304dbf6eea7fe79352ca808f310b7e724648e5f3cf7c13a7a54d682/litellm_enterprise-0.1.41-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/65/16/284b7304dbf6eea7fe79352ca808f310b7e724648e5f3cf7c13a7a54d682/litellm_enterprise-0.1.41-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/39/08/aaaad47bc4e9dc8c725e68f9d04865dbcb2052843ff09c97b08904852d84/urllib3-2.6.3-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/39/08/aaaad47bc4e9dc8c725e68f9d04865dbcb2052843ff09c97b08904852d84/urllib3-2.6.3-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/1e/77/dc8c558f7593132cf8fefec57c4f60c83b16941c574ac5f619abb3ae7933/dill-0.4.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/1e/77/dc8c558f7593132cf8fefec57c4f60c83b16941c574ac5f619abb3ae7933/dill-0.4.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/96/86/16815fddf056ca998853c6dc525397edf0b43559bb4073a80d2bc7fe8009/msal-1.35.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/96/86/16815fddf056ca998853c6dc525397edf0b43559bb4073a80d2bc7fe8009/msal-1.35.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/1d/64/7e85f5f47495ebb0bb5f30a4f4b54b64277a40a14be79c34052df97ac7ab/litellm_proxy_extras-0.4.73-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/1d/64/7e85f5f47495ebb0bb5f30a4f4b54b64277a40a14be79c34052df97ac7ab/litellm_proxy_extras-0.4.73-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/0d/1a/3b64696bc0c33aa1d86d3e6add03c4e0afe51110264fd41208bd95c2665c/rq-2.7.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/0d/1a/3b64696bc0c33aa1d86d3e6add03c4e0afe51110264fd41208bd95c2665c/rq-2.7.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/38/0e/27be9fdef66e72d64c0cdc3cc2823101b80585f8119b5c112c2e8f5f7dab/anyio-4.12.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/38/0e/27be9fdef66e72d64c0cdc3cc2823101b80585f8119b5c112c2e8f5f7dab/anyio-4.12.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/3e/57/aa70121b5008f44031be645a61a7c4abc24e0e888ad3fc8fda916f4d188e/fastapi-0.124.4-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/3e/57/aa70121b5008f44031be645a61a7c4abc24e0e888ad3fc8fda916f4d188e/fastapi-0.124.4-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/66/3e/868e5c3364b6cee19ff3e1a122194fa4ce51def02c61023970442162859e/yarl-1.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/66/3e/868e5c3364b6cee19ff3e1a122194fa4ce51def02c61023970442162859e/yarl-1.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/b8/58/40fbbcefeda82364720eba5cf2270f98496bdfa19ea75b4cccae79c698e6/identify-2.6.16-py2.py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/b8/58/40fbbcefeda82364720eba5cf2270f98496bdfa19ea75b4cccae79c698e6/identify-2.6.16-py2.py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/94/54/e7d793b573f298e1c9013b8c4dade17d481164aa517d1d7148619c2cedbf/markdown_it_py-4.0.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/94/54/e7d793b573f298e1c9013b8c4dade17d481164aa517d1d7148619c2cedbf/markdown_it_py-4.0.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/7e/d4/7ebdbd03970677812aac39c869717059dbb71a4cfc033ca6e5221787892c/click-8.1.8-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/7e/d4/7ebdbd03970677812aac39c869717059dbb71a4cfc033ca6e5221787892c/click-8.1.8-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/69/4a/4f9dbeb84e8850557c02365a0eee0649abe5eb1d84af92a25731c6c0f922/jsonschema-4.23.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/69/4a/4f9dbeb84e8850557c02365a0eee0649abe5eb1d84af92a25731c6c0f922/jsonschema-4.23.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/85/dd/904873250a6554fbae40cddbf9198e3cc37a2f1319d5e1a5ce82fe269c17/s3transfer-0.17.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/85/dd/904873250a6554fbae40cddbf9198e3cc37a2f1319d5e1a5ce82fe269c17/s3transfer-0.17.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/cb/7d/6dac2a6e1eba33ee43f318edbed4ff29151a49b5d37f080aad1e6469bca4/gunicorn-23.0.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/cb/7d/6dac2a6e1eba33ee43f318edbed4ff29151a49b5d37f080aad1e6469bca4/gunicorn-23.0.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/1e/d3/26bf1008eb3d2daa8ef4cacc7f3bfdc11818d111f7e2d0201bc6e3b49d45/annotated_doc-0.0.4-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/1e/d3/26bf1008eb3d2daa8ef4cacc7f3bfdc11818d111f7e2d0201bc6e3b49d45/annotated_doc-0.0.4-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/16/e1/3079a9ff9b8e11b846c6ac5c8b5bfb7ff225eee721825310c91b3b50304f/tqdm-4.67.3-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/16/e1/3079a9ff9b8e11b846c6ac5c8b5bfb7ff225eee721825310c91b3b50304f/tqdm-4.67.3-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/b7/b9/c538f279a4e237a006a2c98387d081e9eb060d203d8ed34467cc0f0b9b53/packaging-26.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/b7/b9/c538f279a4e237a006a2c98387d081e9eb060d203d8ed34467cc0f0b9b53/packaging-26.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/db/3c/33bac158f8ab7f89b2e59426d5fe2e4f63f7ed25df84c036890172b412b5/cfgv-3.5.0-py2.py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/db/3c/33bac158f8ab7f89b2e59426d5fe2e4f63f7ed25df84c036890172b412b5/cfgv-3.5.0-py2.py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/fb/76/641ae371508676492379f16e2fa48f4e2c11741bd63c48be4b12a6b09cba/aiosignal-1.4.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/fb/76/641ae371508676492379f16e2fa48f4e2c11741bd63c48be4b12a6b09cba/aiosignal-1.4.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/d2/fd/6668e5aec43ab844de6fc74927e155a3b37bf40d7c3790e49fc0406b6578/httpx_sse-0.4.3-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/d2/fd/6668e5aec43ab844de6fc74927e155a3b37bf40d7c3790e49fc0406b6578/httpx_sse-0.4.3-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/e9/44/75a9c9421471a6c4805dbf2356f7c181a29c1879239abab1ea2cc8f38b40/sniffio-1.3.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/e9/44/75a9c9421471a6c4805dbf2356f7c181a29c1879239abab1ea2cc8f38b40/sniffio-1.3.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/2e/54/647ade08bf0db230bfea292f893923872fd20be6ac6f53b2b936ba839d75/zipp-3.23.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/2e/54/647ade08bf0db230bfea292f893923872fd20be6ac6f53b2b936ba839d75/zipp-3.23.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/78/b6/6307fbef88d9b5ee7421e68d78a9f162e0da4900bc5f5793f6d3d0e34fb8/annotated_types-0.7.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/78/b6/6307fbef88d9b5ee7421e68d78a9f162e0da4900bc5f5793f6d3d0e34fb8/annotated_types-0.7.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/dc/9b/47798a6c91d8bdb567fe2698fe81e0c6b7cb7ef4d13da4114b41d239f65d/typing_inspection-0.4.2-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/dc/9b/47798a6c91d8bdb567fe2698fe81e0c6b7cb7ef4d13da4114b41d239f65d/typing_inspection-0.4.2-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/f8/7f/3de5402f39890ac5660b86bcf5c03f9d855dad5c4ed764866d7b592b46fd/sse_starlette-3.3.4-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/f8/7f/3de5402f39890ac5660b86bcf5c03f9d855dad5c4ed764866d7b592b46fd/sse_starlette-3.3.4-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/e5/35/f8b19922b6a25bc0880171a2f1a003eaeb93657475193ab516fd87cac9da/pytest_asyncio-1.3.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/e5/35/f8b19922b6a25bc0880171a2f1a003eaeb93657475193ab516fd87cac9da/pytest_asyncio-1.3.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/df/73/b6e24bd22e6720ca8ee9a85a0c4a2971af8497d8f3193fa05390cbd46e09/backoff-2.2.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/df/73/b6e24bd22e6720ca8ee9a85a0c4a2971af8497d8f3193fa05390cbd46e09/backoff-2.2.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/0f/15/5bf3b99495fb160b63f95972b81750f18f7f4e02ad051373b669d17d44f2/aiohappyeyeballs-2.6.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/0f/15/5bf3b99495fb160b63f95972b81750f18f7f4e02ad051373b669d17d44f2/aiohappyeyeballs-2.6.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/c2/14/e2a54fabd4f08cd7af1c07030603c3356b74da07f7cc056e600436edfa17/tzlocal-5.3.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/c2/14/e2a54fabd4f08cd7af1c07030603c3356b74da07f7cc056e600436edfa17/tzlocal-5.3.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/b5/36/7fb70f04bf00bc646cd5bb45aa9eddb15e19437a28b8fb2b4a5249fac770/filelock-3.20.3-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/b5/36/7fb70f04bf00bc646cd5bb45aa9eddb15e19437a28b8fb2b4a5249fac770/filelock-3.20.3-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/cb/28/3bfe2fa5a7b9c46fe7e13c97bda14c895fb10fa2ebf1d0abb90e0cea7ee1/platformdirs-4.5.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/cb/28/3bfe2fa5a7b9c46fe7e13c97bda14c895fb10fa2ebf1d0abb90e0cea7ee1/platformdirs-4.5.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/5e/75/bd9b7bb966668920f06b200e84454c8f3566b102183bc55c5473d96cb2b9/msal_extensions-1.3.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/5e/75/bd9b7bb966668920f06b200e84454c8f3566b102183bc55c5473d96cb2b9/msal_extensions-1.3.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/14/2f/967ba146e6d58cf6a652da73885f52fc68001525b4197effc174321d70b4/jmespath-1.1.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/14/2f/967ba146e6d58cf6a652da73885f52fc68001525b4197effc174321d70b4/jmespath-1.1.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/15/aa/0aca39a37d3c7eb941ba736ede56d689e7be91cab5d9ca846bde3999eba6/isodate-0.7.2-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/15/aa/0aca39a37d3c7eb941ba736ede56d689e7be91cab5d9ca846bde3999eba6/isodate-0.7.2-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/3c/2e/8d0c2ab90a8c1d9a24f0399058ab8519a3279d1bd4289511d74e909f060e/markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/3c/2e/8d0c2ab90a8c1d9a24f0399058ab8519a3279d1bd4289511d74e909f060e/markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/88/b2/d0896bdcdc8d28a7fc5717c305f1a861c26e18c05047949fb371034d98bd/nodeenv-1.10.0-py2.py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/88/b2/d0896bdcdc8d28a7fc5717c305f1a861c26e18c05047949fb371034d98bd/nodeenv-1.10.0-py2.py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/d7/61/d2ac0800cb1f390ec2aad464ea4cc5944de285fabc8f987327da4633f17d/fastapi_sso-0.19.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/d7/61/d2ac0800cb1f390ec2aad464ea4cc5944de285fabc8f987327da4633f17d/fastapi_sso-0.19.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/1a/c0/3848f4006f7e164ee20833ca984067e4b3fc99fe7f1dfa88b4927e681299/restrictedpython-8.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/1a/c0/3848f4006f7e164ee20833ca984067e4b3fc99fe7f1dfa88b4927e681299/restrictedpython-8.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/99/78/4126abcbdbd3c559d43e0db7f7b9173fc6befe45d39a2856cc0b8ec2a5a6/python_multipart-0.0.27-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/99/78/4126abcbdbd3c559d43e0db7f7b9173fc6befe45d39a2856cc0b8ec2a5a6/python_multipart-0.0.27-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/15/70/70f895f404d363d291dcf62c12c85fdd47619ad9674ac0f53364d035925a/pyjwt-2.12.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/15/70/70f895f404d363d291dcf62c12c85fdd47619ad9674ac0f53364d035925a/pyjwt-2.12.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/de/15/545e2b6cf2e3be84bc1ed85613edd75b8aea69807a71c26f4ca6a9258e82/email_validator-2.3.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/de/15/545e2b6cf2e3be84bc1ed85613edd75b8aea69807a71c26f4ca6a9258e82/email_validator-2.3.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/a0/d9/a1e041c5e7caa9a05c925f4bdbdfb7f006d1f74996af53467bc394c97be7/importlib_metadata-8.5.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/a0/d9/a1e041c5e7caa9a05c925f4bdbdfb7f006d1f74996af53467bc394c97be7/importlib_metadata-8.5.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/d0/39/783980e78cb92c2d7bdb1fc7dbc86e94ccc6d58224d76a7f1f51b6c51e30/croniter-6.2.2-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/d0/39/783980e78cb92c2d7bdb1fc7dbc86e94ccc6d58224d76a7f1f51b6c51e30/croniter-6.2.2-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/18/67/36e9267722cc04a6b9f15c7f3441c2363321a3ea07da7ae0c0707beb2a9c/typing_extensions-4.15.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/18/67/36e9267722cc04a6b9f15c7f3441c2363321a3ea07da7ae0c0707beb2a9c/typing_extensions-4.15.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/0c/c3/44f3fbbfa403ea2a7c779186dc20772604442dde72947e7d01069cbe98e3/pycparser-3.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/0c/c3/44f3fbbfa403ea2a7c779186dc20772604442dde72947e7d01069cbe98e3/pycparser-3.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/98/79/2e2620337ef1e4ef7a058b351603b765f59ac28e6e3ac7c5e7cdee9ea1ab/uvicorn-0.33.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/98/79/2e2620337ef1e4ef7a058b351603b765f59ac28e6e3ac7c5e7cdee9ea1ab/uvicorn-0.33.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/d5/91/9b286ab899c008c2cb05e8be99814807e7fbbd33f0c0c960470826e5ac82/typer-0.23.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/d5/91/9b286ab899c008c2cb05e8be99814807e7fbbd33f0c0c960470826e5ac82/typer-0.23.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/ae/8d/f1af3832f5e6eb13ba94ee809e72b8ecb5eef226d27ee0bef7d963d943c7/pydantic_settings-2.14.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/ae/8d/f1af3832f5e6eb13ba94ee809e72b8ecb5eef226d27ee0bef7d963d943c7/pydantic_settings-2.14.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/d9/52/1064f510b141bd54025f9b55105e26d1fa970b9be67ad766380a3c9b74b0/starlette-0.50.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/d9/52/1064f510b141bd54025f9b55105e26d1fa970b9be67ad766380a3c9b74b0/starlette-0.50.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/9f/64/2e54428beba8d9992aa478bb8f6de9e4ecaa5f8f513bcfd567ed7fb0262d/apscheduler-3.11.2-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/9f/64/2e54428beba8d9992aa478bb8f6de9e4ecaa5f8f513bcfd567ed7fb0262d/apscheduler-3.11.2-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/1e/db/4254e3eabe8020b458f1a747140d32277ec7a271daf1d235b70dc0b4e6e3/requests-2.32.5-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/1e/db/4254e3eabe8020b458f1a747140d32277ec7a271daf1d235b70dc0b4e6e3/requests-2.32.5-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/0e/61/66938bbb5fc52dbdf84594873d5b51fb1f7c7794e9c0f5bd885f30bc507b/idna-3.11-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/0e/61/66938bbb5fc52dbdf84594873d5b51fb1f7c7794e9c0f5bd885f30bc507b/idna-3.11-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl
+DEBUG No cache entry for: https://pypi.org/simple/hatchling/
+DEBUG Sending fresh GET request for: https://pypi.org/simple/hatchling/
+ Downloaded openai
+ Downloaded tiktoken
+ Downloaded pynacl
+ Downloaded pygments
+ Downloaded soundfile
+ Downloaded capstone
+DEBUG Searching for a compatible version of hatchling (*)
+DEBUG Selecting: hatchling==1.33.0 [compatible] (hatchling-1.33.0-py3-none-any.whl)
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/32/64/4afe5dd77b2939a93e8c9513f8082dbd049ecba9c1484a379a0f6ae29d6b/hatchling-1.33.0-py3-none-any.whl.metadata
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/32/64/4afe5dd77b2939a93e8c9513f8082dbd049ecba9c1484a379a0f6ae29d6b/hatchling-1.33.0-py3-none-any.whl.metadata
+ Downloaded aiohttp
+ Downloaded pydantic-core
+DEBUG Adding transitive dependency for hatchling==1.33.0: packaging>=24.2
+DEBUG Adding transitive dependency for hatchling==1.33.0: pathspec>=0.10.1
+DEBUG Adding transitive dependency for hatchling==1.33.0: pluggy>=1.0.0
+DEBUG Adding transitive dependency for hatchling==1.33.0: tomlkit>=0.11.1
+DEBUG Adding transitive dependency for hatchling==1.33.0: trove-classifiers*
+DEBUG No cache entry for: https://pypi.org/simple/packaging/
+DEBUG Sending fresh GET request for: https://pypi.org/simple/packaging/
+DEBUG No cache entry for: https://pypi.org/simple/pathspec/
+DEBUG Sending fresh GET request for: https://pypi.org/simple/pathspec/
+DEBUG No cache entry for: https://pypi.org/simple/pluggy/
+DEBUG Sending fresh GET request for: https://pypi.org/simple/pluggy/
+DEBUG No cache entry for: https://pypi.org/simple/tomlkit/
+DEBUG Sending fresh GET request for: https://pypi.org/simple/tomlkit/
+DEBUG No cache entry for: https://pypi.org/simple/trove-classifiers/
+DEBUG Sending fresh GET request for: https://pypi.org/simple/trove-classifiers/
+DEBUG Searching for a compatible version of packaging (>=24.2)
+DEBUG Selecting: packaging==26.3 [compatible] (packaging-26.3-py3-none-any.whl)
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl.metadata
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl.metadata
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl.metadata
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl.metadata
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/30/81/0da8afb52a71d0a4f2bd3152357b1a441e393b286374802b9d3addab4ab5/trove_classifiers-2026.9.21.13-py3-none-any.whl.metadata
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/30/81/0da8afb52a71d0a4f2bd3152357b1a441e393b286374802b9d3addab4ab5/trove_classifiers-2026.9.21.13-py3-none-any.whl.metadata
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/da/46/7d84138a60a8bd796825b2d38ebe92d0d16501ca57d501b7c5d677401bbc/tomlkit-0.15.2-py3-none-any.whl.metadata
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/da/46/7d84138a60a8bd796825b2d38ebe92d0d16501ca57d501b7c5d677401bbc/tomlkit-0.15.2-py3-none-any.whl.metadata
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/40/9e/2b38731e0fc536806f16490e1a12d7f0dc2a1235aa8cc07bcc75416a7daa/pluggy-1.7.0-py3-none-any.whl.metadata
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/40/9e/2b38731e0fc536806f16490e1a12d7f0dc2a1235aa8cc07bcc75416a7daa/pluggy-1.7.0-py3-none-any.whl.metadata
+ Downloaded tokenizers
+ Downloaded granian
+DEBUG Searching for a compatible version of pathspec (>=0.10.1)
+DEBUG Selecting: pathspec==1.1.1 [compatible] (pathspec-1.1.1-py3-none-any.whl)
+DEBUG Searching for a compatible version of pluggy (>=1.0.0)
+DEBUG Selecting: pluggy==1.7.0 [compatible] (pluggy-1.7.0-py3-none-any.whl)
+DEBUG Searching for a compatible version of tomlkit (>=0.11.1)
+DEBUG Selecting: tomlkit==0.15.2 [compatible] (tomlkit-0.15.2-py3-none-any.whl)
+DEBUG Searching for a compatible version of trove-classifiers (*)
+DEBUG Selecting: trove-classifiers==2026.9.21.13 [compatible] (trove_classifiers-2026.9.21.13-py3-none-any.whl)
+DEBUG Tried 6 versions: hatchling 1, packaging 1, pathspec 1, pluggy 1, tomlkit 1, trove-classifiers 1
+DEBUG marker environment resolution took 0.556s
+DEBUG Installing `trove-classifiers==2026.9.21.13`, `packaging==26.3`, `hatchling==1.33.0`, `pathspec==1.1.1`, `pluggy==1.7.0`, `tomlkit==0.15.2` in `/home/runner/.cache/uv/builds-v0/.tmpChyuDu`
+DEBUG Identified uncached distribution: trove-classifiers==2026.9.21.13
+DEBUG Identified uncached distribution: packaging==26.3
+DEBUG Identified uncached distribution: hatchling==1.33.0
+DEBUG Identified uncached distribution: pathspec==1.1.1
+DEBUG Identified uncached distribution: pluggy==1.7.0
+DEBUG Identified uncached distribution: tomlkit==0.15.2
+DEBUG Downloading and building requirements for build: trove-classifiers==2026.9.21.13, packaging==26.3, hatchling==1.33.0, pathspec==1.1.1, pluggy==1.7.0, tomlkit==0.15.2
+ Downloaded pyroscope-io
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/32/64/4afe5dd77b2939a93e8c9513f8082dbd049ecba9c1484a379a0f6ae29d6b/hatchling-1.33.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/32/64/4afe5dd77b2939a93e8c9513f8082dbd049ecba9c1484a379a0f6ae29d6b/hatchling-1.33.0-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/30/81/0da8afb52a71d0a4f2bd3152357b1a441e393b286374802b9d3addab4ab5/trove_classifiers-2026.9.21.13-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/30/81/0da8afb52a71d0a4f2bd3152357b1a441e393b286374802b9d3addab4ab5/trove_classifiers-2026.9.21.13-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/da/46/7d84138a60a8bd796825b2d38ebe92d0d16501ca57d501b7c5d677401bbc/tomlkit-0.15.2-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/da/46/7d84138a60a8bd796825b2d38ebe92d0d16501ca57d501b7c5d677401bbc/tomlkit-0.15.2-py3-none-any.whl
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/40/9e/2b38731e0fc536806f16490e1a12d7f0dc2a1235aa8cc07bcc75416a7daa/pluggy-1.7.0-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/40/9e/2b38731e0fc536806f16490e1a12d7f0dc2a1235aa8cc07bcc75416a7daa/pluggy-1.7.0-py3-none-any.whl
+ Downloaded hf-xet
+DEBUG Installing build requirements: trove-classifiers==2026.9.21.13, tomlkit==0.15.2, pluggy==1.7.0, pathspec==1.1.1, hatchling==1.33.0, packaging==26.3
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/YyMj1X9QDnupHdJi/trove_classifiers-2026.9.21.13.dist-info/RECORD` to `/home/runner/.cache/uv/builds-v0/.tmpChyuDu/lib/python3.12/site-packages/trove_classifiers-2026.9.21.13.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/6UdLl8bT32uskcp6/pathspec-1.1.1.dist-info/RECORD` to `/home/runner/.cache/uv/builds-v0/.tmpChyuDu/lib/python3.12/site-packages/pathspec-1.1.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/LCMpV3y9sIF_fn3g/tomlkit-0.15.2.dist-info/RECORD` to `/home/runner/.cache/uv/builds-v0/.tmpChyuDu/lib/python3.12/site-packages/tomlkit-0.15.2.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/87IOaPkW2wnOi5hZ/pluggy/_manager.py` to `/home/runner/.cache/uv/builds-v0/.tmpChyuDu/lib/python3.12/site-packages/pluggy/_manager.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/TR-mnhDjRmCCuGvs/hatchling/utils/constants.py` to `/home/runner/.cache/uv/builds-v0/.tmpChyuDu/lib/python3.12/site-packages/hatchling/utils/constants.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/01q1q1LXxNcL_2QJ/packaging-26.3.dist-info/RECORD` to `/home/runner/.cache/uv/builds-v0/.tmpChyuDu/lib/python3.12/site-packages/packaging-26.3.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Creating PEP 517 build environment
+DEBUG Calling `hatchling.build.get_requires_for_build_editable()`
+ Downloaded cryptography
+ Downloaded uvloop
+ Downloaded virtualenv
+ Downloaded ruff
+ Downloaded pandas
+ Downloaded botocore
+ Downloaded numpy
+ Downloaded ty
+ Downloaded litellm
+DEBUG Installing extra requirements for build backend
+DEBUG Solving with installed Python version: 3.12.15
+DEBUG Solving with target Python version: >=3.12.15
+DEBUG Adding direct dependency: hatchling*
+DEBUG Adding direct dependency: editables>=0.3, <1.dev0
+DEBUG Searching for a compatible version of hatchling (*)
+DEBUG Selecting: hatchling==1.33.0 [compatible] (hatchling-1.33.0-py3-none-any.whl)
+DEBUG Adding transitive dependency for hatchling==1.33.0: packaging>=24.2
+DEBUG Adding transitive dependency for hatchling==1.33.0: pathspec>=0.10.1
+DEBUG Adding transitive dependency for hatchling==1.33.0: pluggy>=1.0.0
+DEBUG Adding transitive dependency for hatchling==1.33.0: tomlkit>=0.11.1
+DEBUG Adding transitive dependency for hatchling==1.33.0: trove-classifiers*
+DEBUG No cache entry for: https://pypi.org/simple/editables/
+DEBUG Sending fresh GET request for: https://pypi.org/simple/editables/
+DEBUG Searching for a compatible version of editables (>=0.3, <1.dev0)
+DEBUG Selecting: editables==0.6 [compatible] (editables-0.6-py3-none-any.whl)
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/cc/0e/d095533037fc9468f947b19f2da53f869804632b508808de41e86e801797/editables-0.6-py3-none-any.whl.metadata
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/cc/0e/d095533037fc9468f947b19f2da53f869804632b508808de41e86e801797/editables-0.6-py3-none-any.whl.metadata
+DEBUG Searching for a compatible version of packaging (>=24.2)
+DEBUG Selecting: packaging==26.3 [compatible] (packaging-26.3-py3-none-any.whl)
+DEBUG Searching for a compatible version of pathspec (>=0.10.1)
+DEBUG Selecting: pathspec==1.1.1 [compatible] (pathspec-1.1.1-py3-none-any.whl)
+DEBUG Searching for a compatible version of pluggy (>=1.0.0)
+DEBUG Selecting: pluggy==1.7.0 [compatible] (pluggy-1.7.0-py3-none-any.whl)
+DEBUG Searching for a compatible version of tomlkit (>=0.11.1)
+DEBUG Selecting: tomlkit==0.15.2 [compatible] (tomlkit-0.15.2-py3-none-any.whl)
+DEBUG Searching for a compatible version of trove-classifiers (*)
+DEBUG Selecting: trove-classifiers==2026.9.21.13 [compatible] (trove_classifiers-2026.9.21.13-py3-none-any.whl)
+DEBUG Tried 7 versions: editables 1, hatchling 1, packaging 1, pathspec 1, pluggy 1, tomlkit 1, trove-classifiers 1
+DEBUG marker environment resolution took 0.008s
+DEBUG Installing `trove-classifiers==2026.9.21.13`, `pluggy==1.7.0`, `hatchling==1.33.0`, `editables==0.6`, `pathspec==1.1.1`, `packaging==26.3`, `tomlkit==0.15.2` in `/home/runner/.cache/uv/builds-v0/.tmpChyuDu`
+DEBUG Requirement already installed: trove-classifiers==2026.9.21.13
+DEBUG Requirement already installed: pluggy==1.7.0
+DEBUG Requirement already installed: hatchling==1.33.0
+DEBUG Identified uncached distribution: editables==0.6
+DEBUG Requirement already installed: pathspec==1.1.1
+DEBUG Requirement already installed: packaging==26.3
+DEBUG Requirement already installed: tomlkit==0.15.2
+DEBUG Downloading and building requirement for build: editables==0.6
+DEBUG No cache entry for: https://files.pythonhosted.org/packages/cc/0e/d095533037fc9468f947b19f2da53f869804632b508808de41e86e801797/editables-0.6-py3-none-any.whl
+DEBUG Sending fresh GET request for: https://files.pythonhosted.org/packages/cc/0e/d095533037fc9468f947b19f2da53f869804632b508808de41e86e801797/editables-0.6-py3-none-any.whl
+DEBUG Installing build requirement: editables==0.6
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/y9F3rzwrCS4OLQ-w/editables-0.6.dist-info/RECORD` to `/home/runner/.cache/uv/builds-v0/.tmpChyuDu/lib/python3.12/site-packages/editables-0.6.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Calling `hatchling.build.build_editable(__import__("os").fsdecode(b"/home/runner/.cache/uv/builds-v0/.tmpcAz3i5"), {}, None)`
+ Downloaded polars-runtime-32
+ Downloaded pyarrow
+DEBUG Built `cybergym @ file:///home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym` into `cybergym-0.1.0-py3-none-any.whl`
+      Built cybergym @ file:///home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+Prepared 125 packages in 1.41s
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/MNokTzbvV-Oa3Stl/typing_inspection/typing_objects.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/typing_inspection/typing_objects.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/pCX7lkj6QxNU1G_g/pycparser-3.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pycparser-3.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/t9xgnhgmN502fngO/azure_identity-1.25.2.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/azure_identity-1.25.2.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/ZEZ8nc8_CxhowcVT/referencing/retrieval.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/referencing/retrieval.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/unQEDQHSpr6KFccP/yaml/resolver.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/yaml/resolver.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/4uNo6hVPYKuolM4H/isodate/tzinfo.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/isodate/tzinfo.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/Yk4RW9tcUTednpB3/sse_starlette/event.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/sse_starlette/event.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/A1HqvnVhAflQ0wwt/markupsafe-3.0.3.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/markupsafe-3.0.3.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/SBhMHTwS1CPhFWtq/backoff-2.2.1.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/backoff-2.2.1.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/hwhzRpzcEPBGrcCA/websockets-15.0.1.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/websockets-15.0.1.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/E8WVEluymTC7Gggt/h11-0.16.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/h11-0.16.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/bvKgRcEpRl0zc1vZ/pytest_asyncio-1.3.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pytest_asyncio-1.3.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/PINARJsiUSmxrYh5/urllib3-2.6.3.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/urllib3-2.6.3.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/EcosL7DS_Dbkt2wB/typer-0.23.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/typer-0.23.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/syP022d77bBaDURw/polars/dataframe/group_by.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/polars/dataframe/group_by.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/C59OtdTA32TRRri6/python_multipart-0.0.27.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/python_multipart-0.0.27.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/PLY9lvyrEj4gKkMW/pydantic-2.12.5.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pydantic-2.12.5.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/nEc6wlM9otT9ojRB/tiktoken/_educational.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/tiktoken/_educational.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/ros3t5TG6F9DZS4o/typing_extensions-4.15.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/typing_extensions-4.15.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/RSH4kMANdjn4-ocH/uvicorn-0.33.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/uvicorn-0.33.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/eF6JHI6815DlAEJs/nacl/public.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/nacl/public.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/FKuXZA5k94-JykE1/python_dotenv-1.0.1.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/python_dotenv-1.0.1.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/rnTS6ORQ5xrSJzAD/rq/repeat.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/rq/repeat.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/42GCppkqxAh0coQC/pygments/filter.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pygments/filter.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/lCrmUOVfvGcTzyDc/xxhash-3.6.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/xxhash-3.6.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/sUj4Txwi7lDh5CMW/jsonschema_specifications/schemas/draft4/metaschema.json` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/jsonschema_specifications/schemas/draft4/metaschema.json`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/UF0j2yd4KrVfpQnJ/tzlocal-5.3.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/tzlocal-5.3.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/GR8szfbE0LrQZbAt/fsspec/implementations/reference.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/fsspec/implementations/reference.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/M7VhlJCNv7_PH--G/filelock/asyncio.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/filelock/asyncio.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/9aB2gSvo9cIB8uxN/distlib/t64.exe` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/distlib/t64.exe`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/NmqPr6T3x0Ffwdxl/regex/_main.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/regex/_main.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/MU6EZSbE4sxQhdzR/distro-1.9.0.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/distro-1.9.0.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/RkQqCskw5v6ed5a2/jmespath/lexer.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/jmespath/lexer.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/96SopwUbViCQ-1Gd/pre_commit-4.5.1.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pre_commit-4.5.1.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/iMv1koCAm-dBTvJZ/platformdirs-4.5.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/platformdirs-4.5.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/BGm5wYgN3alYMjry/datasets-4.8.4.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/datasets-4.8.4.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/FGDPWlWPW2OTYyb1/pluggy-1.6.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pluggy-1.6.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/e94ZmgR9uGAKPzrm/msal_extensions-1.3.1.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/msal_extensions-1.3.1.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/p8iuKkJQAIP4fUBL/restrictedpython-8.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/restrictedpython-8.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/-ZL6NiozaIDMK6TH/fastapi_sso-0.19.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/fastapi_sso-0.19.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/8vnMTcW4f7mP6gnX/_soundfile.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/_soundfile.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/94vhgMsBCB7qh5V-/croniter-6.2.2.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/croniter-6.2.2.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/utyHgiA06RdXJNRH/capstone/sparc.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/capstone/sparc.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/bbHVDnSGuhgum0zs/_cffi_backend.cpython-312-x86_64-linux-gnu.so` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/_cffi_backend.cpython-312-x86_64-linux-gnu.so`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/YjjvN8UNEs1-9996/httpx/_multipart.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/httpx/_multipart.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/sl_k2mfdZjOkP1fB/azure_core-1.39.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/azure_core-1.39.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/xrgHfP5nIAnwUWpy/litellm_enterprise/litellm_core_utils/litellm_logging.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/litellm_enterprise/litellm_core_utils/litellm_logging.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/Jo-IKBIbLfjJw-aR/pyjwt-2.12.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pyjwt-2.12.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/p1CP7768DzeFyevf/nodeenv-1.10.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/nodeenv-1.10.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/aM2YjHp9mkcQRR8A/email_validator/exceptions.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/email_validator/exceptions.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/sfeDNcHxvRz36gw2/importlib_metadata/_compat.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/importlib_metadata/_compat.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/6LbDAzyX1a9csvpV/attrs-26.1.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/attrs-26.1.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/sbcqiRSjz71AejnD/dateutil/_common.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/dateutil/_common.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/yXOMWVpcGKM-4wBj/anyio/from_thread.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/anyio/from_thread.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/Zy7U_atN0Z0h5YPb/pydantic_settings/utils.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pydantic_settings/utils.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/cElHmmQZie9D6Kb1/mcp-1.26.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/mcp-1.26.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/K3EDIRGJOGj5QIrr/requests/_internal_utils.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/requests/_internal_utils.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/84a8pGIbzghVtsEi/fastapi-0.124.4.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/fastapi-0.124.4.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/iOO8kv-tC8_yyzTz/idna/package_data.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/idna/package_data.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/dfx91bcBIZx720NY/aiohttp/base_protocol.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/aiohttp/base_protocol.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/JGWhIRVd_wQAc00R/apscheduler-3.11.2.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/apscheduler-3.11.2.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/NJPIsQ9bu9luhHU9/openai-2.24.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/openai-2.24.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/IcdEQkpdlzG974e9/huggingface_hub-1.8.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/huggingface_hub-1.8.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/ASOwpnONCxsy0evu/pydantic_core/_pydantic_core.pyi` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pydantic_core/_pydantic_core.pyi`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/gaWvPHlxr-2ECPgh/tokenizers/tools/visualizer-styles.css` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/tokenizers/tools/visualizer-styles.css`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/o9aWLMFvXiW3gBCJ/propcache-0.4.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/propcache-0.4.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/bk6sajhIpN47pNRL/multidict/_abc.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/multidict/_abc.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/gJNKNBfUiVW4ds1o/granian/utils/__init__.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/granian/utils/__init__.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/Vw6ubMpQcjxFrief/frozenlist/_frozenlist.cpython-312-x86_64-linux-gnu.so` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/frozenlist/_frozenlist.cpython-312-x86_64-linux-gnu.so`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/Vb5igslgY_swWB9r/aiosignal/__init__.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/aiosignal/__init__.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/owycZDjjVRX89Nts/rich-13.9.4.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/rich-13.9.4.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/FM2MO5CCNNVNZqkz/iniconfig/exceptions.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/iniconfig/exceptions.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/WaFM_OMC77g5WB8e/pyroscope/_native.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pyroscope/_native.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/IZiPpf7KP1U_CM6m/cfgv.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/cfgv.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/XfCld5-kopE2Fjh0/hf_xet-1.4.3.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/hf_xet-1.4.3.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/PCG97FFvEiJQ7tt1/annotated_doc/main.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/annotated_doc/main.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/nkuYHPQrcnk8EkMd/fastuuid-0.14.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/fastuuid-0.14.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/cfoKKzv2UKlujQJc/httpx_sse/_api.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/httpx_sse/_api.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/NVZmRET64y2jRtrD/cryptography/fernet.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/cryptography/fernet.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/krNBg-CZ1c0861H8/dnspython-2.8.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/dnspython-2.8.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/7PTzLbejDMgsjZ9T/tqdm-4.67.3.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/tqdm-4.67.3.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/yAIm8v1zP7IiEaCQ/annotated_types/test_cases.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/annotated_types/test_cases.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/Io4Qq3gnlseAtSRg/uvloop/sslproto.pyx` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/uvloop/sslproto.pyx`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/UP06OFDRF7vSlYpj/zipp/_functools.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/zipp/_functools.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/nvdj4GUthCxFs1Ne/httpcore/_backends/auto.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/httpcore/_backends/auto.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/xBM2Tipvb70WdH4q/virtualenv-20.36.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/virtualenv-20.36.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/2_QVMko9mK_AXKnC/jiter/jiter.cpython-312-x86_64-linux-gnu.so` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/jiter/jiter.cpython-312-x86_64-linux-gnu.so`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/nK0rgdzZI0TdkE8Q/charset_normalizer-3.4.4.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/charset_normalizer-3.4.4.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/i11MHQIBGTUTqw-A/shellingham-1.5.4.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/shellingham-1.5.4.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/iQo9WBiqj00Ou1Vf/six-1.17.0.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/six-1.17.0.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/_YQrykXFoKXckLhv/pytest-9.0.2.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pytest-9.0.2.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/6KJ2Ik2ORixxnUts/mdurl/_format.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/mdurl/_format.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/_2Z9W5WdpMBqUj2P/sniffio/_impl.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/sniffio/_impl.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/jPGujrcW7hiGUw05/s3transfer-0.17.1.dist-info/NOTICE.txt` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/s3transfer-0.17.1.dist-info/NOTICE.txt`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/J-2SCylQqW7k8TU_/ruff/_find_ruff.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/ruff/_find_ruff.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/iqv1aKPmMd6WXGAz/dill/source.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/dill/source.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/kZXFy8kQ5P87-WeK/pandas/pyproject.toml` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pandas/pyproject.toml`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/8BAec1yl0fGkxcEb/jsonschema-4.23.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/jsonschema-4.23.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/SDnadkbsYBnA-k9K/certifi-2026.1.4.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/certifi-2026.1.4.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/A8zHhLpuXcw4QXcP/boto3-1.43.1.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/boto3-1.43.1.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/agLiPF96ZIOKLoDi/rpds_py-0.30.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/rpds_py-0.30.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/YepKMuDl8HFSMinP/packaging-26.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/packaging-26.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/fbhqZPkidVAmhpte/jinja2-3.1.6.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/jinja2-3.1.6.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/RI1nH0YveqfCnZ8X/starlette/templating.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/starlette/templating.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/iC2lWYaDeiSZlMRs/yarl-1.23.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/yarl-1.23.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/rg1Jrd4mfLZV1B0u/docker/utils/build.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/docker/utils/build.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/qT2FH595UGtaiyFg/azure_storage_blob-12.28.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/azure_storage_blob-12.28.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/3rBktrh2BsSvAK3L/_multiprocess/__init__.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/_multiprocess/__init__.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/EB8BFdN9Qt3_n_u3/click-8.1.8.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/click-8.1.8.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/Gh3BKY5azINrmjVP/msal-1.35.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/msal-1.35.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/_oldzB1j8d4Q5neC/redis/event.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/redis/event.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/TA1j5itDDVTxO77N/gunicorn-23.0.0.dist-info/LICENSE` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/gunicorn-23.0.0.dist-info/LICENSE`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/GUp3ge93DqVqXbR6/litellm_proxy_extras/_logging.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/litellm_proxy_extras/_logging.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/s0nwBqmwCECpEyWq/orjson/__init__.pyi` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/orjson/__init__.pyi`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/FUsEkpP1MMjzveAe/identify/interpreters.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/identify/interpreters.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/hJOybbabYUPb06gI/markdown_it_py-4.0.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/markdown_it_py-4.0.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/CKXXxs_X5tYgzi-T/aiohappyeyeballs/impl.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/aiohappyeyeballs/impl.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/pDs6roto7OpRZG2D/oauthlib-3.3.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/oauthlib-3.3.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/bJthqhXjAOWV-g7D/numpy.libs/libquadmath-96973f99-934c22de.so.0.0.0` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/numpy.libs/libquadmath-96973f99-934c22de.so.0.0.0`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/cL2JXY0_Bp3EdQqX/litellm-1.87.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/litellm-1.87.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/xxAIWzb48541qjC-/ty/__init__.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/ty/__init__.py`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/22MwJ1eKvM9ZVmuo/pyarrow-23.0.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/pyarrow-23.0.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/gfV6UinVgdAgzXAW/cybergym-0.1.0.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/cybergym-0.1.0.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/YhM7D0ENIPeGXZh0/polars_runtime_32-1.38.1.dist-info/RECORD` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/polars_runtime_32-1.38.1.dist-info/RECORD`: Operation not supported (os error 95), falling back
+DEBUG Failed to reflink `/home/runner/.cache/uv/archive-v0/xuP8N0Om7Nf8kxJ8/botocore/loaders.py` to `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/lib/python3.12/site-packages/botocore/loaders.py`: Operation not supported (os error 95), falling back
+Installed 125 packages in 160ms
+ + aiohappyeyeballs==2.6.1
+ + aiohttp==3.13.3
+ + aiosignal==1.4.0
+ + annotated-doc==0.0.4
+ + annotated-types==0.7.0
+ + anyio==4.12.1
+ + apscheduler==3.11.2
+ + attrs==26.1.0
+ + azure-core==1.39.0
+ + azure-identity==1.25.2
+ + azure-storage-blob==12.28.0
+ + backoff==2.2.1
+ + boto3==1.43.1
+ + botocore==1.43.26
+ + capstone==5.0.6
+ + certifi==2026.1.4
+ + cffi==2.0.0
+ + cfgv==3.5.0
+ + charset-normalizer==3.4.4
+ + click==8.1.8
+ + croniter==6.2.2
+ + cryptography==46.0.7
+ + cybergym==0.1.0 (from file:///home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym)
+ + datasets==4.8.4
+ + dill==0.4.1
+ + distlib==0.4.0
+ + distro==1.9.0
+ + dnspython==2.8.0
+ + docker==7.1.0
+ + email-validator==2.3.0
+ + fastapi==0.124.4
+ + fastapi-sso==0.19.0
+ + fastuuid==0.14.0
+ + filelock==3.20.3
+ + frozenlist==1.8.0
+ + fsspec==2026.2.0
+ + granian==2.5.7
+ + gunicorn==23.0.0
+ + h11==0.16.0
+ + hf-xet==1.4.3
+ + httpcore==1.0.9
+ + httpx==0.28.1
+ + httpx-sse==0.4.3
+ + huggingface-hub==1.8.0
+ + identify==2.6.16
+ + idna==3.11
+ + importlib-metadata==8.5.0
+ + iniconfig==2.3.0
+ + isodate==0.7.2
+ + jinja2==3.1.6
+ + jiter==0.13.0
+ + jmespath==1.1.0
+ + jsonschema==4.23.0
+ + jsonschema-specifications==2025.9.1
+ + litellm==1.87.1
+ + litellm-enterprise==0.1.41
+ + litellm-proxy-extras==0.4.73
+ + markdown-it-py==4.0.0
+ + markupsafe==3.0.3
+ + mcp==1.26.0
+ + mdurl==0.1.2
+ + msal==1.35.1
+ + msal-extensions==1.3.1
+ + multidict==6.7.1
+ + multiprocess==0.70.19
+ + nodeenv==1.10.0
+ + numpy==2.4.4
+ + oauthlib==3.3.1
+ + openai==2.24.0
+ + orjson==3.11.6
+ + packaging==26.0
+ + pandas==3.0.2
+ + platformdirs==4.5.1
+ + pluggy==1.6.0
+ + polars==1.38.1
+ + polars-runtime-32==1.38.1
+ + pre-commit==4.5.1
+ + propcache==0.4.1
+ + pyarrow==23.0.1
+ + pycparser==3.0
+ + pydantic==2.12.5
+ + pydantic-core==2.41.5
+ + pydantic-settings==2.14.1
+ + pygments==2.19.2
+ + pyjwt==2.12.0
+ + pynacl==1.6.2
+ + pyroscope-io==0.8.16
+ + pytest==9.0.2
+ + pytest-asyncio==1.3.0
+ + python-dateutil==2.9.0.post0
+ + python-dotenv==1.0.1
+ + python-multipart==0.0.27
+ + pyyaml==6.0.3
+ + redis==7.4.0
+ + referencing==0.37.0
+ + regex==2026.4.4
+ + requests==2.32.5
+ + restrictedpython==8.1
+ + rich==13.9.4
+ + rpds-py==0.30.0
+ + rq==2.7.0
+ + ruff==0.15.8
+ + s3transfer==0.17.1
+ + shellingham==1.5.4
+ + six==1.17.0
+ + sniffio==1.3.1
+ + soundfile==0.12.1
+ + sse-starlette==3.3.4
+ + starlette==0.50.0
+ + tiktoken==0.12.0
+ + tokenizers==0.22.2
+ + tqdm==4.67.3
+ + ty==0.0.31
+ + typer==0.23.1
+ + typing-extensions==4.15.0
+ + typing-inspection==0.4.2
+ + tzlocal==5.3.1
+ + urllib3==2.6.3
+ + uvicorn==0.33.0
+ + uvloop==0.21.0
+ + virtualenv==20.36.1
+ + websockets==15.0.1
+ + xxhash==3.6.0
+ + yarl==1.23.0
+ + zipp==3.23.0

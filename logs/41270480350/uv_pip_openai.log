@@ -1,0 +1,30 @@
+DEBUG Found workspace root: /home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG Adding root workspace member: /home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym
+DEBUG Skipping `pyproject.toml` in `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym` (no `[tool.uv]` section)
+DEBUG Searching for user configuration in: /home/runner/.config/uv/uv.toml
+DEBUG uv 0.13.6 (x86_64-unknown-linux-gnu)
+DEBUG Searching for default Python interpreter in virtual environments
+DEBUG Found `cpython-3.12.15-linux-x86_64-gnu` at `/home/runner/work/probable-octo-funicular/probable-octo-funicular/exploitgym/.venv/bin/python` (virtual environment)
+DEBUG Using Python 3.12.15 environment at: .venv
+DEBUG Requirement satisfied: annotated-types>=0.6.0
+DEBUG Requirement satisfied: anyio
+DEBUG Requirement satisfied: anyio>=3.5.0, <5
+DEBUG Requirement satisfied: certifi
+DEBUG Requirement satisfied: distro>=1.7.0, <2
+DEBUG Requirement satisfied: h11>=0.16
+DEBUG Requirement satisfied: httpcore==1.*
+DEBUG Requirement satisfied: httpx>=0.23.0, <1
+DEBUG Requirement satisfied: idna
+DEBUG Requirement satisfied: idna>=2.8
+DEBUG Requirement satisfied: jiter>=0.10.0, <1
+DEBUG Requirement satisfied: openai
+DEBUG Requirement satisfied: pydantic-core==2.41.5
+DEBUG Requirement satisfied: pydantic>=1.9.0, <3
+DEBUG Requirement satisfied: sniffio
+DEBUG Requirement satisfied: tqdm>4
+DEBUG Requirement satisfied: typing-extensions>=4.11, <5
+DEBUG Requirement satisfied: typing-extensions>=4.12.0
+DEBUG Requirement satisfied: typing-extensions>=4.14.1
+DEBUG Requirement satisfied: typing-extensions>=4.5 ; python_full_version < '3.13'
+DEBUG Requirement satisfied: typing-inspection>=0.4.2
+Checked 1 package in 48ms
