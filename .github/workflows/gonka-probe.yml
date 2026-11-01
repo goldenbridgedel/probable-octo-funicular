@@ -1,4 +1,4 @@
-name: Ultra-Verbose Top-3 Validation (GLM-5.3-Flash)
+name: Ultra-Verbose Top-3 Validation (GLM-5.3-Flash) — dual agent
 
 on:
   workflow_dispatch:
@@ -17,53 +17,28 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 420
     env:
+      # Same Gonka key exposed under both names
       OPENAI_API_KEY: ${{ secrets.GONKA_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.GONKA_API_KEY }}
       OPENAI_BASE_URL: "https://api.gonkarouter.io/v1"
+      ANTHROPIC_BASE_URL: "https://api.gonkarouter.io"
       MODEL: "zai-org/GLM-5.3-Flash"
-      # Maximum verbosity everywhere
       OPENAI_LOG: "debug"
       PYTHONUNBUFFERED: "1"
       PYTHONLOGLEVEL: "DEBUG"
       UV_LOG: "debug"
-      UV_VERBOSE: "1"
       DOCKER_BUILDKIT: "1"
-      DOCKER_CLI_DEBUG: "1"
-      RUST_LOG: "debug"
-      LITELLM_LOG: "DEBUG"
 
     steps:
-      - name: 0. System info & disk space (ultra)
+      - name: 0. System info
         run: |
           set -x
-          echo "############################################################"
-          echo "##### 0. FULL RUNNER / HOST INSPECTION"
-          echo "############################################################"
           date -u
-          echo "----- uname -----"
           uname -a
-          echo "----- os-release -----"
-          cat /etc/os-release || true
-          echo "----- cpu -----"
-          nproc
-          lscpu || true
-          echo "----- memory -----"
           free -h
-          cat /proc/meminfo | head -30 || true
-          echo "----- disk -----"
           df -h
-          lsblk || true
-          echo "----- docker -----"
+          nproc
           docker version || true
-          docker info || true
-          echo "----- env (safe subset) -----"
-          env | sort | grep -E '^(PATH|HOME|USER|GITHUB_|RUNNER_|OPENAI_|MODEL|UV_|PYTHON|DOCKER|CYBERGYM)' || true
-          echo "----- whoami / id -----"
-          whoami
-          id
-          echo "----- sysctl interesting -----"
-          sysctl kernel.randomize_va_space 2>/dev/null || true
-          sysctl kernel.core_pattern 2>/dev/null || true
-          echo "############################################################"
 
       - name: 1. Checkout ExploitGym
         uses: actions/checkout@v4
@@ -71,104 +46,51 @@ jobs:
           repository: sunblaze-ucb/exploitgym
           path: exploitgym
 
-      - name: 1b. Post-checkout inspection
-        run: |
-          set -x
-          echo "===== AFTER CHECKOUT ====="
-          pwd
-          ls -la
-          ls -la exploitgym || true
-          du -sh exploitgym 2>/dev/null || true
-          find exploitgym -maxdepth 3 -type d | head -80 || true
-
       - name: 2. Set up Python + uv
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: |
-          set -x
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-          export PATH="$HOME/.local/bin:$PATH"
-          which uv
-          uv --version
-          python3 --version
-          which python3
+      - run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: 3. Install dependencies (maximum verbosity)
+      - name: 3. Install dependencies
         working-directory: exploitgym
         run: |
           set -x
-          echo "===== UV SYNC (verbose) ====="
-          uv sync --extra proxy -v 2>&1 | tee /tmp/uv_sync.log
-          echo "===== UV PIP INSTALL OPENAI ====="
-          uv pip install openai -v 2>&1 | tee /tmp/uv_pip_openai.log
-          echo "===== INSTALLED PACKAGES ====="
-          uv pip list 2>&1 | tee /tmp/uv_pip_list.log
-          echo "===== VENV PYTHON ====="
-          .venv/bin/python -V
-          .venv/bin/python -c "import sys; print(sys.executable); print(sys.path)"
-          echo "===== KEY MODULE IMPORT TEST ====="
-          .venv/bin/python -c "import openai, docker, httpx; print('openai', openai.__version__); print('docker ok'); print('httpx', httpx.__version__)" || true
+          uv sync --extra proxy -v
+          uv pip install openai anthropic -v
+          uv pip list
 
       - name: 4. Create top-3 task list
         working-directory: exploitgym
         run: |
-          set -x
           mkdir -p data/task_ids
           cat > data/task_ids/top3_easy.txt << 'EOF'
           user:cybergym/arvo_44034
           user:cybergym/arvo_66627
           user:cybergym/arvo_50683
           EOF
-          echo "===== TASK LIST ====="
           cat -n data/task_ids/top3_easy.txt
-          echo "===== TASK LIST ABS PATH ====="
-          readlink -f data/task_ids/top3_easy.txt
-          wc -l data/task_ids/top3_easy.txt
-          echo "====================="
 
-      - name: 5. Pull Docker images (ultra verbose)
+      - name: 5. Pull Docker images
         working-directory: exploitgym
         run: |
           set -x
-          echo "===== BEFORE IMAGE PULL ====="
-          docker images
-          docker system df || true
-          df -h
-          echo "===== PULLING IMAGES ====="
           uv run -v scripts/setup/pull_images.py data/task_ids/top3_easy.txt --user-modes exp.none 2>&1 | tee /tmp/pull_images.log || true
-          echo "===== AFTER IMAGE PULL ====="
           docker images
-          docker system df || true
-          df -h
-          echo "===== PULL LOG (full) ====="
-          cat /tmp/pull_images.log || true
-          echo "===== PULL LOG (last 150 lines) ====="
-          tail -n 150 /tmp/pull_images.log || true
+          tail -n 80 /tmp/pull_images.log || true
 
-      - name: 6. Runtime artifacts (best-effort, ultra verbose)
+      - name: 6. Runtime artifacts
         working-directory: exploitgym
         run: |
           set -x
-          echo "===== SETUP_DATA.SH ====="
           bash -x scripts/setup/setup_data.sh 2>&1 | tee /tmp/setup_data.log || true
-          echo "===== DOCKER PULL SQUID ====="
           docker pull ubuntu/squid:latest 2>&1 | tee /tmp/squid.log || true
-          echo "===== SETUP_DATA LOG (full) ====="
-          cat /tmp/setup_data.log || true
-          echo "===== SQUID LOG ====="
-          cat /tmp/squid.log || true
-          echo "===== DATA DIR TREE (depth 4) ====="
-          find data -maxdepth 4 -type d 2>/dev/null | head -100 || true
-          du -sh data/* 2>/dev/null || true
 
-      - name: 7. Start controller / proxy (ultra verbose + minted secrets)
+      - name: 7. Start controller / proxy (mint secrets)
         working-directory: exploitgym
         run: |
           set -x
-
-          # Mint stable controller secrets for this job
           SALT="cg-$(openssl rand -hex 16)"
           FLAG_SEED="sf-$(openssl rand -hex 16)"
           API_KEY="cybergym-$(openssl rand -hex 16)"
@@ -181,61 +103,26 @@ jobs:
           export CYBERGYM_SERVER_FLAG_SEED="$FLAG_SEED"
           export CYBERGYM_SERVER_API_KEY="$API_KEY"
 
-          echo "############################################################"
-          echo "##### MINTED CONTROLLER SECRETS"
-          echo "############################################################"
+          echo "===== MINTED SECRETS ====="
           echo "CYBERGYM_SERVER_SALT=$SALT"
           echo "CYBERGYM_SERVER_FLAG_SEED=$FLAG_SEED"
           echo "CYBERGYM_SERVER_API_KEY=$API_KEY"
-          echo "############################################################"
 
-          echo "===== PRE-RUN ENVIRONMENT (relevant) ====="
-          env | sort | grep -E 'CYBERGYM_|DOCKER_|OPENAI_|MODEL|UV_|PYTHON' || true
-
-          echo "===== RUNNING pre_run.py ====="
           uv run -v scripts/setup/pre_run.py data/task_ids/top3_easy.txt 2>&1 | tee /tmp/pre_run.log || true
+          echo "===== PRE_RUN LOG (tail) ====="
+          tail -n 100 /tmp/pre_run.log || true
 
-          echo "===== PRE_RUN FULL LOG ====="
-          cat /tmp/pre_run.log || true
-
-          echo "===== POST pre_run: processes ====="
-          ps auxf | head -80 || true
-          echo "===== POST pre_run: docker ps ====="
-          docker ps -a || true
-          echo "===== POST pre_run: listening ports ====="
-          ss -tlnp || netstat -tlnp || true
-          echo "===== POST pre_run: env ====="
-          env | sort | grep -E 'CYBERGYM_|DOCKER_|OPENAI_|MODEL' || true
-
-          echo "===== CONTROLLER / PROXY LOG FILES (if any) ====="
-          find . -name '*.log' -o -name '*controller*' -o -name '*proxy*' 2>/dev/null | head -50 || true
-          find /tmp -name '*controller*' -o -name '*proxy*' -o -name '*cybergym*' 2>/dev/null | head -30 || true
-
-      - name: 8. Run agent with maximum verbosity
+      # ---------- Agent A: claude_code (Anthropic-style) ----------
+      - name: 8a. Run agent = claude_code
         working-directory: exploitgym
         run: |
           set -x
-          mkdir -p out/top3_ultra_verbose
+          mkdir -p out/claude_code
+          echo "===== CLAUDE_CODE RUN ====="
+          echo "ANTHROPIC_API_KEY set? ${ANTHROPIC_API_KEY:+yes}"
+          echo "ANTHROPIC_BASE_URL=$ANTHROPIC_BASE_URL"
+          echo "MODEL=$MODEL"
 
-          echo "############################################################"
-          echo "##### STARTING AGENT RUN"
-          echo "############################################################"
-          echo "date: $(date -u)"
-          echo "Model: $MODEL"
-          echo "Base URL: $OPENAI_BASE_URL"
-          echo "OPENAI_API_KEY set? ${OPENAI_API_KEY:+yes (len=${#OPENAI_API_KEY})}"
-          echo "CYBERGYM_SERVER_SALT set? ${CYBERGYM_SERVER_SALT:+yes}"
-          echo "CYBERGYM_SERVER_FLAG_SEED set? ${CYBERGYM_SERVER_FLAG_SEED:+yes}"
-          echo "CYBERGYM_SERVER_API_KEY set? ${CYBERGYM_SERVER_API_KEY:+yes}"
-          echo "Tasks file:"
-          cat -n data/task_ids/top3_easy.txt
-          echo "----- docker ps before agent -----"
-          docker ps -a || true
-          echo "----- listening ports before agent -----"
-          ss -tlnp || true
-          echo "############################################################"
-
-          # Run agent; capture stdout+stderr and also leave a copy in /tmp
           uv run -v examples/run_agent.py \
             --agent claude_code \
             --model "$MODEL" \
@@ -243,93 +130,81 @@ jobs:
             --max-workers 1 \
             --timeout ${{ github.event.inputs.timeout_seconds || 9000 }} \
             --budget ${{ github.event.inputs.max_budget_usd || 4.0 }} \
-            --out-dir out/top3_ultra_verbose \
+            --out-dir out/claude_code \
             --user-mode exp.none \
             --use-api-key \
-            2>&1 | tee out/top3_ultra_verbose/FULL_CONSOLE.log /tmp/FULL_CONSOLE.log
+            2>&1 | tee out/claude_code/FULL_CONSOLE.log /tmp/claude_code_console.log
 
-          AGENT_EXIT=${PIPESTATUS[0]}
-          echo "===== AGENT RUN FINISHED (exit=$AGENT_EXIT) ====="
-          echo "date: $(date -u)"
-          echo "----- docker ps after agent -----"
-          docker ps -a || true
-          echo "----- out dir size -----"
-          du -sh out/top3_ultra_verbose || true
-          find out/top3_ultra_verbose -type f -printf "%s\t%p\n" | sort -n || true
+          echo "===== CLAUDE_CODE FINISHED (exit=${PIPESTATUS[0]}) ====="
+          find out/claude_code -type f -printf "%s\t%p\n" | sort -n || true
 
-      - name: 9. Dump every file produced (ultra detailed)
+      # ---------- Agent B: codex (OpenAI-style) ----------
+      - name: 8b. Run agent = codex
+        working-directory: exploitgym
+        run: |
+          set -x
+          mkdir -p out/codex
+          echo "===== CODEX RUN ====="
+          echo "OPENAI_API_KEY set? ${OPENAI_API_KEY:+yes}"
+          echo "OPENAI_BASE_URL=$OPENAI_BASE_URL"
+          echo "MODEL=$MODEL"
+
+          uv run -v examples/run_agent.py \
+            --agent codex \
+            --model "$MODEL" \
+            --tasks-file data/task_ids/top3_easy.txt \
+            --max-workers 1 \
+            --timeout ${{ github.event.inputs.timeout_seconds || 9000 }} \
+            --budget ${{ github.event.inputs.max_budget_usd || 4.0 }} \
+            --out-dir out/codex \
+            --user-mode exp.none \
+            --use-api-key \
+            2>&1 | tee out/codex/FULL_CONSOLE.log /tmp/codex_console.log
+
+          echo "===== CODEX FINISHED (exit=${PIPESTATUS[0]}) ====="
+          find out/codex -type f -printf "%s\t%p\n" | sort -n || true
+
+      - name: 9. Compare results
         working-directory: exploitgym
         if: always()
         run: |
           set -x
-          OUT=out/top3_ultra_verbose
+          echo "############################################################"
+          echo "##### COMPARISON SUMMARY"
+          echo "############################################################"
 
-          echo "############################################################"
-          echo "##### COMPLETE FILE TREE"
-          echo "############################################################"
-          find "$OUT" -type f -printf "%p (%s bytes)\n" 2>/dev/null | sort || true
-          echo ""
-          echo "##### /tmp logs #####"
-          find /tmp -maxdepth 1 -name '*.log' -printf "%p (%s bytes)\n" 2>/dev/null | sort || true
-
-          echo ""
-          echo "############################################################"
-          echo "##### ALL result.json FILES"
-          echo "############################################################"
-          find "$OUT" -name 'result.json' 2>/dev/null | while read f; do
-            echo "---------- $f ----------"
-            cat "$f"
+          for agent in claude_code codex; do
             echo ""
-          done || true
+            echo "===== $agent ====="
+            OUT=out/$agent
+            echo "Files:"
+            find "$OUT" -type f -printf "%p (%s bytes)\n" 2>/dev/null | sort || true
+            echo "result.json files:"
+            find "$OUT" -name 'result.json' 2>/dev/null | while read f; do
+              echo "--- $f ---"
+              cat "$f"
+              if jq -e '.score > 0' "$f" >/dev/null 2>&1; then
+                echo "✅ SOLVED"
+              else
+                echo "❌ NOT SOLVED"
+              fi
+            done || echo "(no result.json)"
+            echo "Last 40 lines of console:"
+            tail -n 40 "$OUT/FULL_CONSOLE.log" 2>/dev/null || true
+          done
 
           echo ""
-          echo "############################################################"
-          echo "##### ALL TRAJECTORY / CONVERSATION / JSON FILES (first 400 lines each)"
-          echo "############################################################"
-          find "$OUT" -type f \( -name '*.json' -o -name '*.jsonl' -o -name '*traj*' -o -name '*conversation*' -o -name '*history*' -o -name '*.log' \) 2>/dev/null | while read f; do
-            echo "========== FILE: $f ($(wc -c < "$f") bytes) =========="
-            head -n 400 "$f"
-            echo "... (truncated if longer) ..."
-            echo ""
-          done || true
-
-          echo ""
-          echo "############################################################"
-          echo "##### FULL CONSOLE LOG (complete)"
-          echo "############################################################"
-          cat "$OUT/FULL_CONSOLE.log" 2>/dev/null || cat /tmp/FULL_CONSOLE.log 2>/dev/null || echo "(no FULL_CONSOLE.log)"
-
-          echo ""
-          echo "############################################################"
-          echo "##### PRE_RUN LOG (complete)"
-          echo "############################################################"
-          cat /tmp/pre_run.log 2>/dev/null || echo "(no pre_run.log)"
-
-          echo ""
-          echo "############################################################"
-          echo "##### SUCCESS CHECK"
-          echo "############################################################"
-          find "$OUT" -name result.json -print0 2>/dev/null | while IFS= read -r -d '' f; do
-            if jq -e '.score > 0' "$f" >/dev/null 2>&1; then
-              echo "✅ SOLVED: $f"
-              jq . "$f"
-            else
-              echo "❌ NOT SOLVED: $f"
-              jq . "$f" || cat "$f"
-            fi
-          done || true
-
-          echo ""
-          echo "##### final docker / process snapshot #####"
-          docker ps -a || true
-          ps aux | grep -E 'python|controller|proxy|uvicorn|litellm' | grep -v grep || true
+          echo "===== QUICK ERROR GREP ====="
+          grep -n -iE 'error|ValueError|auth|401|403|invalid|failed' \
+            out/claude_code/FULL_CONSOLE.log out/codex/FULL_CONSOLE.log \
+            /tmp/claude_code_console.log /tmp/codex_console.log 2>/dev/null | head -80 || true
 
       - name: 10. Upload everything
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: top3-ultra-verbose-logs
+          name: top3-dual-agent-logs
           path: |
-            exploitgym/out/top3_ultra_verbose/
+            exploitgym/out/
             /tmp/*.log
           retention-days: 14
