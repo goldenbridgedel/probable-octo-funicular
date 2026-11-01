@@ -101,19 +101,33 @@ jobs:
         working-directory: exploitgym
         run: |
           set -x
+
+          # Mint stable controller secrets for this job and persist them
+          # so every subsequent step (and pre_run itself) sees the same values.
+          SALT="cg-$(openssl rand -hex 16)"
+          FLAG_SEED="sf-$(openssl rand -hex 16)"
+          API_KEY="cybergym-$(openssl rand -hex 16)"
+
+          echo "CYBERGYM_SERVER_SALT=$SALT"           >> $GITHUB_ENV
+          echo "CYBERGYM_SERVER_FLAG_SEED=$FLAG_SEED" >> $GITHUB_ENV
+          echo "CYBERGYM_SERVER_API_KEY=$API_KEY"     >> $GITHUB_ENV
+
+          # Also export for the current shell (pre_run runs in this step)
+          export CYBERGYM_SERVER_SALT="$SALT"
+          export CYBERGYM_SERVER_FLAG_SEED="$FLAG_SEED"
+          export CYBERGYM_SERVER_API_KEY="$API_KEY"
+
+          echo "===== MINTED CONTROLLER SECRETS ====="
+          echo "CYBERGYM_SERVER_SALT=$SALT"
+          echo "CYBERGYM_SERVER_FLAG_SEED=$FLAG_SEED"
+          echo "CYBERGYM_SERVER_API_KEY=$API_KEY"
+
           uv run -v scripts/setup/pre_run.py data/task_ids/top3_easy.txt 2>&1 | tee /tmp/pre_run.log || true
+
           echo "===== PRE_RUN FULL LOG ====="
           cat /tmp/pre_run.log || true
           echo "===== ENVIRONMENT AFTER PRE_RUN ====="
           env | grep -E 'CYBERGYM_|DOCKER_|OPENAI_|MODEL' || true
-
-          # Capture the three controller secrets that pre_run.py prints
-          # so they are available to subsequent steps via $GITHUB_ENV
-          grep -E 'export CYBERGYM_SERVER_(SALT|FLAG_SEED|API_KEY)=' /tmp/pre_run.log \
-            | sed 's/^export //' >> $GITHUB_ENV || true
-
-          echo "===== CAPTURED CONTROLLER SECRETS ====="
-          grep CYBERGYM_SERVER_ $GITHUB_ENV || echo "(none captured – check pre_run.log format)"
 
       - name: 8. Run agent with maximum verbosity
         working-directory: exploitgym
@@ -130,7 +144,6 @@ jobs:
           cat data/task_ids/top3_easy.txt
           echo "=============================="
 
-          # --use-api-key is required so run_agent.py accepts OPENAI_API_KEY / OPENAI_BASE_URL
           uv run -v examples/run_agent.py \
             --agent claude_code \
             --model "$MODEL" \
@@ -173,7 +186,6 @@ jobs:
           echo "############################################################"
           find "$OUT" -type f \( -name '*.json' -o -name '*.jsonl' -o -name '*traj*' -o -name '*conversation*' -o -name '*history*' \) | while read f; do
             echo "========== FILE: $f =========="
-            # Print first 300 lines to avoid exploding the log
             head -n 300 "$f"
             echo "... (truncated if longer) ..."
             echo ""
