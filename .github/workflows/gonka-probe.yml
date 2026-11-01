@@ -90,26 +90,22 @@ jobs:
         working-directory: exploitgym
         run: |
           set -x
-          # Run setup_data but we will force Node/Codex in the next step
           bash -x scripts/setup/setup_data.sh 2>&1 | tee /tmp/setup_data.log || true
           docker pull ubuntu/squid:latest 2>&1 | tee /tmp/squid.log || true
 
-      # ---------- FIX: ensure /data/node/bin/codex.sh exists via host mount ----------
-      - name: 6b. Install Node + Codex into data/runtime/node
+      - name: 6b. Install Node + Codex into data/runtime/node (fixed launcher)
         working-directory: exploitgym
         run: |
           set -x
           NODE_PREFIX="$(pwd)/data/runtime/node"
           mkdir -p "$NODE_PREFIX"
 
-          # Fast path: official Node linux-x64 binary (glibc) instead of full static compile
           if [[ ! -x "$NODE_PREFIX/bin/node" ]]; then
             NODE_VERSION="22.21.0"
             echo "Downloading Node ${NODE_VERSION}..."
             curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" \
               -o /tmp/node.tar.xz
             tar -xJf /tmp/node.tar.xz -C /tmp
-            # Merge into prefix (bin/, lib/, ...)
             cp -a /tmp/node-v${NODE_VERSION}-linux-x64/. "$NODE_PREFIX/"
           fi
 
@@ -117,37 +113,69 @@ jobs:
           "$NODE_PREFIX/bin/node" -v
           "$NODE_PREFIX/bin/npm" -v
 
-          # Install Codex CLI into this prefix
           echo "Installing @openai/codex..."
           NPM_CONFIG_PREFIX="$NODE_PREFIX" npm_config_prefix="$NODE_PREFIX" \
             "$NODE_PREFIX/bin/npm" install -g --prefix "$NODE_PREFIX" "@openai/codex@0.120.0"
 
-          # Write launcher expected by CodexAgent (CODEX_BIN_PATH=/data/node/bin/codex.sh)
-          # Host path data/runtime is mounted at /data in the container.
+          # CRITICAL: never rely on `env node` — container has no node on PATH.
+          # Always exec via $SCRIPT_DIR/node (mounted at /data/node/bin/node).
           cat > "$NODE_PREFIX/bin/codex.sh" << 'LAUNCHER'
           #!/bin/bash
           SCRIPT_DIR=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
-          TARGET="$SCRIPT_DIR/codex"
-          if [[ -x "$TARGET" ]]; then
-            exec "$TARGET" "$@"
+          NODE="$SCRIPT_DIR/node"
+          export PATH="$SCRIPT_DIR:$PATH"
+
+          if [[ ! -x "$NODE" ]]; then
+            echo "node missing at $NODE" >&2
+            exit 127
           fi
-          # npm global bin may be a JS entry
-          if [[ -f "$TARGET" ]]; then
-            exec "$SCRIPT_DIR/node" "$TARGET" "$@"
+
+          # Prefer adjacent codex binary/script
+          if [[ -e "$SCRIPT_DIR/codex" && ! -d "$SCRIPT_DIR/codex" ]]; then
+            if head -c 2 "$SCRIPT_DIR/codex" 2>/dev/null | grep -q '#!'; then
+              exec "$NODE" "$SCRIPT_DIR/codex" "$@"
+            fi
+            if [[ -x "$SCRIPT_DIR/codex" ]]; then
+              exec "$SCRIPT_DIR/codex" "$@"
+            fi
           fi
-          # Fallback: npx-style resolution
-          exec "$SCRIPT_DIR/node" "$SCRIPT_DIR/../lib/node_modules/@openai/codex/bin/codex.js" "$@"
+
+          # npm package entrypoints
+          for cand in \
+            "$SCRIPT_DIR/../lib/node_modules/@openai/codex/bin/codex.js" \
+            "$SCRIPT_DIR/../lib/node_modules/@openai/codex/bin/codex" \
+            "$SCRIPT_DIR/../lib/node_modules/@openai/codex/dist/cli.js"
+          do
+            if [[ -f "$cand" ]]; then
+              exec "$NODE" "$cand" "$@"
+            fi
+          done
+
+          echo "codex entry not found under $SCRIPT_DIR" >&2
+          ls -la "$SCRIPT_DIR" >&2
+          ls -la "$SCRIPT_DIR/../lib/node_modules/@openai/codex" 2>/dev/null | head -40 >&2 || true
+          exit 127
           LAUNCHER
           chmod +x "$NODE_PREFIX/bin/codex.sh"
 
-          echo "===== VALIDATE HOST TREE ====="
+          # Strip any CRLF that could break shebang in container
+          sed -i 's/\r$//' "$NODE_PREFIX/bin/codex.sh"
+
+          echo "===== HOST VALIDATE ====="
           ls -la "$NODE_PREFIX/bin/" | head -40
-          file "$NODE_PREFIX/bin/node" || true
-          file "$NODE_PREFIX/bin/codex.sh" || true
-          # codex --version (may need network the first time; ok if it just prints help/version)
-          "$NODE_PREFIX/bin/codex.sh" --version 2>&1 | head -20 || true
-          test -x "$NODE_PREFIX/bin/codex.sh"
-          echo "Codex launcher OK at data/runtime/node/bin/codex.sh (-> /data/node/bin/codex.sh in container)"
+          "$NODE_PREFIX/bin/codex.sh" --version 2>&1 | head -30 || true
+
+          echo "===== CONTAINER VALIDATE (same mount layout as eval) ====="
+          docker run --rm \
+            -v "$(pwd)/data/runtime:/data:ro" \
+            ubuntu:22.04 \
+            /data/node/bin/codex.sh --version 2>&1 | tee /tmp/codex_in_container.log
+          grep -qiE 'No such file|env: .node.|not found' /tmp/codex_in_container.log && {
+            echo "CONTAINER CODEX STILL BROKEN"
+            cat /tmp/codex_in_container.log
+            exit 1
+          }
+          echo "Container codex OK"
 
       - name: 7. Start controller / proxy (mint secrets)
         working-directory: exploitgym
@@ -175,9 +203,8 @@ jobs:
           echo "OPENAI_API_KEY set? ${OPENAI_API_KEY:+yes}"
           echo "OPENAI_BASE_URL=$OPENAI_BASE_URL"
           echo "MODEL=$MODEL"
-          echo "Host codex.sh: $(ls -la data/runtime/node/bin/codex.sh)"
+          ls -la data/runtime/node/bin/codex.sh data/runtime/node/bin/node
 
-          # Smoke test Gonka
           .venv/bin/python - <<'PY' 2>&1 | tee /tmp/gonka_smoke.log || true
           import os
           from openai import OpenAI
@@ -200,7 +227,7 @@ jobs:
             2>&1 | tee out/codex/FULL_CONSOLE.log /tmp/codex_console.log
 
           echo "exit=${PIPESTATUS[0]}"
-          find out/codex -type f -printf "%s\t%p\n" | sort -n | tail -40
+          find out/codex -type f -printf "%s\t%p\n" | sort -n | tail -50
 
       - name: 9. Dump results
         working-directory: exploitgym
@@ -216,11 +243,11 @@ jobs:
           echo "===== codex.log samples ====="
           find "$OUT" -name 'codex.log' | while read f; do
             echo "--- $f ---"
-            cat "$f"
+            head -n 80 "$f"
           done || true
-          tail -n 100 "$OUT/FULL_CONSOLE.log" 2>/dev/null || true
-          grep -n -iE 'error|No such file|codex.sh|401|403|ValueError' \
-            "$OUT/FULL_CONSOLE.log" /tmp/codex_console.log 2>/dev/null | head -40 || true
+          tail -n 120 "$OUT/FULL_CONSOLE.log" 2>/dev/null || true
+          grep -n -iE 'error|No such file|env: .node.|codex.sh|401|403|ValueError' \
+            "$OUT/FULL_CONSOLE.log" /tmp/codex_console.log /tmp/codex_in_container.log 2>/dev/null | head -50 || true
 
       - name: 10. Upload artifact
         if: always()
@@ -259,6 +286,6 @@ jobs:
           } > "$DEST/README.md"
           git checkout -B "$BRANCH"
           git add -A
-          git diff --staged --quiet || git commit -m "logs: run ${RUN_ID} (codex + node runtime fix)"
+          git diff --staged --quiet || git commit -m "logs: run ${RUN_ID} (codex node PATH fix)"
           git push -u origin "$BRANCH" --force
           echo "https://github.com/${{ github.repository }}/tree/${BRANCH}"
