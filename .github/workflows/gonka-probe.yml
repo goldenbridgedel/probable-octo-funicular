@@ -1,3 +1,4 @@
+```yaml
 name: Minimal Flag Probe (ultra-verbose + full LLM I/O)
 
 on:
@@ -48,7 +49,7 @@ jobs:
           cat /etc/os-release || true
           docker version || true
           echo "===== Selected ENV ====="
-          env | grep -E 'OPENAI|MODEL|CODEX|PYTHON|UV_|GITHUB_' | sort
+          env | grep -E 'OPENAI|MODEL|CODEX|PYTHON|UV_|GITHUB_|CYBERGYM_' | sort
 
       - name: 1. Checkout this repo (for log push)
         uses: actions/checkout@v4
@@ -62,7 +63,7 @@ jobs:
           repository: sunblaze-ucb/exploitgym
           path: exploitgym
 
-      - name: 2. Set up Python 3.12 + uv
+      - name: 2. Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -75,19 +76,14 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           uv --version
           python3 --version
-          which python3
 
-      - name: 3. Install Python deps (correct method)
+      - name: 3. Install Python deps (official method)
         working-directory: exploitgym
         run: |
           set -x
-          echo "===== 3. uv sync (official method) ====="
-          python3 --version
-          uv python list || true
+          echo "===== 3. uv sync --extra proxy ====="
           uv sync --extra proxy
-          echo "===== Installed packages ====="
           uv pip list
-          echo "===== Verifying import ====="
           uv run python -c "import cybergym; print('cybergym OK', cybergym.__file__)"
 
       - name: 4. Install Node + Codex
@@ -112,20 +108,48 @@ jobs:
           sudo apt-get install -y -qq gdb socat netcat-openbsd
           which gdb socat nc
 
-      - name: 6. Start controller and hard-require it
+      - name: 6. Create task list
+        run: |
+          set -x
+          echo "===== 6. Task list ====="
+          mkdir -p /tmp/tasks
+          cat > /tmp/tasks/list.txt << 'EOF'
+          user:cybergym/arvo_44034
+          user:cybergym/arvo_50683
+          user:cybergym/arvo_66627
+          EOF
+          cat /tmp/tasks/list.txt
+
+      - name: 7. Pull required Docker images + prepare data
         working-directory: exploitgym
         run: |
           set -x
-          echo "===== 6. Starting controller ====="
-          # Use the project's own pre_run / controller entrypoint when possible.
-          # Fallback shown here — replace with the real command if different.
-          nohup uv run python -m cybergym.controller --port 8666 > /tmp/controller.log 2>&1 &
-          echo $! > /tmp/controller.pid
-          sleep 5
-          echo "===== Controller log (head) ====="
-          head -100 /tmp/controller.log || true
-          echo "===== Waiting for :8666 ====="
-          for i in $(seq 1 20); do
+          echo "===== 7. Pulling images + setup_data ====="
+          # Official data / image preparation
+          bash scripts/setup/setup_data.sh || true
+          uv run scripts/setup/pull_images.py /tmp/tasks/list.txt
+          echo "===== Images present ====="
+          docker images | head -30
+
+      - name: 8. Start controller + services via official pre_run.py
+        working-directory: exploitgym
+        run: |
+          set -x
+          echo "===== 8. Running pre_run.py (official) ====="
+          # This starts cybergym.server (controller on :8666), mints secrets,
+          # starts firewall/LLM proxy if needed, and prints the export lines.
+          uv run scripts/setup/pre_run.py /tmp/tasks/list.txt --no-llm-proxy 2>&1 | tee /tmp/pre_run.log
+
+          echo "===== pre_run.log (tail) ====="
+          tail -100 /tmp/pre_run.log || true
+
+          # Capture the three secrets that run_agent.py requires
+          grep -E 'export CYBERGYM_SERVER_(SALT|FLAG_SEED|API_KEY)=' /tmp/pre_run.log > /tmp/secrets.sh || true
+          cat /tmp/secrets.sh || true
+          source /tmp/secrets.sh || true
+
+          echo "===== Waiting for controller on :8666 ====="
+          for i in $(seq 1 30); do
             if curl -sf http://127.0.0.1:8666/ >/dev/null 2>&1 || \
                curl -sf http://127.0.0.1:8666/health >/dev/null 2>&1; then
               echo "Controller is UP on attempt $i"
@@ -135,26 +159,22 @@ jobs:
             sleep 2
           done
           echo "Controller NEVER answered"
-          cat /tmp/controller.log || true
+          cat /tmp/pre_run.log || true
           exit 1
 
-      - name: 7. Create task list
-        run: |
-          set -x
-          echo "===== 7. Task list ====="
-          mkdir -p /tmp/tasks
-          cat > /tmp/tasks/list.txt << 'EOF'
-          user:cybergym/arvo_44034
-          user:cybergym/arvo_50683
-          user:cybergym/arvo_66627
-          EOF
-          cat /tmp/tasks/list.txt
-
-      - name: 8. Run agent per task (full LLM I/O logging)
+      - name: 9. Run agent per task (full LLM I/O logging)
         working-directory: exploitgym
         run: |
           set -x
           set +e
+
+          # Load secrets generated by pre_run
+          if [[ -f /tmp/secrets.sh ]]; then
+            source /tmp/secrets.sh
+          fi
+          echo "CYBERGYM_SERVER_SALT set? ${CYBERGYM_SERVER_SALT:+yes}"
+          echo "CYBERGYM_SERVER_FLAG_SEED set? ${CYBERGYM_SERVER_FLAG_SEED:+yes}"
+          echo "CYBERGYM_SERVER_API_KEY set? ${CYBERGYM_SERVER_API_KEY:+yes}"
 
           TIMEOUT=${{ github.event.inputs.timeout_seconds || '3600' }}
           BUDGET=${{ github.event.inputs.max_budget_usd || '6.0' }}
@@ -177,7 +197,7 @@ jobs:
             echo "=============================================================="
             echo "OUT_DIR=$OUT_DIR  TIMEOUT=${TIMEOUT}s  BUDGET=\$${BUDGET}"
 
-            # Adjust flags to match the real examples/run_agent.py interface
+            # Adjust flags to the real CLI if needed (see examples/run_agent.py --help)
             uv run examples/run_agent.py \
               --task "$TASK" \
               --model "$MODEL" \
@@ -226,11 +246,11 @@ jobs:
           echo "$TOTAL_SOLVED" > /tmp/solved_count.txt
           echo "$TASK_NUM" > /tmp/total_count.txt
 
-      - name: 9. Final summary + full artifact dump
+      - name: 10. Final summary + artifact dump
         if: always()
         run: |
           set -x
-          echo "===== 9. FINAL SUMMARY ====="
+          echo "===== 10. FINAL SUMMARY ====="
           echo "Solved: $(cat /tmp/solved_count.txt 2>/dev/null || echo 0)"
           echo "Total tasks: $(cat /tmp/total_count.txt 2>/dev/null || echo 0)"
           echo ""
@@ -242,20 +262,23 @@ jobs:
           done
           echo "===== Directory tree ====="
           find /tmp/results -type f 2>/dev/null | sort || true
+          echo "===== pre_run.log (tail) ====="
+          tail -80 /tmp/pre_run.log 2>/dev/null || true
 
-      - name: 10. Upload everything
+      - name: 11. Upload everything
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: flag-probe-logs-${{ github.run_id }}
           path: |
             /tmp/results
-            /tmp/controller.log
+            /tmp/pre_run.log
+            /tmp/secrets.sh
             /tmp/solved_count.txt
             /tmp/total_count.txt
           if-no-files-found: warn
 
-      - name: 11. Fail the job if zero flags
+      - name: 12. Fail the job if zero flags
         if: always()
         run: |
           set -x
@@ -269,3 +292,4 @@ jobs:
             echo "::error::No flag captured"
             exit 1
           fi
+```
