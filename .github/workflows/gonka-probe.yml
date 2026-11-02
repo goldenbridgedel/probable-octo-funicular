@@ -334,8 +334,10 @@ jobs:
               raise SystemExit(0)
 
           old_timeout = "timeout {args.agent_timeout_seconds}"
-          # Inside codex.py this sits in an f-string. Doubled braces emit ${CODEX_ATTEMPT_TIMEOUT}.
-          new_timeout = "timeout \"${{ '${{' }}CODEX_ATTEMPT_TIMEOUT}\""
+          # f-string in codex.py: {{ -> { and }} -> }, so the shell sees
+          # timeout "${CODEX_ATTEMPT_TIMEOUT:-N}". The ${{ '${{' }} prefix
+          # stops GitHub Actions from eating the opening braces.
+          new_timeout = 'timeout "${{ '${{' }}CODEX_ATTEMPT_TIMEOUT:-{args.agent_timeout_seconds}}}"'
           if old_timeout not in text:
               raise SystemExit("timeout anchor not found")
           text = text.replace(old_timeout, new_timeout, 1)
@@ -470,6 +472,7 @@ jobs:
           python3 << 'PY'
           from pathlib import Path
           import re
+          import textwrap
 
           path = Path("src/cybergym/evaluation/agents/codex.py")
           text = path.read_text()
@@ -478,21 +481,27 @@ jobs:
               raise SystemExit(0)
 
           # 1) Force more env verbosity for the Codex binary
-          old_env = '''    env = {
-          "CODEX_HOME": "/logs",
-          "OPENAI_BASE_URL": args.api_base_url,
-          "OPENAI_API_KEY": args.api_key,
-          }'''
-          new_env = '''    env = {
-          "CODEX_HOME": "/logs",
-          "OPENAI_BASE_URL": args.api_base_url,
-          "OPENAI_API_KEY": args.api_key,
-          "OPENAI_LOG": "debug",
-          "DEBUG": "1",
-          "NODE_DEBUG": "http,net,tls",
-          "RUST_LOG": "debug",
-          "CODEX_LOG_LEVEL": "debug",
-          }'''
+          # Build with explicit spaces. A YAML block scalar would strip the
+          # dict-key indent and the anchor would not match codex.py.
+          old_env = (
+              "    env = {\n"
+              "        \"CODEX_HOME\": \"/logs\",\n"
+              "        \"OPENAI_BASE_URL\": args.api_base_url,\n"
+              "        \"OPENAI_API_KEY\": args.api_key,\n"
+              "    }"
+          )
+          new_env = (
+              "    env = {\n"
+              "        \"CODEX_HOME\": \"/logs\",\n"
+              "        \"OPENAI_BASE_URL\": args.api_base_url,\n"
+              "        \"OPENAI_API_KEY\": args.api_key,\n"
+              "        \"OPENAI_LOG\": \"debug\",\n"
+              "        \"DEBUG\": \"1\",\n"
+              "        \"NODE_DEBUG\": \"http,net,tls\",\n"
+              "        \"RUST_LOG\": \"debug\",\n"
+              "        \"CODEX_LOG_LEVEL\": \"debug\",\n"
+              "    }"
+          )
           if old_env not in text:
               raise SystemExit("env block anchor not found")
           text = text.replace(old_env, new_env, 1)
@@ -506,7 +515,7 @@ jobs:
           echo "prompt_path={prompt_path}"
           echo "model={codex_model}"
           echo "reasoning={reasoning_effort}"
-          echo "CODEX_ATTEMPT_TIMEOUT=${{ '${{' }}CODEX_ATTEMPT_TIMEOUT:-unset}"
+          echo "CODEX_ATTEMPT_TIMEOUT=${{ '${{' }}CODEX_ATTEMPT_TIMEOUT:-unset}}"
           echo "OPENAI_BASE_URL=$OPENAI_BASE_URL"
           ls -la /logs /workspace /tmp 2>&1 || true
           echo "----- /logs/config.toml -----"
@@ -519,7 +528,7 @@ jobs:
           ls -la {CODEX_BIN_PATH} 2>&1 || true
           {CODEX_BIN_PATH} --version 2>&1 || true
           echo "===== launching codex ====="
-          cat {prompt_path} | timeout "${{ '${{' }}CODEX_ATTEMPT_TIMEOUT:-{args.agent_timeout_seconds}}" {CODEX_BIN_PATH} exec \\
+          cat {prompt_path} | timeout "${{ '${{' }}CODEX_ATTEMPT_TIMEOUT:-{args.agent_timeout_seconds}}}" {CODEX_BIN_PATH} exec \\
               --dangerously-bypass-approvals-and-sandbox \\
               --skip-git-repo-check \\
               --model {codex_model} \\
@@ -570,6 +579,9 @@ jobs:
                       except Exception as e:
                           logger.warning("diag dump failed: %s", e)
           '''
+          # YAML dedent leaves this block too deep for the for-loop body (8 spaces).
+          dump = textwrap.dedent(dump).strip("\n")
+          dump = "\n".join(("        " + ln if ln.strip() else "") for ln in dump.splitlines())
 
           inject_after = 'logger.warning("flag.txt missing after attempt %d", attempt)'
           if inject_after not in text:
