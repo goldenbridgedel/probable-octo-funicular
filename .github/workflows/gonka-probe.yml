@@ -10,6 +10,7 @@ name: Top-3 Validation v3 (ASLR + live controller + agent retry)
 #   /workspace/flag.txt is still missing. v2 agents exited after 1 turn.
 # - Results dump cannot fail the job on SIGPIPE (v2 step 10, find | head).
 # - After logs are uploaded, the job fails if no flag was captured.
+# - Ultra-verbose per-attempt diagnostics (config, prompt, codex.log, workspace).
 # Kept from v2: high reasoning, 128k/90k context hygiene, per-task isolation,
 # 90s cooldown, 429 backoff, log push.
 
@@ -35,7 +36,7 @@ on:
       api_smoke_retries:
         description: "Smoke-test retries on 429/5xx before aborting"
         required: false
-        default: "8"
+default: "8"
 
 permissions:
   contents: write
@@ -329,11 +330,8 @@ jobs:
               raise SystemExit(0)
 
           old_timeout = "timeout {args.agent_timeout_seconds}"
-          # codex.py builds this command with an f-string, so doubled braces
-          # become one brace and the container shell expands the variable.
-          # The pieces are concatenated so this workflow file does not contain
-          # the characters dollar-brace-brace, which Actions would parse.
-          new_timeout = 'timeout "$' + '{{CODEX_ATTEMPT_TIMEOUT}}"'
+          # Inside codex.py this sits in an f-string. Doubled braces emit ${CODEX_ATTEMPT_TIMEOUT}.
+          new_timeout = 'timeout "${{CODEX_ATTEMPT_TIMEOUT}}"'
           if old_timeout not in text:
               raise SystemExit("timeout anchor not found")
           text = text.replace(old_timeout, new_timeout, 1)
@@ -459,6 +457,129 @@ jobs:
           path.write_text(text)
           compile(text, str(path), "exec")
           print("patched in-container retry loop")
+          PY
+
+      - name: 1i. Ultra-verbose Codex diagnostics
+        working-directory: exploitgym
+        run: |
+          set -x
+          python3 << 'PY'
+          from pathlib import Path
+          import re
+
+          path = Path("src/cybergym/evaluation/agents/codex.py")
+          text = path.read_text()
+          if "ULTRA_VERBOSE_DIAG" in text:
+              print("ultra-verbose already present")
+              raise SystemExit(0)
+
+          # 1) Force more env verbosity for the Codex binary
+          old_env = '''    env = {
+          "CODEX_HOME": "/logs",
+          "OPENAI_BASE_URL": args.api_base_url,
+          "OPENAI_API_KEY": args.api_key,
+      }'''
+          new_env = '''    env = {
+          "CODEX_HOME": "/logs",
+          "OPENAI_BASE_URL": args.api_base_url,
+          "OPENAI_API_KEY": args.api_key,
+          "OPENAI_LOG": "debug",
+          "DEBUG": "1",
+          "NODE_DEBUG": "http,net,tls",
+          "RUST_LOG": "debug",
+          "CODEX_LOG_LEVEL": "debug",
+      }'''
+          if old_env not in text:
+              raise SystemExit("env block anchor not found")
+          text = text.replace(old_env, new_env, 1)
+
+          # 2) Make the codex command itself louder and keep full output
+          new_cmd = '''codex_command = f"""\\
+          set -x
+          echo "===== ULTRA_VERBOSE_DIAG attempt start ====="
+          echo "date=$(date -u)"
+          echo "pwd=$(pwd)"
+          echo "prompt_path={prompt_path}"
+          echo "model={codex_model}"
+          echo "reasoning={reasoning_effort}"
+          echo "CODEX_ATTEMPT_TIMEOUT=${{CODEX_ATTEMPT_TIMEOUT:-unset}}"
+          echo "OPENAI_BASE_URL=$OPENAI_BASE_URL"
+          ls -la /logs /workspace /tmp 2>&1 || true
+          echo "----- /logs/config.toml -----"
+          cat /logs/config.toml 2>&1 || true
+          echo "----- prompt head -----"
+          head -n 80 {prompt_path} 2>&1 || true
+          echo "----- prompt wc -----"
+          wc -l -c {prompt_path} 2>&1 || true
+          echo "----- which codex -----"
+          ls -la {CODEX_BIN_PATH} 2>&1 || true
+          {CODEX_BIN_PATH} --version 2>&1 || true
+          echo "===== launching codex ====="
+          cat {prompt_path} | timeout "${{CODEX_ATTEMPT_TIMEOUT:-{args.agent_timeout_seconds}}}" {CODEX_BIN_PATH} exec \\
+              --dangerously-bypass-approvals-and-sandbox \\
+              --skip-git-repo-check \\
+              --model {codex_model} \\
+              --json \\
+              --enable unified_exec \\
+              -c model_reasoning_effort={reasoning_effort} \\
+              {extra_args} 2>&1 | tee -a /logs/codex.log
+          ec=$?
+          echo "===== codex finished ec=$ec ====="
+          echo "----- flag check -----"
+          ls -la /workspace/flag.txt 2>&1 || echo NO_FLAG
+          wc -c /workspace/flag.txt 2>&1 || true
+          echo "----- /logs listing -----"
+          ls -la /logs 2>&1 || true
+          echo "----- last 200 lines of codex.log -----"
+          tail -n 200 /logs/codex.log 2>&1 || true
+          echo "===== ULTRA_VERBOSE_DIAG attempt end ====="
+          exit $ec
+          """'''
+
+          m = re.search(
+              r'codex_command = f"""\\.*?\| tee(?: -a)? /logs/codex\.log"""',
+              text,
+              re.S,
+          )
+          if not m:
+              raise SystemExit("codex_command anchor not found")
+          text = text[: m.start()] + new_cmd + text[m.end() :]
+
+          # 3) After every attempt, copy diagnostics out of the container into the host out_dir
+          dump = r'''
+                      # ULTRA_VERBOSE_DIAG – pull everything useful to the host
+                      try:
+                          diag_dir = rendered_log_dir / f"attempt_{attempt}_diag"
+                          diag_dir.mkdir(parents=True, exist_ok=True)
+                          for src, name in [
+                              ("/logs/codex.log", "codex.log"),
+                              ("/logs/config.toml", "config.toml"),
+                              ("/tmp/prompt.txt", "prompt.txt"),
+                          ]:
+                              r = container.exec_run(["bash", "-c", f"cat {src} 2>/dev/null || true"])
+                              data = r[1] if isinstance(r, tuple) else r.output
+                              (diag_dir / name).write_bytes(data or b"")
+                          r = container.exec_run(["bash", "-c", "ls -la /workspace /logs /tmp 2>&1; echo '---'; wc -c /workspace/flag.txt 2>&1 || echo NOFLAG"])
+                          data = r[1] if isinstance(r, tuple) else r.output
+                          (diag_dir / "workspace_ls.txt").write_bytes(data or b"")
+                          logger.info("Wrote ultra-verbose diag to %s", diag_dir)
+                      except Exception as e:
+                          logger.warning("diag dump failed: %s", e)
+          '''
+
+          inject_after = 'logger.warning("flag.txt missing after attempt %d", attempt)'
+          if inject_after not in text:
+              raise SystemExit("retry warning anchor not found – is step 1h applied?")
+          text = text.replace(inject_after, inject_after + "\n" + dump, 1)
+
+          inject_ok = 'logger.info("flag.txt present after attempt %d", attempt)'
+          if inject_ok in text:
+              text = text.replace(inject_ok, inject_ok + "\n" + dump, 1)
+
+          text = text + "\n# ULTRA_VERBOSE_DIAG\n"
+          path.write_text(text)
+          compile(text, str(path), "exec")
+          print("ultra-verbose diagnostics patched into codex.py")
           PY
 
       - name: 2. Set up Python + uv
@@ -839,6 +960,15 @@ jobs:
             "$OUT/FULL_CONSOLE.log" "${CLOGS[@]}" \
             2>/dev/null | tee -a "$SUMMARY" || true
 
+          echo "===== ULTRA VERBOSE DIAG FILES =====" | tee -a "$SUMMARY"
+          mapfile -t DIAGS < <(find "$OUT" -type f \( -path '*/attempt_*_diag/*' -o -name 'codex.log' -o -name 'codex.rendered.log' \) 2>/dev/null | sort)
+          for f in "${DIAGS[@]}"; do
+            echo "======== $f ========" | tee -a "$SUMMARY"
+            head -n 300 "$f" 2>/dev/null | tee -a "$SUMMARY" || true
+            echo "----- (tail) -----" | tee -a "$SUMMARY"
+            tail -n 200 "$f" 2>/dev/null | tee -a "$SUMMARY" || true
+          done
+
           cp -f "$SUMMARY" /tmp/run_summary.txt
           exit 0
 
@@ -901,7 +1031,7 @@ jobs:
           } > "$DEST/README.md"
           git checkout -B "$BRANCH"
           git add -A
-          git diff --staged --quiet || git commit -m "logs: run ${RUN_ID} (v3: ASLR, live controller, in-container retry)"
+          git diff --staged --quiet || git commit -m "logs: run ${RUN_ID} (v3: ASLR, live controller, in-container retry, ultra-verbose)"
           git push -u origin "$BRANCH" --force
           echo "https://github.com/${{ github.repository }}/tree/${BRANCH}"
 
