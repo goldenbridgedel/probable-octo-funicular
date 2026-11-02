@@ -36,7 +36,7 @@ on:
       api_smoke_retries:
         description: "Smoke-test retries on 429/5xx before aborting"
         required: false
-default: "8"
+        default: "8"
 
 permissions:
   contents: write
