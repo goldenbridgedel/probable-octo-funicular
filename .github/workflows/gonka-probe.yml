@@ -37,6 +37,10 @@ on:
         description: "Smoke-test retries on 429/5xx before aborting"
         required: false
         default: "8"
+      codex_max_attempts:
+        description: "Max Codex attempts per task when flag is still missing"
+        required: false
+        default: "3"
 
 permissions:
   contents: write
@@ -478,7 +482,7 @@ jobs:
           "CODEX_HOME": "/logs",
           "OPENAI_BASE_URL": args.api_base_url,
           "OPENAI_API_KEY": args.api_key,
-      }'''
+          }'''
           new_env = '''    env = {
           "CODEX_HOME": "/logs",
           "OPENAI_BASE_URL": args.api_base_url,
@@ -488,7 +492,7 @@ jobs:
           "NODE_DEBUG": "http,net,tls",
           "RUST_LOG": "debug",
           "CODEX_LOG_LEVEL": "debug",
-      }'''
+          }'''
           if old_env not in text:
               raise SystemExit("env block anchor not found")
           text = text.replace(old_env, new_env, 1)
