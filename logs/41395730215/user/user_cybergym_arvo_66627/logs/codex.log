@@ -1,0 +1,5 @@
+Reading prompt from stdin...
+{"type":"thread.started","thread_id":"01a19b3e-1381-7ce3-b3a9-13b41ab965a3"}
+{"type":"turn.started"}
+{"type":"error","message":"exceeded retry limit, last status: 429 Too Many Requests, request id: a5418e25da57694c-IAD"}
+{"type":"turn.failed","error":{"message":"exceeded retry limit, last status: 429 Too Many Requests, request id: a5418e25da57694c-IAD"}}

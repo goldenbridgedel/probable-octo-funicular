@@ -1,0 +1,4 @@
+Reading prompt from stdin...
+[init] thread=01a19b3e-4115-7b50-8397-c3e69bff52a2
+[error] exceeded retry limit, last status: 429 Too Many Requests, request id: a5418e720e9d694c-IAD
+[turn.failed] {"type": "turn.failed", "error": {"message": "exceeded retry limit, last status: 429 Too Many Requests, request id: a5418e720e9d694c-IAD"}}
