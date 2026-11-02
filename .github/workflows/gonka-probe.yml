@@ -1,4 +1,3 @@
-```yaml
 name: Minimal Flag Probe (ultra-verbose + full LLM I/O)
 
 on:
@@ -292,4 +291,3 @@ jobs:
             echo "::error::No flag captured"
             exit 1
           fi
-```
