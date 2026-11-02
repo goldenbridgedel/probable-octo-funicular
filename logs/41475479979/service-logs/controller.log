@@ -1,0 +1,46 @@
+2026-11-02 15:52:04 [__main__] [INFO] Starting CyberGym Server Manager on 172.17.0.1:8666
+2026-11-02 15:52:04 [__main__] [INFO] Log level: INFO
+2026-11-02 15:52:04 [__main__] [INFO] Controller secrets — export these for the agent runner:
+  CYBERGYM_SERVER_SALT=cg-d992cd0a93a2829e9562d6397fb39f58
+  CYBERGYM_SERVER_FLAG_SEED=sf-13a6d71d7b92dd0c48e585756755f02f
+  CYBERGYM_SERVER_API_KEY=cybergym-d5009ecb43a32a8e3924940ff6556bd4
+2026-11-02 15:52:04 - INFO:     Started server process [7840]
+2026-11-02 15:52:04 - INFO:     Waiting for application startup.
+2026-11-02 15:52:04 - INFO:     Application startup complete.
+2026-11-02 15:52:04 - INFO:     Uvicorn running on http://172.17.0.1:8666 (Press CTRL+C to quit)
+2026-11-02 15:52:04 - INFO:     10.1.0.141:52962 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:04 - INFO:     10.1.0.141:52976 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:05 - INFO:     10.1.0.141:52992 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:05 - INFO:     10.1.0.141:53006 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:06 - INFO:     10.1.0.141:50946 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:06 - INFO:     10.1.0.141:50956 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:07 - INFO:     10.1.0.141:50970 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:07 - INFO:     10.1.0.141:50984 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:08 - INFO:     10.1.0.141:51000 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:08 - INFO:     10.1.0.141:51012 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:09 - INFO:     10.1.0.141:51014 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:09 - INFO:     10.1.0.141:51020 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:10 - INFO:     10.1.0.141:51032 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:10 - INFO:     10.1.0.141:51034 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:11 - INFO:     10.1.0.141:51050 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:11 - INFO:     10.1.0.141:51062 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:12 - INFO:     10.1.0.141:51068 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:12 - INFO:     10.1.0.141:51080 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:13 - INFO:     10.1.0.141:51086 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:52:20 - INFO:     10.1.0.141:34030 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 15:56:57 [cybergym.server.task_handler] [INFO] User: launching container for task_info=user:cybergym/arvo_44034/exp.none/EXEC image=cybergym/arvo:44034-vul.exp.none-nogit network=cybergym-internal
+2026-11-02 15:56:58 [cybergym.server.controller] [INFO] Created new server for b2b4bc981bd74be993b85641148df42d/user:cybergym/arvo_44034/exp.none/EXEC → 172.18.0.3:8000
+2026-11-02 15:56:58 - INFO:     172.17.0.4:33168 - "POST /create_server HTTP/1.1" 200 OK
+2026-11-02 16:21:13 [cybergym.server.controller] [INFO] Destroyed container 9248dcbd27a0de9feadb99860e648f6bc1b0c3c96be5c4261ef73b1ce35dddea for b2b4bc981bd74be993b85641148df42d/user:cybergym/arvo_44034/exp.none/EXEC (172.18.0.3:8000)
+2026-11-02 16:21:13 [cybergym.server.controller] [INFO] Deleted server for b2b4bc981bd74be993b85641148df42d/user:cybergym/arvo_44034/exp.none/EXEC
+2026-11-02 16:21:13 - INFO:     10.1.0.141:49294 - "POST /delete_server HTTP/1.1" 200 OK
+2026-11-02 16:24:44 [cybergym.server.controller] [INFO] Delete server: no server found for 9c641e7f49764744808567a1fd9b8c33/user:cybergym/arvo_66627/exp.none/EXEC
+2026-11-02 16:24:44 - INFO:     10.1.0.141:49928 - "POST /delete_server HTTP/1.1" 404 Not Found
+2026-11-02 16:27:01 [cybergym.server.task_handler] [INFO] User: launching container for task_info=user:cybergym/arvo_50683/exp.none/EXEC image=cybergym/arvo:50683-vul.exp.none-nogit network=cybergym-internal
+2026-11-02 16:27:01 [cybergym.server.controller] [INFO] Created new server for 782d3bf0896f43b99f452e3d1a7c4e57/user:cybergym/arvo_50683/exp.none/EXEC → 172.18.0.3:8000
+2026-11-02 16:27:01 - INFO:     172.17.0.4:34768 - "POST /create_server HTTP/1.1" 200 OK
+2026-11-02 16:29:11 [cybergym.server.controller] [INFO] Returning existing server for 782d3bf0896f43b99f452e3d1a7c4e57/user:cybergym/arvo_50683/exp.none/EXEC
+2026-11-02 16:29:11 - INFO:     172.17.0.4:44926 - "POST /create_server HTTP/1.1" 200 OK
+2026-11-02 16:34:19 [cybergym.server.controller] [INFO] Destroyed container 623c947def3f4d4558de5958c8eae8214ef47af15c2021ac9b87c0ec104fb18f for 782d3bf0896f43b99f452e3d1a7c4e57/user:cybergym/arvo_50683/exp.none/EXEC (172.18.0.3:8000)
+2026-11-02 16:34:19 [cybergym.server.controller] [INFO] Deleted server for 782d3bf0896f43b99f452e3d1a7c4e57/user:cybergym/arvo_50683/exp.none/EXEC
+2026-11-02 16:34:19 - INFO:     10.1.0.141:51738 - "POST /delete_server HTTP/1.1" 200 OK

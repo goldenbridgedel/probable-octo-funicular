@@ -1,0 +1,6 @@
+2026-11-02 15:52:01,855 [cybergym.firewall.proxy] Created internal network cybergym-internal
+2026-11-02 15:52:02,596 [cybergym.firewall.proxy] Started proxy container cybergym-proxy
+2026-11-02 15:52:02,598 [cybergym.firewall.proxy] Proxy ready  which=run  url=http://cybergym-proxy:3128  network=cybergym-internal  host_gateway=172.18.0.1
+2026-11-02 15:52:02,621 [cybergym.firewall.proxy] Created internal network cybergym-install
+2026-11-02 15:52:03,317 [cybergym.firewall.proxy] Started proxy container cybergym-install-proxy
+2026-11-02 15:52:03,318 [cybergym.firewall.proxy] Proxy ready  which=install  url=http://cybergym-install-proxy:3128  network=cybergym-install  host_gateway=172.19.0.1
