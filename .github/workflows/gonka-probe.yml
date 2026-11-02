@@ -286,10 +286,11 @@ jobs:
           grep -qiE 'No such file|env: .node.|wire_api = "chat" is no longer supported' /tmp/codex_in_container.log && exit 1
           echo "Container codex OK (expect ~0.80.0)"
 
-      - name: 7. Start controller / proxy (mint secrets)
+      - name: 7. Start controller / proxy (mint secrets) + hard readiness
         working-directory: exploitgym
         run: |
-          set -x
+          set -euxo pipefail
+
           SALT="cg-$(openssl rand -hex 16)"
           FLAG_SEED="sf-$(openssl rand -hex 16)"
           API_KEY="cybergym-$(openssl rand -hex 16)"
@@ -300,8 +301,44 @@ jobs:
           export CYBERGYM_SERVER_FLAG_SEED="$FLAG_SEED"
           export CYBERGYM_SERVER_API_KEY="$API_KEY"
 
-          uv run -v scripts/setup/pre_run.py data/task_ids/top3_easy.txt 2>&1 | tee /tmp/pre_run.log || true
-          tail -n 80 /tmp/pre_run.log || true
+          # Best-effort (user-mode tasks do not strictly need ASLR off)
+          sudo sysctl -w kernel.randomize_va_space=0 || true
+          sudo sysctl -w kernel.core_pattern=core.%e.%p.%t || true
+
+          mkdir -p logs
+
+          # Prefer the official helper; if it aborts (e.g. ASLR check), start controller manually
+          if ! uv run -v scripts/setup/pre_run.py data/task_ids/top3_easy.txt 2>&1 | tee /tmp/pre_run.log; then
+            echo "pre_run failed — starting controller manually"
+            BRIDGE_IP=$(docker network inspect bridge -f '{{(index .IPAM.Config 0).Gateway}}' 2>/dev/null || echo "172.17.0.1")
+            nohup uv run -m cybergym.server \
+              --host "$BRIDGE_IP" \
+              --port 8666 \
+              --log_dir logs \
+              > logs/controller.log 2>&1 &
+            echo $! > /tmp/controller.pid
+            sleep 4
+          fi
+
+          # Hard gate: refuse to spend agent budget if controller is down
+          BRIDGE_IP=$(docker network inspect bridge -f '{{(index .IPAM.Config 0).Gateway}}' 2>/dev/null || echo "172.17.0.1")
+          for i in $(seq 1 30); do
+            if curl -sf --max-time 2 "http://${BRIDGE_IP}:8666/docs" >/dev/null 2>&1 || \
+               curl -sf --max-time 2 -X POST "http://${BRIDGE_IP}:8666/health_check" \
+                 -H 'Content-Type: application/json' -d '{}' >/dev/null 2>&1; then
+              echo "Controller is up on ${BRIDGE_IP}:8666"
+              exit 0
+            fi
+            echo "waiting for controller… ($i/30)"
+            sleep 2
+          done
+
+          echo "FATAL: controller never became reachable on ${BRIDGE_IP}:8666"
+          echo "----- pre_run.log -----"
+          tail -n 80 /tmp/pre_run.log 2>/dev/null || true
+          echo "----- controller.log -----"
+          tail -n 100 logs/controller.log 2>/dev/null || true
+          exit 1
 
       - name: 8. Run agent = codex (OpenAI style + chat + pin 0.80.0)
         working-directory: exploitgym
