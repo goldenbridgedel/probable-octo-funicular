@@ -32,7 +32,6 @@ jobs:
       PYTHONLOGLEVEL: "DEBUG"
       UV_LOG: "debug"
       CODEX_NPM_VERSION: "0.80.0"
-      # Force maximum logging
       CODEX_LOG_LEVEL: "debug"
       OPENAI_LOG_LEVEL: "debug"
 
@@ -63,23 +62,33 @@ jobs:
           repository: sunblaze-ucb/exploitgym
           path: exploitgym
 
-      - name: 2. Set up Python + uv
+      - name: 2. Set up Python 3.12 + uv
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 2b. Install uv
         run: |
           set -x
-          echo "===== 2. Installing uv ====="
+          echo "===== 2b. Installing uv ====="
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           uv --version
           python3 --version
+          which python3
 
-      - name: 3. Install Python deps
+      - name: 3. Install Python deps (correct method)
         working-directory: exploitgym
         run: |
           set -x
-          echo "===== 3. Installing Python package ====="
-          uv pip install --system -e .
+          echo "===== 3. uv sync (official method) ====="
+          python3 --version
+          uv python list || true
+          uv sync --extra proxy
           echo "===== Installed packages ====="
           uv pip list
+          echo "===== Verifying import ====="
+          uv run python -c "import cybergym; print('cybergym OK', cybergym.__file__)"
 
       - name: 4. Install Node + Codex
         run: |
@@ -108,12 +117,13 @@ jobs:
         run: |
           set -x
           echo "===== 6. Starting controller ====="
-          # Adjust the start command to match your real controller entrypoint
-          nohup python3 -m cybergym.controller --port 8666 > /tmp/controller.log 2>&1 &
+          # Use the project's own pre_run / controller entrypoint when possible.
+          # Fallback shown here — replace with the real command if different.
+          nohup uv run python -m cybergym.controller --port 8666 > /tmp/controller.log 2>&1 &
           echo $! > /tmp/controller.pid
-          sleep 4
+          sleep 5
           echo "===== Controller log (head) ====="
-          head -80 /tmp/controller.log || true
+          head -100 /tmp/controller.log || true
           echo "===== Waiting for :8666 ====="
           for i in $(seq 1 20); do
             if curl -sf http://127.0.0.1:8666/ >/dev/null 2>&1 || \
@@ -133,7 +143,6 @@ jobs:
           set -x
           echo "===== 7. Task list ====="
           mkdir -p /tmp/tasks
-          # Edit these to the tasks you actually want
           cat > /tmp/tasks/list.txt << 'EOF'
           user:cybergym/arvo_44034
           user:cybergym/arvo_50683
@@ -166,13 +175,10 @@ jobs:
             echo "=============================================================="
             echo "===== TASK $TASK_NUM: $TASK ====="
             echo "=============================================================="
-            echo "OUT_DIR=$OUT_DIR"
-            echo "TIMEOUT=${TIMEOUT}s  BUDGET=\$${BUDGET}  REASONING=$REASONING"
+            echo "OUT_DIR=$OUT_DIR  TIMEOUT=${TIMEOUT}s  BUDGET=\$${BUDGET}"
 
-            # --- Run the agent (adjust the exact command to your entrypoint) ---
-            # The important part is that Codex / the agent writes full conversation
-            # logs into $OUT_DIR (codex.log, rendered stream, etc.)
-            python3 examples/run_agent.py \
+            # Adjust flags to match the real examples/run_agent.py interface
+            uv run examples/run_agent.py \
               --task "$TASK" \
               --model "$MODEL" \
               --timeout "$TIMEOUT" \
@@ -184,24 +190,21 @@ jobs:
             AGENT_RC=${PIPESTATUS[0]}
             echo "Agent exit code: $AGENT_RC"
 
-            # ---------- FULL LLM I/O DUMP ----------
             echo ""
-            echo "----- LLM conversation / logs for $TASK -----"
+            echo "----- FULL LLM I/O + logs for $TASK -----"
             find "$OUT_DIR" -type f \( \
               -name '*.log' -o -name '*prompt*' -o -name '*codex*' \
               -o -name '*conversation*' -o -name '*messages*' \
-              -o -name '*.jsonl' -o -name 'config.toml' \
+              -o -name '*.jsonl' -o -name 'config.toml' -o -name '*.json' \
             \) | sort | while read -r f; do
               echo ""
               echo "########## FILE: $f ##########"
-              # Cap extremely large files but still show a lot
               wc -l "$f" || true
-              head -c 200000 "$f" || true
+              head -c 300000 "$f" || true
               echo ""
               echo "########## END $f ##########"
             done
 
-            # ---------- FLAG CHECK ----------
             echo ""
             echo "----- Flag check for $TASK -----"
             if find "$OUT_DIR" -name flag.txt -size +0 2>/dev/null | grep -q .; then
@@ -214,7 +217,7 @@ jobs:
             fi
 
             echo "===== END TASK $TASK_NUM ====="
-            sleep 5   # small cooldown
+            sleep 5
           done < /tmp/tasks/list.txt
 
           echo ""
@@ -232,13 +235,13 @@ jobs:
           echo "Total tasks: $(cat /tmp/total_count.txt 2>/dev/null || echo 0)"
           echo ""
           echo "===== All result.json files ====="
-          find /tmp/results -name result.json | sort | while read f; do
+          find /tmp/results -name result.json 2>/dev/null | sort | while read f; do
             echo "--- $f ---"
-            cat "$f"
+            cat "$f" || true
             echo
           done
           echo "===== Directory tree ====="
-          find /tmp/results -type f | sort
+          find /tmp/results -type f 2>/dev/null | sort || true
 
       - name: 10. Upload everything
         if: always()
