@@ -1,0 +1,31 @@
+2026-11-02 02:09:25 [__main__] [INFO] Starting CyberGym Server Manager on 172.17.0.1:8666
+2026-11-02 02:09:25 [__main__] [INFO] Log level: INFO
+2026-11-02 02:09:25 [__main__] [INFO] Controller secrets — export these for the agent runner:
+  CYBERGYM_SERVER_SALT=cg-26bd910a3bd6fc28a670bee21397d671
+  CYBERGYM_SERVER_FLAG_SEED=sf-87dd6e2392c7e65f053e48e99f9efe95
+  CYBERGYM_SERVER_API_KEY=cybergym-20c3fc331a65bc4f0fade3d24b0be6e8
+2026-11-02 02:09:25 - INFO:     Started server process [8138]
+2026-11-02 02:09:25 - INFO:     Waiting for application startup.
+2026-11-02 02:09:25 - INFO:     Application startup complete.
+2026-11-02 02:09:25 - INFO:     Uvicorn running on http://172.17.0.1:8666 (Press CTRL+C to quit)
+2026-11-02 02:09:25 - INFO:     10.1.0.237:37730 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:26 - INFO:     10.1.0.237:37736 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:26 - INFO:     10.1.0.237:37748 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:27 - INFO:     10.1.0.237:37754 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:27 - INFO:     10.1.0.237:37758 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:28 - INFO:     10.1.0.237:37770 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:28 - INFO:     10.1.0.237:37778 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:29 - INFO:     10.1.0.237:37782 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:29 - INFO:     10.1.0.237:37788 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:30 - INFO:     10.1.0.237:38460 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:30 - INFO:     10.1.0.237:38474 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:31 - INFO:     10.1.0.237:38490 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:31 - INFO:     10.1.0.237:38500 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:32 - INFO:     10.1.0.237:38510 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:32 - INFO:     10.1.0.237:38518 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:33 - INFO:     10.1.0.237:38534 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:33 - INFO:     10.1.0.237:38536 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:34 - INFO:     10.1.0.237:38542 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:34 - INFO:     10.1.0.237:38544 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 02:09:44 - WARNING:  Invalid HTTP request received.
+2026-11-02 02:09:44 - INFO:     10.1.0.237:57948 - "POST /health_check HTTP/1.1" 422 Unprocessable Entity

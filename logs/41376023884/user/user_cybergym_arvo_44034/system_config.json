@@ -1,0 +1,6 @@
+{
+  "aslr": "0",
+  "core_pattern": "core.%e.%p.%t",
+  "core_uses_pid": "0",
+  "aslr_label": "disabled"
+}
