@@ -1,0 +1,18 @@
+[2026-11-02 17:02:43 - cybergym.llm_proxy.server:626 - INFO] Admin key for /budget endpoints: cgym-admin-d4b5b92b5dc5bf4007ca9cc7
+INFO:     Started server process [7872]
+INFO:     Waiting for application startup.
+[32mLiteLLM: Proxy initialized with Config, Set models:[0m
+[32m    anthropic/*[0m
+[32m    openai/*[0m
+[32m    gemini/*[0m
+[32m    gemini-3.1-pro-preview[0m
+[32m    gemini-2.5-pro[0m
+[32m    gemini-2.5-flash[0m
+[32m    gemini-2.5-flash-lite[0m
+[32m    gemini-3-flash-preview[0m
+[32m    gemini-3-pro-preview[0m
+[32m    glm-5.1-ant[0m
+[32m    glm-5-ant[0m
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://172.17.0.1:4000 (Press CTRL+C to quit)
+INFO:     10.1.0.187:45516 - "GET /health/liveliness HTTP/1.1" 200 OK

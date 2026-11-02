@@ -1,0 +1,33 @@
+2026-11-02 17:02:28 [__main__] [INFO] Starting CyberGym Server Manager on 172.17.0.1:8666
+2026-11-02 17:02:28 [__main__] [INFO] Log level: INFO
+2026-11-02 17:02:28 [__main__] [INFO] Controller secrets — export these for the agent runner:
+  CYBERGYM_SERVER_SALT=cg-bfca91b2ef4b90ef0c20177b93d4476b
+  CYBERGYM_SERVER_FLAG_SEED=sf-bf77fca6ce0d25c61af4aee7fa6cc84a
+  CYBERGYM_SERVER_API_KEY=cybergym-637d08cfd4c9556932f564eff9e6ade1
+2026-11-02 17:02:28 - INFO:     Started server process [7860]
+2026-11-02 17:02:28 - INFO:     Waiting for application startup.
+2026-11-02 17:02:28 - INFO:     Application startup complete.
+2026-11-02 17:02:28 - INFO:     Uvicorn running on http://172.17.0.1:8666 (Press CTRL+C to quit)
+2026-11-02 17:02:28 - INFO:     10.1.0.187:40070 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:29 - INFO:     10.1.0.187:40086 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:29 - INFO:     10.1.0.187:40098 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:30 - INFO:     10.1.0.187:40104 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:30 - INFO:     10.1.0.187:40116 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:31 - INFO:     10.1.0.187:40126 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:31 - INFO:     10.1.0.187:40138 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:32 - INFO:     10.1.0.187:40140 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:32 - INFO:     10.1.0.187:40142 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:33 - INFO:     10.1.0.187:40156 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:33 - INFO:     10.1.0.187:40158 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:34 - INFO:     10.1.0.187:40164 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:34 - INFO:     10.1.0.187:40180 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:35 - INFO:     10.1.0.187:40186 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:35 - INFO:     10.1.0.187:40190 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:36 - INFO:     10.1.0.187:40204 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:36 - INFO:     10.1.0.187:40206 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:37 - INFO:     10.1.0.187:40212 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:37 - INFO:     10.1.0.187:57178 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:02:43 - INFO:     10.1.0.187:57192 - "GET / HTTP/1.1" 404 Not Found
+2026-11-02 17:05:37 [cybergym.server.task_handler] [INFO] User: launching container for task_info=user:cybergym/arvo_44034/exp.none/EXEC image=cybergym/arvo:44034-vul.exp.none-nogit network=cybergym-internal
+2026-11-02 17:05:38 [cybergym.server.controller] [INFO] Created new server for 5e6cdd0169fc480bb0eaf754288c7170/user:cybergym/arvo_44034/exp.none/EXEC → 172.18.0.3:8000
+2026-11-02 17:05:38 - INFO:     172.17.0.4:57602 - "POST /create_server HTTP/1.1" 200 OK

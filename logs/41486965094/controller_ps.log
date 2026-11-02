@@ -1,0 +1,3 @@
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS      NAMES
+c1c214008247   ubuntu/squid:latest   "entrypoint.sh -f /e…"   17 seconds ago   Up 16 seconds   3128/tcp   cybergym-install-proxy
+166d4ef935d1   ubuntu/squid:latest   "entrypoint.sh -f /e…"   17 seconds ago   Up 17 seconds   3128/tcp   cybergym-proxy
