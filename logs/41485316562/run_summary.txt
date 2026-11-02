@@ -1,0 +1,7 @@
+===== RESULT JSON =====
+solved_count=0 result_files=0
+===== per-task signals =====
+===== context-window / failure signals =====
+===== codex.log (first task, first 150 lines) =====
+===== URL / auth / wire grep =====
+===== ULTRA VERBOSE DIAG FILES =====
