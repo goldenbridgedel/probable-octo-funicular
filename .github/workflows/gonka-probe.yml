@@ -329,8 +329,11 @@ jobs:
               raise SystemExit(0)
 
           old_timeout = "timeout {args.agent_timeout_seconds}"
-          # Inside codex.py this sits in an f-string. Doubled braces emit ${CODEX_ATTEMPT_TIMEOUT}.
-          new_timeout = 'timeout "${{CODEX_ATTEMPT_TIMEOUT}}"'
+          # codex.py builds this command with an f-string, so doubled braces
+          # become one brace and the container shell expands the variable.
+          # The pieces are concatenated so this workflow file does not contain
+          # the characters dollar-brace-brace, which Actions would parse.
+          new_timeout = 'timeout "$' + '{{CODEX_ATTEMPT_TIMEOUT}}"'
           if old_timeout not in text:
               raise SystemExit("timeout anchor not found")
           text = text.replace(old_timeout, new_timeout, 1)
