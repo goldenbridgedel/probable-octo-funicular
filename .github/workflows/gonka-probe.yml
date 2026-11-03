@@ -43,14 +43,14 @@ jobs:
           mkdir -p /workspace
           chmod 777 /workspace
 
-          # Clean catflag (no YAML indentation issues)
+          # Clean, portable catflag creation
           printf '%s\n' '#!/bin/bash' 'echo "FLAG{direct_api_success_$(date +%s)}"' > /usr/local/bin/catflag
           chmod +x /usr/local/bin/catflag
 
           echo "--- catflag works ---"
           /usr/local/bin/catflag
-          file /usr/local/bin/catflag
           ls -la /usr/local/bin/catflag
+          head -5 /usr/local/bin/catflag
 
           echo "--- /workspace is ready ---"
           ls -la /workspace
