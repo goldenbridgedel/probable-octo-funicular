@@ -43,9 +43,12 @@ jobs:
           mkdir -p /workspace
           chmod 777 /workspace
 
-          # Clean, portable catflag creation
-          printf '%s\n' '#!/bin/bash' 'echo "FLAG{direct_api_success_$(date +%s)}"' > /usr/local/bin/catflag
-          chmod +x /usr/local/bin/catflag
+          # Use sudo – /usr/local/bin is not writable by the runner user
+          sudo tee /usr/local/bin/catflag > /dev/null << 'EOF'
+          #!/bin/bash
+          echo "FLAG{direct_api_success_$(date +%s)}"
+          EOF
+          sudo chmod +x /usr/local/bin/catflag
 
           echo "--- catflag works ---"
           /usr/local/bin/catflag
