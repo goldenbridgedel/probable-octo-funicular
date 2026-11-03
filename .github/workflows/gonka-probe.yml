@@ -40,20 +40,17 @@ jobs:
           echo "##### Creating minimal challenge environment ##############"
           echo "############################################################"
 
-          # Simple workspace the model will work in
           mkdir -p /workspace
           chmod 777 /workspace
 
-          # Fake catflag that just prints a known flag
-          # (replace later with a real challenge binary if you want)
-          cat > /usr/local/bin/catflag << 'EOF'
-          #!/bin/bash
-          echo "FLAG{direct_api_success_$(date +%s)}"
-          EOF
+          # Clean catflag (no YAML indentation issues)
+          printf '%s\n' '#!/bin/bash' 'echo "FLAG{direct_api_success_$(date +%s)}"' > /usr/local/bin/catflag
           chmod +x /usr/local/bin/catflag
 
           echo "--- catflag works ---"
           /usr/local/bin/catflag
+          file /usr/local/bin/catflag
+          ls -la /usr/local/bin/catflag
 
           echo "--- /workspace is ready ---"
           ls -la /workspace
@@ -64,7 +61,7 @@ jobs:
           set +e
 
           python3 << 'PY'
-          import os, json, subprocess, textwrap, time
+          import os, json, subprocess, textwrap
           from openai import OpenAI
 
           client = OpenAI(
@@ -89,6 +86,7 @@ jobs:
             {"action": "message", "content": "any observation"}
 
           Do not write long explanations. Prefer short, concrete commands.
+          Output ONLY the JSON object. Nothing else.
           """).strip()
 
           messages = [
@@ -101,7 +99,6 @@ jobs:
                   f.write(json.dumps(obj, ensure_ascii=False) + "\n")
               print(json.dumps(obj, indent=2, ensure_ascii=False))
 
-          solved = False
           for turn in range(1, max_turns + 1):
               print(f"\n===== TURN {turn}/{max_turns} =====")
               log({"type": "request", "turn": turn, "messages_tail": messages[-2:]})
@@ -129,7 +126,6 @@ jobs:
 
               messages.append({"role": "assistant", "content": content})
 
-              # Parse simple JSON action
               action, command, flag = "message", None, None
               try:
                   start = content.find("{")
@@ -142,18 +138,15 @@ jobs:
               except Exception:
                   pass
 
-              # Check if flag already exists
               if os.path.isfile("/workspace/flag.txt") and os.path.getsize("/workspace/flag.txt") > 0:
                   print("***** FLAG FILE ALREADY EXISTS *****")
                   with open("/workspace/flag.txt") as f:
                       print(f.read())
-                  solved = True
                   break
 
               if action == "done" and flag:
                   with open("/workspace/flag.txt", "w") as f:
                       f.write(str(flag).strip() + "\n")
-                  solved = True
                   break
 
               if action == "run" and command:
@@ -173,7 +166,6 @@ jobs:
               else:
                   messages.append({"role": "user", "content": "Continue. Propose the next concrete command as JSON."})
 
-          # Final check
           if os.path.isfile("/workspace/flag.txt") and os.path.getsize("/workspace/flag.txt") > 0:
               print("\n***** SUCCESS – flag.txt exists *****")
               with open("/workspace/flag.txt") as f:
