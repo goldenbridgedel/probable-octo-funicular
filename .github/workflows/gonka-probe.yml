@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       max_budget_usd:
-        description: "Per-task dollar budget"
+        description: "Per-task dollar budget (informational when using --use-api-key)"
         required: false
         default: "8.0"
       timeout_seconds:
@@ -49,7 +49,7 @@ jobs:
           nproc
           docker version || true
 
-      - name: 1. Checkout this repo (for pushing logs)
+      - name: 1. Checkout this repo
         uses: actions/checkout@v4
         with:
           path: probe-repo
@@ -164,7 +164,7 @@ jobs:
         run: |
           set -x
           sudo apt-get update -qq
-          sudo apt-get install -y -qq python3 python3-pip python3-venv jq curl git build-essential
+          sudo apt-get install -y -qq python3 python3-pip python3-venv jq curl git build-essential openssl
           python3 -m pip install --upgrade pip setuptools wheel
           python3 -m pip install \
             openai \
@@ -177,7 +177,6 @@ jobs:
             pydantic \
             tenacity
 
-          # Install ExploitGym itself so `import cybergym` works
           cd exploitgym
           python3 -m pip install -e .
           python3 -c "import cybergym; print('cybergym imported successfully')"
@@ -200,7 +199,65 @@ jobs:
           EOF
           cat data/task_ids/top3_easy.txt
 
-      - name: 5. Run Top-3 tasks
+      - name: 5. Generate controller secrets + disable ASLR
+        run: |
+          set -x
+          # Generate secrets once so controller and run_agent share the same values
+          echo "CYBERGYM_SERVER_SALT=cg-$(openssl rand -hex 16)" >> $GITHUB_ENV
+          echo "CYBERGYM_SERVER_FLAG_SEED=sf-$(openssl rand -hex 16)" >> $GITHUB_ENV
+          echo "CYBERGYM_SERVER_API_KEY=cybergym-$(openssl rand -hex 16)" >> $GITHUB_ENV
+
+          # Default ExploitGym profile expects ASLR disabled
+          sudo sysctl -w kernel.randomize_va_space=0 || true
+          sysctl -n kernel.randomize_va_space || true
+
+          # Docker bridge IP (containers reach host services via this)
+          BRIDGE_IP=$(ip -4 addr show docker0 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}' || echo "172.17.0.1")
+          echo "DOCKER_BRIDGE_IP=$BRIDGE_IP" >> $GITHUB_ENV
+          echo "BRIDGE_IP=$BRIDGE_IP"
+
+      - name: 6. Pull Squid + target images + extract task data
+        working-directory: exploitgym
+        run: |
+          set -x
+          # Firewall image (needed if we ever enable --use-firewall)
+          docker pull ubuntu/squid:latest || true
+
+          # Prefer official pull helper if present
+          if [ -f scripts/setup/pull_images.py ]; then
+            python3 scripts/setup/pull_images.py ../data/task_ids/top3_easy.txt --user-modes exp.none || true
+          fi
+
+          # Extract PoC / task data if setup script exists
+          if [ -f scripts/setup/setup_data.sh ]; then
+            bash scripts/setup/setup_data.sh || true
+          fi
+
+          docker images | head -30
+
+      - name: 7. Start controller (and supporting services) via pre_run.py
+        working-directory: exploitgym
+        run: |
+          set -x
+          # pre_run will reuse the secrets we already exported
+          # --no-llm-proxy because we use --use-api-key against gonkarouter
+          # --no-firewall keeps the setup lighter for this first real run
+          python3 scripts/setup/pre_run.py ../data/task_ids/top3_easy.txt \
+            --no-llm-proxy \
+            --no-firewall \
+            2>&1 | tee /tmp/pre_run.log
+
+          echo "===== pre_run finished ====="
+          # Make sure the three secrets are still present
+          echo "SALT set? ${CYBERGYM_SERVER_SALT:+yes}"
+          echo "FLAG_SEED set? ${CYBERGYM_SERVER_FLAG_SEED:+yes}"
+          echo "API_KEY set? ${CYBERGYM_SERVER_API_KEY:+yes}"
+          echo "DOCKER_BRIDGE_IP=$DOCKER_BRIDGE_IP"
+
+          # Quick liveness check
+          curl -s "http://${DOCKER_BRIDGE_IP:-172.17.0.1}:8666/" || true
+
+      - name: 8. Run Top-3 tasks
         working-directory: exploitgym
         run: |
           set -x
@@ -219,13 +276,16 @@ jobs:
             echo "===== Starting task: $TASK ====="
             echo "============================================================"
 
-            # NOTE: task is a positional argument; budget flag is --budget
+            # --use-api-key → talk directly to OPENAI_BASE_URL / OPENAI_API_KEY
+            # (no litellm proxy required)
             python3 examples/run_agent.py \
               --agent codex \
               --model "$MODEL" \
               --budget "$MAX_BUDGET" \
               --timeout "$TIMEOUT" \
               --reasoning-effort "$REASONING" \
+              --use-api-key \
+              --controller-url "http://${DOCKER_BRIDGE_IP:-172.17.0.1}:8666" \
               "$TASK" \
               2>&1 | tee "/tmp/results/$(echo $TASK | tr '/:' '__').log"
 
@@ -233,20 +293,24 @@ jobs:
             sleep "$COOLDOWN"
           done
 
-      - name: 6. Collect results
+      - name: 9. Collect results
         if: always()
         run: |
           set -x
           echo "===== Results summary ====="
           find /tmp/results -type f -name "*.log" | head -20
           echo "-----"
-          grep -H "flag.txt\|SUCCESS\|score\|solved\|ERROR\|Traceback\|ModuleNotFoundError\|unrecognized arguments" /tmp/results/*.log || true
+          grep -H "flag.txt\|SUCCESS\|score\|solved\|ERROR\|Traceback\|Controller secrets\|Invalid token" /tmp/results/*.log || true
           ls -la /tmp/results/ || true
+          echo "----- pre_run log (tail) -----"
+          tail -80 /tmp/pre_run.log || true
 
-      - name: 7. Upload logs
+      - name: 10. Upload logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: top3-logs
-          path: /tmp/results/
+          path: |
+            /tmp/results/
+            /tmp/pre_run.log
           retention-days: 14
