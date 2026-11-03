@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       max_budget_usd:
-        description: "Per-task dollar budget (informational when using --use-api-key)"
+        description: "Per-task dollar budget (informational with --use-api-key)"
         required: false
         default: "8.0"
       timeout_seconds:
@@ -108,19 +108,15 @@ jobs:
           set -x
           python3 << 'PY'
           from pathlib import Path
-
           path = Path("src/cybergym/evaluation/agents/codex.py")
           text = path.read_text()
-
           marker = "PROMPT_HARDENING_INJECTED"
           if marker in text:
               print("prompt hardening already present")
               raise SystemExit(0)
-
           anchor = "prompt = args.task_description"
           if anchor not in text:
               raise SystemExit("anchor 'prompt = args.task_description' not found")
-
           inject = '''
               # --- PROMPT_HARDENING_INJECTED ---
               _hardening = """
@@ -154,7 +150,6 @@ jobs:
               prompt = _hardening + "\\n\\n" + (prompt or "")
               # --- end PROMPT_HARDENING_INJECTED ---
           '''
-
           text = text.replace(anchor, anchor + "\n" + inject, 1)
           path.write_text(text)
           print("injected prompt hardening")
@@ -167,16 +162,7 @@ jobs:
           sudo apt-get install -y -qq python3 python3-pip python3-venv jq curl git build-essential openssl
           python3 -m pip install --upgrade pip setuptools wheel
           python3 -m pip install \
-            openai \
-            httpx \
-            pyyaml \
-            docker \
-            tqdm \
-            rich \
-            requests \
-            pydantic \
-            tenacity
-
+            openai httpx pyyaml docker tqdm rich requests pydantic tenacity
           cd exploitgym
           python3 -m pip install -e .
           python3 -c "import cybergym; print('cybergym imported successfully')"
@@ -188,7 +174,8 @@ jobs:
           which codex || true
           codex --version || true
 
-      - name: 4. Create task list (Top-3)
+      - name: 4. Create task list INSIDE exploitgym
+        working-directory: exploitgym
         run: |
           set -x
           mkdir -p data/task_ids
@@ -198,69 +185,78 @@ jobs:
           user:cybergym/arvo_50683
           EOF
           cat data/task_ids/top3_easy.txt
+          # also keep a copy at the runner root for convenience
+          mkdir -p ../data/task_ids
+          cp data/task_ids/top3_easy.txt ../data/task_ids/
 
       - name: 5. Generate controller secrets + disable ASLR
         run: |
           set -x
-          # Generate secrets once so controller and run_agent share the same values
           echo "CYBERGYM_SERVER_SALT=cg-$(openssl rand -hex 16)" >> $GITHUB_ENV
           echo "CYBERGYM_SERVER_FLAG_SEED=sf-$(openssl rand -hex 16)" >> $GITHUB_ENV
           echo "CYBERGYM_SERVER_API_KEY=cybergym-$(openssl rand -hex 16)" >> $GITHUB_ENV
 
-          # Default ExploitGym profile expects ASLR disabled
           sudo sysctl -w kernel.randomize_va_space=0 || true
-          sysctl -n kernel.randomize_va_space || true
+          sysctl -n kernel.randomize_va_space
 
-          # Docker bridge IP (containers reach host services via this)
           BRIDGE_IP=$(ip -4 addr show docker0 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}' || echo "172.17.0.1")
           echo "DOCKER_BRIDGE_IP=$BRIDGE_IP" >> $GITHUB_ENV
           echo "BRIDGE_IP=$BRIDGE_IP"
 
-      - name: 6. Pull Squid + target images + extract task data
+      - name: 6. Pull images + extract task data
         working-directory: exploitgym
         run: |
           set -x
-          # Firewall image (needed if we ever enable --use-firewall)
           docker pull ubuntu/squid:latest || true
 
-          # Prefer official pull helper if present
           if [ -f scripts/setup/pull_images.py ]; then
-            python3 scripts/setup/pull_images.py ../data/task_ids/top3_easy.txt --user-modes exp.none || true
+            python3 scripts/setup/pull_images.py data/task_ids/top3_easy.txt --user-modes exp.none || true
           fi
 
-          # Extract PoC / task data if setup script exists
           if [ -f scripts/setup/setup_data.sh ]; then
             bash scripts/setup/setup_data.sh || true
           fi
 
-          docker images | head -30
+          echo "===== docker images ====="
+          docker images | head -40
 
-      - name: 7. Start controller (and supporting services) via pre_run.py
+      - name: 7. Start controller via pre_run.py (hard fail on error)
         working-directory: exploitgym
         run: |
           set -x
-          # pre_run will reuse the secrets we already exported
-          # --no-llm-proxy because we use --use-api-key against gonkarouter
-          # --no-firewall keeps the setup lighter for this first real run
-          python3 scripts/setup/pre_run.py ../data/task_ids/top3_easy.txt \
+          # secrets are already in the environment via GITHUB_ENV
+          python3 scripts/setup/pre_run.py data/task_ids/top3_easy.txt \
             --no-llm-proxy \
             --no-firewall \
             2>&1 | tee /tmp/pre_run.log
 
           echo "===== pre_run finished ====="
-          # Make sure the three secrets are still present
           echo "SALT set? ${CYBERGYM_SERVER_SALT:+yes}"
           echo "FLAG_SEED set? ${CYBERGYM_SERVER_FLAG_SEED:+yes}"
           echo "API_KEY set? ${CYBERGYM_SERVER_API_KEY:+yes}"
           echo "DOCKER_BRIDGE_IP=$DOCKER_BRIDGE_IP"
 
-          # Quick liveness check
-          curl -s "http://${DOCKER_BRIDGE_IP:-172.17.0.1}:8666/" || true
+          # Force a real health check – fail the step if controller is dead
+          for i in 1 2 3 4 5; do
+            if curl -sf "http://${DOCKER_BRIDGE_IP:-172.17.0.1}:8666/" >/dev/null; then
+              echo "Controller is alive"
+              break
+            fi
+            echo "Controller not ready yet (attempt $i)..."
+            sleep 3
+          done
+          curl -sf "http://${DOCKER_BRIDGE_IP:-172.17.0.1}:8666/" || {
+            echo "::error::Controller never became healthy"
+            tail -100 /tmp/pre_run.log
+            exit 1
+          }
 
       - name: 8. Run Top-3 tasks
         working-directory: exploitgym
         run: |
           set -x
+          # Keep set -e off so one bad task does not abort the others,
+          # but we still record exit codes.
           set +e
 
           MAX_BUDGET="${{ github.event.inputs.max_budget_usd || '8.0' }}"
@@ -268,16 +264,23 @@ jobs:
           REASONING="${{ github.event.inputs.reasoning_effort || 'high' }}"
           COOLDOWN="${{ github.event.inputs.inter_task_cooldown_seconds || '90' }}"
 
-          mkdir -p /tmp/results
-          TASKS=$(cat ../data/task_ids/top3_easy.txt)
+          # Re-export secrets so the Python process definitely sees them
+          export CYBERGYM_SERVER_SALT
+          export CYBERGYM_SERVER_FLAG_SEED
+          export CYBERGYM_SERVER_API_KEY
+          export DOCKER_BRIDGE_IP
+          export OPENAI_API_KEY
+          export OPENAI_BASE_URL
 
+          mkdir -p /tmp/results
+          TASKS=$(cat data/task_ids/top3_easy.txt)
+
+          FAILED=0
           for TASK in $TASKS; do
             echo "============================================================"
             echo "===== Starting task: $TASK ====="
             echo "============================================================"
 
-            # --use-api-key → talk directly to OPENAI_BASE_URL / OPENAI_API_KEY
-            # (no litellm proxy required)
             python3 examples/run_agent.py \
               --agent codex \
               --model "$MODEL" \
@@ -285,13 +288,22 @@ jobs:
               --timeout "$TIMEOUT" \
               --reasoning-effort "$REASONING" \
               --use-api-key \
+              --user-mode exp.none \
               --controller-url "http://${DOCKER_BRIDGE_IP:-172.17.0.1}:8666" \
               "$TASK" \
               2>&1 | tee "/tmp/results/$(echo $TASK | tr '/:' '__').log"
-
-            echo "===== Finished task: $TASK ====="
+            RC=${PIPESTATUS[0]}
+            echo "===== Finished task: $TASK (exit $RC) ====="
+            if [ "$RC" -ne 0 ]; then
+              FAILED=1
+            fi
             sleep "$COOLDOWN"
           done
+
+          # Surface overall failure so the job is red if nothing worked
+          if [ "$FAILED" -ne 0 ]; then
+            echo "::warning::One or more tasks exited non-zero"
+          fi
 
       - name: 9. Collect results
         if: always()
@@ -300,10 +312,10 @@ jobs:
           echo "===== Results summary ====="
           find /tmp/results -type f -name "*.log" | head -20
           echo "-----"
-          grep -H "flag.txt\|SUCCESS\|score\|solved\|ERROR\|Traceback\|Controller secrets\|Invalid token" /tmp/results/*.log || true
+          grep -H "flag.txt\|SUCCESS\|score\|solved\|ERROR\|Traceback\|Controller secrets\|Invalid token\|No module\|unrecognized" /tmp/results/*.log || true
           ls -la /tmp/results/ || true
           echo "----- pre_run log (tail) -----"
-          tail -80 /tmp/pre_run.log || true
+          tail -120 /tmp/pre_run.log || true
 
       - name: 10. Upload logs
         if: always()
