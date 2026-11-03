@@ -160,7 +160,7 @@ jobs:
           print("injected prompt hardening")
           PY
 
-      - name: 2. Install system + Python deps
+      - name: 2. Install system + Python deps + ExploitGym
         run: |
           set -x
           sudo apt-get update -qq
@@ -176,6 +176,11 @@ jobs:
             requests \
             pydantic \
             tenacity
+
+          # Install ExploitGym itself so `import cybergym` works
+          cd exploitgym
+          python3 -m pip install -e .
+          python3 -c "import cybergym; print('cybergym imported successfully')"
 
       - name: 3. Install Codex CLI
         run: |
@@ -234,7 +239,7 @@ jobs:
           echo "===== Results summary ====="
           find /tmp/results -type f -name "*.log" | head -20
           echo "-----"
-          grep -H "flag.txt\|SUCCESS\|score\|solved\|ERROR\|Traceback" /tmp/results/*.log || true
+          grep -H "flag.txt\|SUCCESS\|score\|solved\|ERROR\|Traceback\|ModuleNotFoundError" /tmp/results/*.log || true
           ls -la /tmp/results/ || true
 
       - name: 7. Upload logs
