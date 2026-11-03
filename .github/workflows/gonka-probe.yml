@@ -43,11 +43,9 @@ jobs:
           mkdir -p /workspace
           chmod 777 /workspace
 
-          # Use sudo – /usr/local/bin is not writable by the runner user
-          sudo tee /usr/local/bin/catflag > /dev/null << 'EOF'
-          #!/bin/bash
-          echo "FLAG{direct_api_success_$(date +%s)}"
-          EOF
+          # Completely avoid heredoc indentation problems
+          echo '#!/bin/bash' | sudo tee /usr/local/bin/catflag > /dev/null
+          echo 'echo "FLAG{direct_api_success_$(date +%s)}"' | sudo tee -a /usr/local/bin/catflag > /dev/null
           sudo chmod +x /usr/local/bin/catflag
 
           echo "--- catflag works ---"
