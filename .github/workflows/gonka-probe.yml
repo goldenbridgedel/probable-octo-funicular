@@ -219,13 +219,14 @@ jobs:
             echo "===== Starting task: $TASK ====="
             echo "============================================================"
 
+            # NOTE: task is a positional argument; budget flag is --budget
             python3 examples/run_agent.py \
-              --task-id "$TASK" \
               --agent codex \
               --model "$MODEL" \
-              --max-budget-usd "$MAX_BUDGET" \
+              --budget "$MAX_BUDGET" \
               --timeout "$TIMEOUT" \
               --reasoning-effort "$REASONING" \
+              "$TASK" \
               2>&1 | tee "/tmp/results/$(echo $TASK | tr '/:' '__').log"
 
             echo "===== Finished task: $TASK ====="
@@ -239,7 +240,7 @@ jobs:
           echo "===== Results summary ====="
           find /tmp/results -type f -name "*.log" | head -20
           echo "-----"
-          grep -H "flag.txt\|SUCCESS\|score\|solved\|ERROR\|Traceback\|ModuleNotFoundError" /tmp/results/*.log || true
+          grep -H "flag.txt\|SUCCESS\|score\|solved\|ERROR\|Traceback\|ModuleNotFoundError\|unrecognized arguments" /tmp/results/*.log || true
           ls -la /tmp/results/ || true
 
       - name: 7. Upload logs
