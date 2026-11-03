@@ -185,7 +185,6 @@ jobs:
           user:cybergym/arvo_50683
           EOF
           cat data/task_ids/top3_easy.txt
-          # also keep a copy at the runner root for convenience
           mkdir -p ../data/task_ids
           cp data/task_ids/top3_easy.txt ../data/task_ids/
 
@@ -203,60 +202,75 @@ jobs:
           echo "DOCKER_BRIDGE_IP=$BRIDGE_IP" >> $GITHUB_ENV
           echo "BRIDGE_IP=$BRIDGE_IP"
 
-      - name: 6. Pull images + extract task data
+      - name: 6. Pull images + extract task data + create network
         working-directory: exploitgym
         run: |
           set -x
           docker pull ubuntu/squid:latest || true
+          docker network create cybergym-internal 2>/dev/null || true
+          docker network ls | grep -E 'cybergym|bridge' || true
 
           if [ -f scripts/setup/pull_images.py ]; then
             python3 scripts/setup/pull_images.py data/task_ids/top3_easy.txt --user-modes exp.none || true
           fi
-
           if [ -f scripts/setup/setup_data.sh ]; then
             bash scripts/setup/setup_data.sh || true
           fi
-
           echo "===== docker images ====="
           docker images | head -40
 
-      - name: 7. Start controller via pre_run.py (hard fail on error)
+      - name: 7. Start controller (direct, no firewall / uv dependency)
         working-directory: exploitgym
         run: |
           set -x
-          # secrets are already in the environment via GITHUB_ENV
-          python3 scripts/setup/pre_run.py data/task_ids/top3_easy.txt \
-            --no-llm-proxy \
-            --no-firewall \
-            2>&1 | tee /tmp/pre_run.log
 
-          echo "===== pre_run finished ====="
-          echo "SALT set? ${CYBERGYM_SERVER_SALT:+yes}"
-          echo "FLAG_SEED set? ${CYBERGYM_SERVER_FLAG_SEED:+yes}"
-          echo "API_KEY set? ${CYBERGYM_SERVER_API_KEY:+yes}"
-          echo "DOCKER_BRIDGE_IP=$DOCKER_BRIDGE_IP"
+          # Ensure network exists (idempotent)
+          docker network create cybergym-internal 2>/dev/null || true
 
-          # Force a real health check – fail the step if controller is dead
-          for i in 1 2 3 4 5; do
-            if curl -sf "http://${DOCKER_BRIDGE_IP:-172.17.0.1}:8666/" >/dev/null; then
-              echo "Controller is alive"
-              break
+          export CYBERGYM_SERVER_SALT
+          export CYBERGYM_SERVER_FLAG_SEED
+          export CYBERGYM_SERVER_API_KEY
+          export DOCKER_BRIDGE_IP="${DOCKER_BRIDGE_IP:-172.17.0.1}"
+
+          echo "SALT=${CYBERGYM_SERVER_SALT:0:12}..."
+          echo "FLAG_SEED=${CYBERGYM_SERVER_FLAG_SEED:0:12}..."
+          echo "API_KEY=${CYBERGYM_SERVER_API_KEY:0:12}..."
+          echo "BRIDGE=$DOCKER_BRIDGE_IP"
+
+          mkdir -p logs/pre_run/controller
+          # Start without --network so we do not depend on the firewall
+          nohup python3 -m cybergym.server \
+            --host "$DOCKER_BRIDGE_IP" \
+            --port 8666 \
+            --log_dir logs/pre_run/controller \
+            > /tmp/controller.out 2>&1 &
+          echo $! > /tmp/controller.pid
+          echo "Controller PID=$(cat /tmp/controller.pid)"
+
+          for i in $(seq 1 30); do
+            if curl -sf "http://${DOCKER_BRIDGE_IP}:8666/" >/dev/null; then
+              echo "Controller is alive (attempt $i)"
+              curl -s "http://${DOCKER_BRIDGE_IP}:8666/" || true
+              exit 0
+            fi
+            if ! kill -0 $(cat /tmp/controller.pid) 2>/dev/null; then
+              echo "::error::Controller process exited"
+              cat /tmp/controller.out || true
+              exit 1
             fi
             echo "Controller not ready yet (attempt $i)..."
-            sleep 3
+            sleep 2
           done
-          curl -sf "http://${DOCKER_BRIDGE_IP:-172.17.0.1}:8666/" || {
-            echo "::error::Controller never became healthy"
-            tail -100 /tmp/pre_run.log
-            exit 1
-          }
+
+          echo "::error::Controller never became healthy"
+          cat /tmp/controller.out || true
+          tail -80 logs/pre_run/controller/*.log 2>/dev/null || true
+          exit 1
 
       - name: 8. Run Top-3 tasks
         working-directory: exploitgym
         run: |
           set -x
-          # Keep set -e off so one bad task does not abort the others,
-          # but we still record exit codes.
           set +e
 
           MAX_BUDGET="${{ github.event.inputs.max_budget_usd || '8.0' }}"
@@ -264,7 +278,6 @@ jobs:
           REASONING="${{ github.event.inputs.reasoning_effort || 'high' }}"
           COOLDOWN="${{ github.event.inputs.inter_task_cooldown_seconds || '90' }}"
 
-          # Re-export secrets so the Python process definitely sees them
           export CYBERGYM_SERVER_SALT
           export CYBERGYM_SERVER_FLAG_SEED
           export CYBERGYM_SERVER_API_KEY
@@ -300,7 +313,6 @@ jobs:
             sleep "$COOLDOWN"
           done
 
-          # Surface overall failure so the job is red if nothing worked
           if [ "$FAILED" -ne 0 ]; then
             echo "::warning::One or more tasks exited non-zero"
           fi
@@ -314,8 +326,11 @@ jobs:
           echo "-----"
           grep -H "flag.txt\|SUCCESS\|score\|solved\|ERROR\|Traceback\|Controller secrets\|Invalid token\|No module\|unrecognized" /tmp/results/*.log || true
           ls -la /tmp/results/ || true
-          echo "----- pre_run log (tail) -----"
-          tail -120 /tmp/pre_run.log || true
+          echo "----- controller stdout -----"
+          cat /tmp/controller.out || true
+          echo "----- controller log dir -----"
+          ls -la exploitgym/logs/pre_run/controller/ 2>/dev/null || true
+          tail -80 exploitgym/logs/pre_run/controller/*.log 2>/dev/null || true
 
       - name: 10. Upload logs
         if: always()
@@ -324,5 +339,6 @@ jobs:
           name: top3-logs
           path: |
             /tmp/results/
-            /tmp/pre_run.log
+            /tmp/controller.out
+            exploitgym/logs/pre_run/
           retention-days: 14
